@@ -1,0 +1,26 @@
+<div id="divPessoa">
+
+    <!-- Panel de Dados da Pessoa -->
+    <div id="pnlDadosPessoa" class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Registro de Pessoa</h4></div>
+        <div class="panel-body">
+            <form ng-submit="registrarPessoa()" class="form-horizontal">
+                <div class="input-group">
+                    <span class="input-group-addon">Nome:</span>
+                    <input id="txtNome" type="text" class="form-control" placeholder="Nome da pessoa" style="text-transform: uppercase" ng-model="Nome" />
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">Bloco:</span>
+                    <input id="txtBloco" type="text" class="form-control" placeholder="Bloco da pessoa" style="text-transform: uppercase" ng-model="Bloco" />
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon">Apartamento:</span>
+                    <input id="txtApartamento" type="text" class="form-control" placeholder="Apartamento da pessoa" style="text-transform: uppercase" ng-model="Apartamento" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

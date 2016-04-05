@@ -1,0 +1,256 @@
+<div id="divVisita">
+
+    <!-- Panel de Pesquisa -->
+    <div id="pnlPesquisa" class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Registro de Entrada</h4></div>
+        <div class="panel-body">
+            <div class="input-group">
+                <span class="input-group-addon">Placa do Veiculo</span>
+                <input id="txtPlaca" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Placa" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Dados da Visita -->
+    <div id="pnlCadastoVisita" class="panel panel-default" style="display:none">
+        <div class="panel-heading">
+            <h4>Dados da Visita</h4>
+        </div>
+        <div ng-submit="entradaVisitante()" class="panel-body">
+            <form class="form-horizontal">
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Bloco</span>
+                    <input type="number" class="form-control" placeholder="Qual Bloco esta sendo visitado?" ng-model="Visita.Bloco" required min="1" max="4">
+                </div>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Apartamento</span>
+                    <input id="txtApartamento" type="number" class="form-control" placeholder="Qual Apartamento esta sendo visitado?" ng-model="Visita.Apartamento" required min="101" max="1508">
+                </div>
+                <br>
+                <button type="reset" class="btn btn-danger">Limpar</button>
+                <button type="submit" class="btn btn-primary pull-right">Registrar Visita</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel de Cadastro de Visitante -->
+    <div id="pnlCadastroVisitante" class="panel panel-default" style="display:none">
+        <div class="panel-heading">
+            <h4>Cadastro de Visitante</h4></div>
+        <div class="panel-body">
+            <form ng-submit="registarVisitante()" class="form-horizontal">
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Nome</span>
+                    <input type="text" class="form-control" placeholder="Nome do Visitante" ng-model="Pessoa.Nome" required>
+                </div>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Modelo</span>
+                    <input type="text" class="form-control" placeholder="Modelo do Veiculo" ng-model="Carro.Modelo">
+                </div>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Cor</span>
+                    <input type="text" class="form-control" placeholder="Cor do Veiculo" ng-model="Carro.Cor">
+                </div>
+                <br>
+                <button type="reset" class="btn btn-danger">Limpar</button>
+                <button type="submit" class="btn btn-primary pull-right">Registrar Visitante</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel de Visualização de Dados -->
+    <div id="pnlVisualizarPessoa" class="panel panel-default" style="display:none">
+        <div class="panel-heading">
+            <h4>Dados do {{ Pessoa.Tipo }}</h4></div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+
+                <!-- Dadis de Pessoa -->
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Nome</label>
+                    <div class="col-md-10">
+                        <p class="form-control-static">{{ Pessoa.Nome }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Placa</label>
+                    <div class="col-md-10">
+                        <p class="form-control-static">{{ Carro.Placa }}</p>
+                    </div>
+                </div>
+
+                <!-- Dados de Morador -->
+                <div id="divMorador">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Bloco</label>
+                        <div class="col-md-10">
+                            <p class="form-control-static">{{ Pessoa.Bloco }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Apartamento</label>
+                        <div class="col-md-10">
+                            <p class="form-control-static">{{ Pessoa.Apartamento }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados de Veiculo -->
+                <div id="divVeiculo">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Modelo</label>
+                        <div class="col-md-10">
+                            <p class="form-control-static">{{ Carro.Modelo ? Carro.Modelo : "Não preenchido." }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Cor</label>
+                        <div class="col-md-10">
+                            <p class="form-control-static">{{ Carro.Cor ? Carro.Cor : "Não preenchido." }}</p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel de Visitantes no Condominio -->
+    <div id="pnlVisitasAtivas" class="panel panel-default" style="display: none">
+        <div class="panel-heading">
+            <h4>Visitas Ativas</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-2 text-center">Placa</th>
+                        <th class="col-md-2 text-center">Visitante</th>
+                        <th class="col-md-1 text-center">Bloco</th>
+                        <th class="col-md-1 text-center">Apartamento</th>
+                        <th class="col-md-2 text-center">Entrada</th>
+                        <th class="col-md-2 text-center">Permanência</th>
+                        <th class="col-md-2 text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="visita_{{visita.ID}}" ng-repeat="visita in Visitas">
+                        <td class="col-md-2 text-center">{{ visita.Placa }}</td>
+                        <td class="col-md-2 text-center">{{ visita.Visitante }}</td>
+                        <td class="col-md-1 text-center">{{ visita.Bloco }}</td>
+                        <td class="col-md-1 text-center">{{ visita.Apartamento }}</td>
+                        <td class="col-md-2 text-center">{{ visita.Entrada }}</td>
+                        <td class="col-md-2 text-center">{{ visita.Permanencia.Formatada }}</td>
+                        <td class="col-md-2 text-center">
+                            <button type="submit" class="btn btn-warning" ng-click="saidaVisitante(visita)">Saida</button>
+                            <button type="submit" class="btn btn-danger" ng-click="">Ocorrência</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 text-center"> 
+<!-- Botão para chamada do modal. -->
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ocorrenciaModal">Registrar Ocorrência</button>
+</div>
+
+<!-- Modal -->
+<div id="ocorrenciaModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Include do conteudo da pagina Ocorrência.-->
+                <div id="ocorrenciaModal" ng-include src="'partials/ocorrencia.html'"></div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+    // Configurar Placa Input.
+    function configurePlacaInput() {
+
+        // Recuperar textbox de placa.
+        var $txtPlaca = $("#txtPlaca");
+
+        // Mascara do textbox de placa.
+        $txtPlaca.mask("SSS-0000");
+
+        // Typeahead configuration.
+        var configuration = {};
+
+        // Metodo chamado quando algum item é selecionado.
+        // Retorno é colocado dentro do InputText.
+        configuration.updater = function(item) {
+            var placa = item.substring(0, 8);
+
+            // Used to call LoadPessoa from #Scope
+            $('#divVisita').scope().loadPlaca(placa);
+
+            return placa;
+        };
+
+        // Configuração do AJAX do Typeahead
+        configuration.ajax = {
+            url: "/api/placas",
+            displayField: "displayField",
+            triggerLength: 3,
+            method: "get",
+            // Método chamado antes do dispatch do AJAX.
+            preDispatch: function(query) {
+                return $('#divVisita').scope().typeahead.preDispatch(query);
+            },
+            // Método chamado no retorno de dados do serviço REST.
+            preProcess: function(data) {
+                return $('#divVisita').scope().typeahead.preProcess(data);
+            }
+        };
+
+        // Configurar o typeahead.
+        $txtPlaca.typeahead(configuration);
+
+        var $txtApartamento = $("#txtApartamento");
+
+        // Validação do apartamento (andar e número).
+        $txtApartamento.keyup(function(event) {
+            var value = $txtApartamento.val();
+
+            // Se menos caracteres do que o necessário pra validação
+            if (value.length < 3) {
+                // Deixar o HTML fazer validação default.
+                event.target.setCustomValidity("");
+                return;
+            }
+
+            // Padleft para 4 digitos.
+            var pad = "0000";
+            value = pad.substring(0, pad.length - value.length) + value;
+
+            // Validar andar (entre 1 e 15) e número do apartamento (entre 1 e 8).
+            var andar = value.substr(0, 2);
+            var numero = value.substr(2, 2);
+
+            if (andar < 1 || andar > 15) {
+                event.target.setCustomValidity("Apartamento invalido.");
+            }
+            else if (numero < 1 || numero > 8) {
+                event.target.setCustomValidity("Apartamento invalido.");
+            }
+            else {
+                event.target.setCustomValidity("");
+            }
+        });
+
+    }
+
+    $().ready(configurePlacaInput);
+</script>

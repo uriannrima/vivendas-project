@@ -1,0 +1,137 @@
+<!doctype html>
+<html ng-app="vivendas">
+
+<head>
+    <!-- Page Title. -->
+    <title> VSG - Controle de Entrada </title>
+
+    <!-- Fake Favicon. -->
+    <link rel="icon" href="data:;base64,=">
+
+    <!-- Meta information. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Third Party Javascript Frameworks -->
+
+    <!-- Moment. -->
+    <script src="js/third_party/moment-2.12.0.js"></script>
+
+    <!-- jQuery and jQuery Mask. -->
+    <script src="js/third_party/jquery-1.12.1.js"></script>
+    <script src="js/third_party/jquery-ui-1.11.4.js"></script>
+    <script src="js/third_party/jquery.mask-1.13.8.js"></script>
+
+    <!-- Bootstrap 3 -->
+    <script src="js/third_party/bootstrap-3.3.6.js"></script>
+
+    <!-- Typeahead -->
+    <script src="js/third_party/typeahead-2.0.3.js"></script>
+
+    <!-- AngularJS script. -->
+    <script src="js/third_party/angular/angular-1.5.0.js"></script>
+    <script src="js/third_party/angular/angular-route-1.5.0.js"></script>
+    <script src="js/third_party/angular/angular-resources-1.5.0.js"></script>
+    <script src="js/third_party/angular/angular-cookies-1.5.0.js"></script>
+    <script src="js/third_party/angular/ng-file-upload-12.0.4.js"></script>
+    <script src="js/third_party/angular/ng-file-upload-shim-12.0.4.js"></script>
+
+    <!-- Third Party CSS -->
+
+    <!-- JQuery UI -->
+    <link rel="stylesheet" href="css/third_party/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="css/third_party/jquery-ui.structure.css" type="text/css" />
+    <link rel="stylesheet" href="css/third_party/jquery-ui.theme.css" type="text/css" />
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="css/third_party/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="css/third_party/bootstrap-theme.css" type="text/css" />
+
+    <!-- Angular Application Javascript. -->
+    <script src="app/app.js"></script>
+
+    <!-- Services. -->
+    <script src="app/services.js"></script>
+    <script src="app/services/visitaService.js"></script>
+    <script src="app/services/carroService.js"></script>
+    <script src="app/services/pessoaService.js"></script>
+    <script src="app/services/ocorrenciaService.js"></script>
+    <script src="app/services/fotoService.js"></script>
+
+    <!-- Controllers. -->
+    <script src="app/controller.js"></script>
+    <script src="app/controllers/visitaController.js"></script>
+    <script src="app/controllers/pessoaController.js"></script>
+    <script src="app/controllers/ocorrenciaController.js"></script>
+
+    <!-- Models. -->
+    <script src="app/models.js"></script>
+    <script src="app/models/abstractModel.js"></script>
+    <script src="app/models/visitaModel.js"></script>
+    <script src="app/models/carroModel.js"></script>
+    <script src="app/models/pessoaModel.js"></script>
+    <script src="app/models/ocorrenciaModel.js"></script>
+    <script src="app/models/fotoModel.js"></script>
+
+    <style>
+        .dropdown-menu {
+            z-index: 2050;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default">
+
+        <!-- Container -->
+        <div class="container-fluid">
+
+            <!-- Navbar Header -->
+            <div class="navbar-header">
+                <a class="navbar-brand">Vivendas de São Gonçalo</a>
+            </div>
+
+            <div id="navMenu">
+                <!-- Left options -->
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/#!/">Controle de Entrada</a></li>
+                    <li><a href="/#!/ocorrencia">Ocorrências</a></li>
+                    <li><a href="/#!/pessoa">Pessoas</a></li>
+                    <li><a href="#">Carros</a></li>
+                </ul>
+
+                <!-- Right options -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Contato</a></li>
+                    <li><a href="#">Sair</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div ng-view></div>
+</body>
+<script>
+    function menuHandler() {
+        // Selecionar todos "a" no navBar.
+        // > = todos "abaixo".
+        // ul.nav = <ul> com class nav
+        // li sem espaço = TODOS li, independente de imediatamente abaixo.
+        // a sem espaço = TODOS a, independente se imediatamente abaixo.
+        $("#navMenu > ul.nav li a").click(
+            function(event) {
+                // Selecionar o <a>
+                var $this = $(this);
+                // Recuperar meu pai, pegar seus filhos, remover de todos a classe ativo (inclusive eu).
+                // Após isto (end), adiciona a classe ativo a mim.
+                $this.parent().siblings().removeClass('active').end().addClass('active');
+            }
+        );
+    }
+
+    $().ready(menuHandler);
+</script>
+
+</html>
