@@ -26,3 +26,8 @@ Push files to server:
 Origin = Remote server - git remote add origin git@github.com:yourname/yourrepository.git
 -u = Upstream
 git push -u origin branchName
+
+Merge branch:
+git checkout branchA -- Change to branch A
+git merge branchB -- Merge this (branch A) branch to branch B
+git branch -d branchB -- Delete branch B if necessary.
