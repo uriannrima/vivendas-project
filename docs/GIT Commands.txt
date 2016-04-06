@@ -12,6 +12,9 @@ git commit -a -m "Commit #Number: Something"
 List branches:
 git branches
 
+Create branch from actual branch:
+git checkout -b "branchName"
+
 Change to Branch (changes files):
 git checkout branchName
 
