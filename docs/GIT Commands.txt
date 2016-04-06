@@ -10,7 +10,7 @@ Commit all tracked files and add message to commit:
 git commit -a -m "Commit #Number: Something"
 
 List branches:
-git branches
+git branch
 
 Create branch from actual branch:
 git checkout -b "branchName"
