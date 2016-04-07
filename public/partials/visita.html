@@ -13,7 +13,7 @@
     </div>
 
     <!-- Panel de Dados da Visita -->
-    <div id="pnlCadastoVisita" class="panel panel-default" style="display:none">
+    <div id="pnlCadastoVisita" class="panel panel-default" ng-show="Pessoa.Tipo == 'Visitante'">
         <div class="panel-heading">
             <h4>Dados da Visita</h4>
         </div>
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Panel de Cadastro de Visitante -->
-    <div id="pnlCadastroVisitante" class="panel panel-default" style="display:none">
+    <div id="pnlCadastroVisitante" class="panel panel-default" ng-show="Placa.length == 8 && !Autocomplete && !Pessoa.ID">
         <div class="panel-heading">
             <h4>Cadastro de Visitante</h4></div>
         <div class="panel-body">
@@ -63,13 +63,13 @@
     </div>
 
     <!-- Panel de Visualização de Dados -->
-    <div id="pnlVisualizarPessoa" class="panel panel-default" style="display:none">
+    <div id="pnlVisualizarPessoa" class="panel panel-default" ng-show="Pessoa.ID && Carro.ID">
         <div class="panel-heading">
             <h4>Dados do {{ Pessoa.Tipo }}</h4></div>
         <div class="panel-body">
             <form class="form-horizontal">
 
-                <!-- Dadis de Pessoa -->
+                <!-- Dados de Pessoa -->
                 <div class="form-group">
                     <label class="col-md-2 control-label">Nome</label>
                     <div class="col-md-10">
@@ -84,7 +84,7 @@
                 </div>
 
                 <!-- Dados de Morador -->
-                <div id="divMorador">
+                <div id="divMorador" ng-show="Pessoa.Tipo == 'Morador'">
                     <div class="form-group">
                         <label class="col-md-2 control-label">Bloco</label>
                         <div class="col-md-10">
@@ -119,7 +119,7 @@
     </div>
 
     <!-- Panel de Visitantes no Condominio -->
-    <div id="pnlVisitasAtivas" class="panel panel-default" style="display: none">
+    <div id="pnlVisitasAtivas" class="panel panel-default" ng-show="Visitas.length">
         <div class="panel-heading">
             <h4>Visitas Ativas</h4>
         </div>
@@ -145,7 +145,7 @@
                         <td class="col-md-2 text-center">{{ visita.Entrada }}</td>
                         <td class="col-md-2 text-center">{{ visita.Permanencia.Formatada }}</td>
                         <td class="col-md-2 text-center">
-                            <button type="submit" class="btn btn-warning" ng-click="saidaVisitante(visita)">Saida</button>
+                            <button type="submit" class="btn btn-warning" ng-click="saidaVisitante($index, visita)">Saida</button>
                             <button type="submit" class="btn btn-danger" ng-click="">Ocorrência</button>
                         </td>
                     </tr>
@@ -155,9 +155,9 @@
     </div>
 </div>
 
-<div class="col-md-12 text-center"> 
-<!-- Botão para chamada do modal. -->
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ocorrenciaModal">Registrar Ocorrência</button>
+<div class="col-md-12 text-center">
+    <!-- Botão para chamada do modal. -->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ocorrenciaModal">Registrar Ocorrência</button>
 </div>
 
 <!-- Modal -->
@@ -175,7 +175,6 @@
 </div>
 
 <script type="text/javascript">
-    
     // Configurar Placa Input.
     function configurePlacaInput() {
 

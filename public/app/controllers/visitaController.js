@@ -13,7 +13,7 @@
  * @param {Resource} visitaService Referencia para o Visita Service.
  * @param {Resource} carroService Referencia para o Carro Service.
  */
-function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroModel) {
+function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaModel, CarroModel) {
 
     // Atualizar tempo dos visitantes a cada 1 segundo.
     $interval(function() {
@@ -55,6 +55,7 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
 
     // Dados do Cadastro de Visitante.
     $scope.formVisitante = {};
+    $scope.Autocomplete = false;
 
     // Modelos do Controller
     $scope.Visita = new VisitaModel();
@@ -63,6 +64,10 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
 
     // Lista de Visitas ativas.
     $scope.Visitas = [];
+
+    function cadastroComSucesso() {
+        $rootScope.adicionarMensagem("", "Visitante e Veiculo cadastrado com sucesso.");
+    };
 
     // Métodos do Typeahead.
     $scope.typeahead = {
@@ -73,27 +78,15 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
             $scope.Pessoa = new PessoaModel();
             $scope.Carro = new CarroModel();
 
-            // Esconder painel de visualização.
-            $("#pnlVisualizarPessoa").hide("slow");
-
-            // Esconder painel de cadastaro.
-            $("#pnlCadastroVisitante").hide("slow");
-
-            // Esconder painel de visita.
-            $("#pnlCadastoVisita").hide("slow");
-
             // Determinar query enviada para o serviço REST.
             return "placa=" + query;
 
         },
         // Método chamado no retorno de dados do serviço REST.
         preProcess: function(data) {
-            // Verificar se placa esta completa, porém não retornou valores do serviço.
-            if ($("#txtPlaca").val().length == 8 && data.length == 0) {
 
-                // Se não retornou, deve ser uma placa nova, liberar painel de cadastro.
-                $("#pnlCadastroVisitante").show("slow");
-            }
+            // Verificar se auto complete ativo (com dados).
+            $scope.Autocomplete = (data.length > 0);
 
             // Se há dados, retornar para o Typeahead.
             return data;
@@ -105,6 +98,7 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
     // No caso Saida == "NULL".
     var visitaModel = new VisitaModel();
     visitaModel.Ativa = true;
+
     visitaModel.find().then(function(data) {
 
         // Não faça nada se não houver dados.
@@ -116,30 +110,7 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
             // Adicionar a lista de visitas do Viewscope.
             $scope.Visitas.push(data[i]);
         }
-
-        // Mostrar painel com visitas ativas.
-        $("#pnlVisitasAtivas").show("slow");
     });
-
-    // Método para exibir as informações de pessoa.
-    $scope.exibirDadosPessoa = function() {
-
-        // Esconder painel de cadastro de visitante.
-        $("#pnlCadastroVisitante").hide("slow");
-
-        // Verificar visibilidade da div de morador.
-        if ($scope.Pessoa.Tipo == 'Morador') {
-            $("#divMorador").show();
-        }
-        // Esconder caso não morador e mostrar painel de cadastro de visita.
-        else {
-            $("#divMorador").hide();
-            $("#pnlCadastoVisita").show("slow");
-        }
-
-        // Mostrar painel de visualização.
-        $("#pnlVisualizarPessoa").show("slow");
-    };
 
     // Função para carregar dados da pessoa do service.
     $scope.loadPlaca = function(placa) {
@@ -154,9 +125,7 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
             $scope.Carro = data[0];
 
             // Carregar pessoa cujo ID seja o PessoaID do Carro.
-            $scope.Pessoa.load($scope.Carro.PessoaID).then(function(data) {
-                $scope.exibirDadosPessoa();
-            });
+            $scope.Pessoa.load($scope.Carro.PessoaID);
         });
     };
 
@@ -172,26 +141,27 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
             // Alguém foi recuperado
             if (data.length == 1) {
 
+                // Informar que visitante já existia.
+                $rootScope.adicionarMensagem("", "Visitante " + $scope.Pessoa.Nome + " já existia e veiculo será associado a ele.");
+
                 // Recuperar ID da pessoa encontrada e inserir na entidade do novo carro
-                $scope.Carro.PessoaID = data[0].ID;
+                $scope.Carro.PessoaID = $scope.Pessoa.ID;
 
                 // Invocar save da entidade carro.
-                $scope.Carro.save().then(function(data) {
-                    $scope.exibirDadosPessoa();
-                });
+                $scope.Carro.save().then(cadastroComSucesso);
             }
             // Ninguém foi recuperado.
             else if (data.length == 0) {
                 // Solicitar criação da pessoa nova.
                 $scope.Pessoa.save().then(function(data) {
+                    // Informar que visitante não existia.
+                    $rootScope.adicionarMensagem("", "Visitante " + $scope.Pessoa.Nome + " não existia e foi registrado com sucesso.");
 
                     // Recuperar ID da pessoa inserida e inserir na entidade do novo carro
-                    $scope.Carro.PessoaID = $scope.Pessoa.ID;
+                    $scope.Carro.PessoaID = data[0].Pessoa.ID;
 
                     // Invocar save da entidade carro.
-                    $scope.Carro.save().then(function(data) {
-                        $scope.exibirDadosPessoa();
-                    });
+                    $scope.Carro.save().then(cadastroComSucesso);
                 });
             }
         });
@@ -212,52 +182,38 @@ function visitaController($scope, $interval, PessoaModel, VisitaModel, CarroMode
             // Salvo com sucesso, adicionar a visita a lista de visitas.
             $scope.Visitas.push($scope.Visita);
 
-            // Criar uma nova visita como placeholder para a próxima.
+            // Resetar valor da placa
+            $scope.Placa = "";
+
+            // Resetar variaveis dos modelos para usar como placeholder para o proximo.
             $scope.Visita = new VisitaModel();
-
-            // Esconder painel de cadastro de visita e painel de visualização.
-            $("#pnlCadastoVisita").hide("slow");
-            $("#pnlVisualizarPessoa").hide("slow");
-
-            // Mostrar painel com visitas ativas.
-            $("#pnlVisitasAtivas").show("slow");
+            $scope.Pessoa = new PessoaModel();
+            $scope.Carro = new CarroModel();
         });
     };
 
     // Função para registrar saida do visitante.
-    $scope.saidaVisitante = function(visita) {
+    $scope.saidaVisitante = function(index, visita) {
         // Transformar Entrada novamente em string e definir horário de saida da visita (Agora).
         visita.Saida = moment().format("DD/MM/YYYY HH:mm:ss");
 
         // Salvar visita com data/hora de saida.
         visita.update().then(function() {
+            // Recuperar o TR
+            var $visitaTableRow = $("#visita_" + visita.ID);
 
-            // Percorrer lista para remover a visita atualizada.
-            for (var i = 0; i < $scope.Visitas.length; i++) {
-                // Se ID no Viewscope == ID do removido.
-                if ($scope.Visitas[i].ID == visita.ID) {
-                    // Recuperar o TR
-                    var $visitaTableRow = $("#visita_" + visita.ID);
-
-                    // Esconder o TR.
-                    $visitaTableRow.hide("slow", function() {
-                        // Após concluido, remover do Viewscope
-                        $scope.Visitas.splice(i, 1);
-
-                        // Se não há mais visitas, esconder o painel de visitas ativas.
-                        if ($scope.Visitas.length <= 0) {
-                            $("#pnlVisitasAtivas").hide("slow");
-                        }
-                    });
-                    break;
-                }
-            }
+            // Esconder o TR.
+            $visitaTableRow.hide("slow", function() {
+                // Após concluido, remover do Viewscope
+                $scope.Visitas.splice(index, 1);
+            });
         });
     };
 }
 
 var referencedModules = [
     '$scope',
+    '$rootScope',
     '$interval',
     'PessoaModel',
     'VisitaModel',

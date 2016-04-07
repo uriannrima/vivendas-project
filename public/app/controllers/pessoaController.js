@@ -8,7 +8,7 @@
  * @param {ngScope} $scope ViewScope do Controller.
  * @param {ngHttp} $http Wrapper HTTP utilizado para requests.
  */
-function pessoaController($scope, $http, carroService) {
+function pessoaController($scope, $http) {
 
     
 
@@ -16,4 +16,4 @@ function pessoaController($scope, $http, carroService) {
 }
 
 // Registrar Pessoa Controller
-vivendasControllers.controller('pessoaController', ['$scope', '$http', 'carroService', pessoaController]);
+vivendasControllers.controller('pessoaController', ['$scope', '$http', pessoaController]);

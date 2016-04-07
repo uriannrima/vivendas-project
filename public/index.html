@@ -60,6 +60,7 @@
 
     <!-- Controllers. -->
     <script src="app/controller.js"></script>
+    <script src="app/controllers/indexController.js"></script>
     <script src="app/controllers/visitaController.js"></script>
     <script src="app/controllers/pessoaController.js"></script>
     <script src="app/controllers/ocorrenciaController.js"></script>
@@ -81,7 +82,7 @@
 
 </head>
 
-<body>
+<body ng-controller="indexController">
     <!-- Navbar -->
     <nav class="navbar navbar-default">
 
@@ -110,6 +111,14 @@
             </div>
         </div>
     </nav>
+
+    <div id="pnlMensagens" ng-show="Mensagens.length">
+        <div ng-repeat="mensagem in Mensagens" class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" aria-label="Close" ng-click="removerMensagem($index)"><span aria-hidden="true">&times;</span></button>
+            <strong>{{ mensagem.Strong }}</strong> {{ mensagem.Texto }}
+        </div>
+    </div>
+
 
     <div ng-view></div>
 </body>

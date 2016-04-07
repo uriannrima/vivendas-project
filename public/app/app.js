@@ -25,8 +25,7 @@ vivendas.config(['$routeProvider', '$locationProvider',
                 controller: 'pessoaController'
             })
             .when('/ocorrencia', {
-                templateUrl: 'partials/ocorrencia.html',
-                //controller: 'pessoaController'
+                templateUrl: 'partials/ocorrencia.html'
             });
 
         // Configureção de Provider.
