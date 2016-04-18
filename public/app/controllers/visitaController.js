@@ -10,10 +10,10 @@
  * @param {ngScope} $scope ViewScope do Controller.
  * @param {ngHttp} $http Wrapper HTTP utilizado para requests.
  * @param {ngInterval} $interval Wrapper do setInterval.
- * @param {Resource} visitaService Referencia para o Visita Service.
- * @param {Resource} carroService Referencia para o Carro Service.
+ * @param {Resource} VisitaService Referencia para o Visita Service.
+ * @param {Resource} CarroService Referencia para o Carro Service.
  */
-function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaModel, CarroModel) {
+function VisitaController($scope, $rootScope, $interval, PessoaModel, VisitaModel, CarroModel, OcorrenciaModel) {
 
     // Atualizar tempo dos visitantes a cada 1 segundo.
     $interval(function() {
@@ -45,6 +45,18 @@ function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
                 else {
                     // Alterar CSS Class para Danger.
                     $visitaTableRow.attr('class', 'danger');
+                    if (!visita.PossuiOcorrencia) {
+                        var ocorrencia = new OcorrenciaModel({
+                            Descricao: "Visitante ficou mais de " + maxTime + " minutos no condominio.",
+                            CarroID: visita.CarroID,
+                            Bloco: visita.Bloco,
+                            Apartamento: visita.Apartamento,
+                            Data: moment().format("DD/MM/YYYY HH:mm:ss")
+                        });
+                        // ocorrencia.save().then(function() {
+                        //     visita.PossuiOcorrencia = true;
+                        // });
+                    }
                 }
 
             }
@@ -64,10 +76,6 @@ function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
 
     // Lista de Visitas ativas.
     $scope.Visitas = [];
-
-    function cadastroComSucesso() {
-        $rootScope.adicionarMensagem("", "Visitante e Veiculo cadastrado com sucesso.");
-    };
 
     // Métodos do Typeahead.
     $scope.typeahead = {
@@ -96,16 +104,21 @@ function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
     // Recuperar todas visitas ativas (sem data de saida).
     // Popular entidade com as propriedades que serão usadas como parametro.
     // No caso Saida == "NULL".
-    var visitaModel = new VisitaModel();
-    visitaModel.Ativa = true;
+    var pesquisaVisitasAtivas = new VisitaModel();
+    pesquisaVisitasAtivas.Ativa = true;
 
-    visitaModel.find().then(function(data) {
+    pesquisaVisitasAtivas.find().then(function(data) {
 
         // Não faça nada se não houver dados.
         if (data.length <= 0) return;
 
         // Lista de todas visitas ativas.
         for (var i = 0; i < data.length; i++) {
+
+            var pesquisarOcorrencia = new OcorrenciaModel();
+            angular.forEach(data, function(visita) {
+                pesquisarOcorrencia.VisitaI
+            });
 
             // Adicionar a lista de visitas do Viewscope.
             $scope.Visitas.push(data[i]);
@@ -142,26 +155,30 @@ function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
             if (data.length == 1) {
 
                 // Informar que visitante já existia.
-                $rootScope.adicionarMensagem("", "Visitante " + $scope.Pessoa.Nome + " já existia e veiculo será associado a ele.");
+                $rootScope.adicionarMensagem("Visitante " + $scope.Pessoa.Nome + " já existia e veiculo será associado a ele.", "I");
 
                 // Recuperar ID da pessoa encontrada e inserir na entidade do novo carro
                 $scope.Carro.PessoaID = $scope.Pessoa.ID;
 
                 // Invocar save da entidade carro.
-                $scope.Carro.save().then(cadastroComSucesso);
+                $scope.Carro.save().then(function() {
+                    $rootScope.adicionarMensagem("Visitante registrado com sucesso.", "S");
+                });
             }
             // Ninguém foi recuperado.
             else if (data.length == 0) {
                 // Solicitar criação da pessoa nova.
                 $scope.Pessoa.save().then(function(data) {
                     // Informar que visitante não existia.
-                    $rootScope.adicionarMensagem("", "Visitante " + $scope.Pessoa.Nome + " não existia e foi registrado com sucesso.");
+                    $rootScope.adicionarMensagem("Visitante " + $scope.Pessoa.Nome + " não existia e foi registrado com sucesso.", "I");
 
                     // Recuperar ID da pessoa inserida e inserir na entidade do novo carro
-                    $scope.Carro.PessoaID = data[0].Pessoa.ID;
+                    $scope.Carro.PessoaID = data[0].ID;
 
                     // Invocar save da entidade carro.
-                    $scope.Carro.save().then(cadastroComSucesso);
+                    $scope.Carro.save().then(function() {
+                        $rootScope.adicionarMensagem("Visitante registrado com sucesso.", "S");
+                    });
                 });
             }
         });
@@ -178,6 +195,8 @@ function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
 
         // Invocar save da entidade visita.
         $scope.Visita.save().then(function(data) {
+
+            $rootScope.adicionarMensagem("Visita registrada com sucesso.", "S");
 
             // Salvo com sucesso, adicionar a visita a lista de visitas.
             $scope.Visitas.push($scope.Visita);
@@ -199,6 +218,9 @@ function visitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
 
         // Salvar visita com data/hora de saida.
         visita.update().then(function() {
+
+            $rootScope.adicionarMensagem("Saida registrada com sucesso.", "S");
+
             // Recuperar o TR
             var $visitaTableRow = $("#visita_" + visita.ID);
 
@@ -218,8 +240,9 @@ var referencedModules = [
     'PessoaModel',
     'VisitaModel',
     'CarroModel',
-    visitaController
+    'OcorrenciaModel',
+    VisitaController
 ];
 
 // Registrar Visita Controller
-vivendasControllers.controller('visitaController', referencedModules);
+vivendasControllers.controller('VisitaController', referencedModules);

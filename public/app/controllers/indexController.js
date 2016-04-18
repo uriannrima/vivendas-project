@@ -8,13 +8,24 @@
  * @param {ngScope} $scope ViewScope do Controller.
  * @param {ngHttp} $http Wrapper HTTP utilizado para requests.
  */
-function indexController($scope, $rootScope) {
+function IndexController($scope, $rootScope) {
     $rootScope.Mensagens = [];
 
-    $rootScope.adicionarMensagem = function(strong, texto) {
+    $rootScope.adicionarMensagem = function(texto, tipo, strong) {
+
+        var alertClass = "info";
+
+        if (tipo.length == 1) {
+            alertClass = tipo == "D" ? "danger" : tipo == "W" ? "warning" : tipo == "I" ? "info" : "success";
+        }
+        else if (tipo == 'danger' || tipo == 'warning' || tipo == 'info' || tipo == 'success') {
+            alertClass = tipo;
+        }
+
         $rootScope.Mensagens.push({
             Strong: strong,
-            Texto: texto
+            Texto: texto,
+            Tipo: alertClass
         });
     };
 
@@ -26,8 +37,8 @@ function indexController($scope, $rootScope) {
 var referencedModules = [
     '$scope',
     '$rootScope',
-    indexController
+    IndexController
 ];
 
 // Registrar Pessoa Controller
-vivendasControllers.controller('indexController', referencedModules);
+vivendasControllers.controller('IndexController', referencedModules);

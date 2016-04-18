@@ -1,0 +1,61 @@
+<div id="divPessoas">
+    <!-- Panel de Pessoas do Condominio -->
+    <div id="pnlPessoas" class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Pessoas Cadastradas</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 text-center">
+                <!-- Botão para chamada do modal. -->
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#pessoaModal">Registrar Pessoa</button>
+            </div>
+            <table class="table table-striped" ng-show="Pessoas.length">
+                <thead>
+                    <tr>
+                        <th class="col-md-4 text-center">Nome</th>
+                        <th class="col-md-4 text-center">Tipo</th>
+                        <th class="col-md-4 text-center">Placa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td class="col-md-4 text-center">
+                        <input id="nomeFilter" type="text" class="form-control" placeholder="Pesquisar por Nome" ng-model="PessoaFilter.Nome" />
+                    </td>
+                    <td class="col-md-4 text-center">
+                        <input id="tipoFilter" type="text" class="form-control" placeholder="Pesquisar por Tipo" ng-model="PessoaFilter.Tipo" />
+                    </td>
+                    <td class="col-md-4 text-center">
+                        <input id="placaFilter" type="text" class="form-control" placeholder="Pesquisar por Placa" ng-model="PessoaFilter.Carro.Placa" vsg-formatar-placa/>
+                    </td>
+                    <tr ng-repeat="pessoa in Pessoas | filter : PessoaFilter">
+                        <td class="col-md-4 text-center"><a ng-href="/#!/pessoa/{{pessoa.ID}}">{{ pessoa.Nome }}</a></td>
+                        <td class="col-md-4 text-center">
+                            {{ pessoa.Tipo }}
+                        </td>
+                        <td class="col-md-4 text-center">
+                            <text ng-show="pessoa.Carro">
+                                ({{ pessoa.Carro.Placa }})
+                            </text>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p ng-hide="Pessoas.length"> Não há pessoas cadastradas.</p>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div id="pessoaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- Include do conteudo da pagina Ocorrência.-->
+                    <div id="pessoaModal" ng-include src="'partials/pessoa.html'"></div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

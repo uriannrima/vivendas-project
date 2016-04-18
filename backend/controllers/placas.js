@@ -12,7 +12,7 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Query.
-        var query = "select concat(de_placa, ' - ', de_nome) as displayField, pes.id_pes as 'PessoaID', car.id_car as 'CarroID', de_placa as 'Placa', de_nome as 'Nome', " +
+        var query = "select concat(de_placa, ' - ', de_nome, ' - ', case when (cd_bloco is null and cd_apartamento is null) then 'VISITANTE' else 'MORADOR' end) as displayField, pes.id_pes as 'PessoaID', car.id_car as 'CarroID', de_placa as 'Placa', de_nome as 'Nome', " +
             " cd_bloco as 'Bloco', cd_apartamento as 'Apartamento', de_modelo as 'Modelo', de_cor as 'Cor', " +
             " case when (cd_bloco is null and cd_apartamento is null) then 'Visitante' else 'Morador' end as 'Tipo' " +
             " from tvsgcar0 car inner join tvsgpes0 pes on car.id_pes = pes.id_pes";

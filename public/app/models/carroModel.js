@@ -4,10 +4,10 @@
 /**
  * Método para encapsular definição da classe do modelo.
  * 
- * @param {ngService} carroService Serviço utilizado pelo modelo para recuperar seus dados.
+ * @param {ngService} CarroService Serviço utilizado pelo modelo para recuperar seus dados.
  * @return {CarroModel} Entidade de Carro.
  */
-function carroModelDefinition($q, carroService, AbstractModel) {
+function carroModelDefinition($q, CarroService, AbstractModel) {
 
     /**
      * Construtor de Modelo.
@@ -19,7 +19,7 @@ function carroModelDefinition($q, carroService, AbstractModel) {
     /**
      * Extender classe abstrata de modelo.
      */
-    CarroModel.prototype = new AbstractModel(carroService);
+    CarroModel.prototype = new AbstractModel(CarroService);
 
     /**
      * Sobrescrever método de instancia modelo. 
@@ -61,4 +61,4 @@ function carroModelDefinition($q, carroService, AbstractModel) {
 }
 
 // Registrar Modelo.
-vivendasModels.factory('CarroModel', ['$q', 'carroService', 'AbstractModel', carroModelDefinition]);
+vivendasModels.factory('CarroModel', ['$q', 'CarroService', 'AbstractModel', carroModelDefinition]);

@@ -4,10 +4,10 @@
 /**
  * Método para encapsular definição da classe do modelo.
  * 
- * @param {ngService} visitaService Serviço utilizado pelo modelo para recuperar seus dados.
+ * @param {ngService} VisitaService Serviço utilizado pelo modelo para recuperar seus dados.
  * @return {VisitaModel} Entidade de Visita.
  */
-function visitaModelDefinition($q, visitaService, AbstractModel) {
+function visitaModelDefinition($q, VisitaService, AbstractModel) {
 
     /**
      * Construtor de Modelo.
@@ -26,7 +26,7 @@ function visitaModelDefinition($q, visitaService, AbstractModel) {
     /**
      * Extender classe abstrata de modelo.
      */
-    VisitaModel.prototype = new AbstractModel(visitaService);
+    VisitaModel.prototype = new AbstractModel(VisitaService);
 
     /**
      * Sobrescrever método de instancia modelo. 
@@ -90,4 +90,4 @@ function visitaModelDefinition($q, visitaService, AbstractModel) {
 }
 
 // Registrar Visita Model.
-vivendasModels.factory('VisitaModel', ['$q', 'visitaService', 'AbstractModel', visitaModelDefinition]);
+vivendasModels.factory('VisitaModel', ['$q', 'VisitaService', 'AbstractModel', visitaModelDefinition]);

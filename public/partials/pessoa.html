@@ -1,26 +1,95 @@
-<div id="divPessoa">
+<div id="divPessoa" ng-controller="PessoaController">
 
     <!-- Panel de Dados da Pessoa -->
     <div id="pnlDadosPessoa" class="panel panel-default">
         <div class="panel-heading">
             <h4>Registro de Pessoa</h4></div>
         <div class="panel-body">
-            <form ng-submit="registrarPessoa()" class="form-horizontal">
+            <form name="pessoaForm" ng-submit="salvarPessoa()" class="form-horizontal">
+                <p>Dados da Pessoa:</p>
                 <div class="input-group">
                     <span class="input-group-addon">Nome:</span>
-                    <input id="txtNome" type="text" class="form-control" placeholder="Nome da pessoa" style="text-transform: uppercase" ng-model="Nome" />
+                    <input name="nome" id="txtNome" type="text" class="form-control" placeholder="Nome da pessoa" ng-model="Pessoa.Nome" required/>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="toggleTipo('Morador')">Morador</button>
+                        <button type="button" class="btn btn-default" ng-click="toggleTipo('Visitante')">Visitante</button>
+                    </div>
+                </div>
+                <div ng-if="Pessoa.Tipo == 'Morador'">
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Bloco:</span>
+                        <input name="bloco" id="txtBloco" type="number" class="form-control" placeholder="Bloco da pessoa" ng-model="Pessoa.Bloco" required min="1" max="4" />
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Apartamento:</span>
+                        <input name="apartamento" id="txtApartamento" type="number" class="form-control" placeholder="Apartamento da pessoa" ng-model="Pessoa.Apartamento" required min="101" max="1508" />
+                    </div>
                 </div>
                 <br>
-                <div class="input-group">
-                    <span class="input-group-addon">Bloco:</span>
-                    <input id="txtBloco" type="text" class="form-control" placeholder="Bloco da pessoa" style="text-transform: uppercase" ng-model="Bloco" />
+                <div ng-hide="Pessoa.ID">
+                    <p>Dados do Veiculo:</p>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon">Placa</span>
+                        <input name="placa" id="txtPlaca" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Carro.Placa" vsg-formatar-placa required>
+                    </div>
+                    <br>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon">Modelo</span>
+                        <input type="text" class="form-control" placeholder="Modelo do Veiculo" ng-model="Carro.Modelo">
+                    </div>
+                    <br>
+                    <div class="input-group input-group">
+                        <span class="input-group-addon">Cor</span>
+                        <input type="text" class="form-control" placeholder="Cor do Veiculo" ng-model="Carro.Cor">
+                    </div>
+                    <br>
                 </div>
-                <br>
-                <div class="input-group">
-                    <span class="input-group-addon">Apartamento:</span>
-                    <input id="txtApartamento" type="text" class="form-control" placeholder="Apartamento da pessoa" style="text-transform: uppercase" ng-model="Apartamento" />
+                <div>
+                    <ul ng-if='pessoaForm.nome.$dirty' ng-messages="pessoaForm.nome.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher o nome.</li>
+                    </ul>
+                    <ul ng-if='pessoaForm.bloco.$dirty' ng-messages="pessoaForm.bloco.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher o bloco.</li>
+                        <li ng-message="min">Bloco deve ser maior que 1.</li>
+                        <li ng-message="max">Bloco deve ser menor que 4.</li>
+                    </ul>
+                    <ul ng-if='pessoaForm.apartamento.$dirty' ng-messages="pessoaForm.apartamento.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher o apartamento.</li>
+                        <li ng-message="min">Apartamento deve ser maior que 101.</li>
+                        <li ng-message="max">Apartamento deve ser menor que 1508.</li>
+                    </ul>
+                    <ul ng-if='pessoaForm.placa.$dirty' ng-messages="pessoaForm.placa.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher a placa do veiculo.</li>
+                        <li ng-message="placataken">Placa já cadastrada.</li>
+                    </ul>
+                    <br>
                 </div>
+                <button type="reset" class="btn btn-danger">Limpar</button>
+                <!-- Single button -->
+                <div class="btn-group" ng-show="Pessoa.ID">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Excluir <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" ng-click="excluirPessoa()">Confirmar?</a></li>
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Salvar</button>
             </form>
         </div>
     </div>
+    <a href="/#!/pessoas" ng-show="!isModal()">Voltar</a>
 </div>
+<script type="text/javascript">
+    function configureInputFields() {
+        // Recuperar textbox de placa.
+        tryGetElement("#txtPlaca", function($txtPlaca) {
+            // Mascara do textbox de placa.
+            //$txtPlaca.mask("SSS-0000");
+        });
+    }
+
+    $().ready(configureInputFields);
+</script>

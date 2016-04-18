@@ -4,10 +4,10 @@
 /**
  * Método para encapsular definição da classe do modelo.
  * 
- * @param {ngService} pessoaService Serviço utilizado pelo modelo para recuperar seus dados.
+ * @param {ngService} PessoaService Serviço utilizado pelo modelo para recuperar seus dados.
  * @return {OcorrenciaModel} Entidade de Ocorrência.
  */
-function fotoModelDefinition($q, Upload, fotoService, AbstractModel) {
+function fotoModelDefinition($q, Upload, FotoService, AbstractModel) {
 
     /**
      * Construtor de Modelo.
@@ -19,7 +19,7 @@ function fotoModelDefinition($q, Upload, fotoService, AbstractModel) {
     /**
      * Extender classe abstrata de modelo.
      */
-    FotoModel.prototype = new AbstractModel(fotoService);
+    FotoModel.prototype = new AbstractModel(FotoService);
 
     /**
      * Sobrescrever método de instancia modelo. 
@@ -77,4 +77,4 @@ function fotoModelDefinition($q, Upload, fotoService, AbstractModel) {
 }
 
 // Registrar Ocorrencia Model.
-vivendasModels.factory('FotoModel', ['$q', 'Upload', 'fotoService', 'AbstractModel', fotoModelDefinition]);
+vivendasModels.factory('FotoModel', ['$q', 'Upload', 'FotoService', 'AbstractModel', fotoModelDefinition]);

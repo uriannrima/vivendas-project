@@ -45,6 +45,9 @@ module.exports = function(app) {
             query += " and cd_apartamento = ? ";
             params.push(req.query.apartamento);
         }
+        
+        query += " order by de_nome";
+        
 
         // Executar query.
         app.database.mysql.query(

@@ -10,7 +10,7 @@
  * @param {ngScope} $scope ViewScope do Controller.
  * @param {ngHttp} $http Wrapper HTTP utilizado para requests.
  */
-function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, FotoModel) {
+function OcorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, FotoModel) {
 
     $scope.Ocorrencia = new OcorrenciaModel();
     $scope.Pessoa = new PessoaModel();
@@ -25,12 +25,6 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
             $scope.Pessoa = new PessoaModel();
             $scope.Carro = new CarroModel();
 
-            // Esconder painel de visualização.
-            $("#pnlOcorrenciaVisualizarPessoa").hide("slow");
-
-            // Esconder painel de visualização.
-            $("#pnlCadastoOcorrencia").hide("slow");
-
             // Determinar query enviada para o serviço REST.
             return "placa=" + query;
 
@@ -40,32 +34,6 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
             // Se há dados, retornar para o Typeahead.
             return data;
         }
-    };
-
-    // Método para exibir as informações de pessoa.
-    $scope.exibirDadosPessoa = function() {
-
-        // Verificar visibilidade da div de morador.
-        if ($scope.Pessoa.Tipo == 'Morador') {
-            $("#divOcorrenciaMorador").show();
-        }
-        // Esconder caso não morador e mostrar painel de cadastro de visita.
-        else {
-            $("#divOcorrenciaMorador").hide();
-        }
-
-        // Mostrar painel de visualização.
-        $("#pnlOcorrenciaVisualizarPessoa").show("slow");
-        $("#pnlCadastoOcorrencia").show("slow");
-        $("#pnlDescricao").show("slow");
-    };
-
-    $scope.esconderDadosPessoa = function() {
-        $("#pnlPesquisaPlacaOcorrencia").hide("slow");
-        $("#divOcorrenciaMorador").hide("slow");
-        $("#pnlOcorrenciaVisualizarPessoa").hide("slow");
-        $("#pnlCadastoOcorrencia").hide("slow");
-        $("#pnlDescricao").hide("slow");
     };
 
     $scope.loadPlaca = function(placa) {
@@ -80,7 +48,7 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
 
             // Carregar pessoa cujo ID seja o PessoaID do Carro.
             $scope.Pessoa.load($scope.Carro.PessoaID).then(function(data) {
-                
+
                 if ($scope.Pessoa.Tipo == "Morador") {
                     $scope.Ocorrencia.Bloco = $scope.Pessoa.Bloco;
                     $scope.Ocorrencia.Apartamento = $scope.Pessoa.Apartamento;
@@ -92,8 +60,6 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
 
                 $scope.Ocorrencia.CarroID = $scope.Carro.ID;
                 $scope.Ocorrencia.Data = moment().format("DD/MM/YYYY HH:mm:ss");
-
-                $scope.exibirDadosPessoa();
             });
         });
     };
@@ -107,8 +73,9 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
         // Salvar a ocorrência
         $scope.Ocorrencia.save().then(function(model) {
 
-            // Esconder paineis de dados das pessoas.
-            $scope.esconderDadosPessoa();
+            // Limpar variaveis do modelo.
+            $scope.Pessoa = new PessoaModel();
+            $scope.Carro = new CarroModel();
 
             // Para cada arquivo de foto na Ocorrência.
             angular.forEach(
@@ -137,25 +104,12 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
 
                             // Após remoção, se a lista esta vazia, todas foram enviadas.
                             if ($scope.FotosUploading.length == 0) {
+
                                 //Fechar modal se houver
-                                var $ocorrenciaModal = $('#ocorrenciaModal');
-
-                                if ($ocorrenciaModal) {
-
-                                    // Limpar variaveis do modelo.
-                                    $scope.Ocorrencia = new OcorrenciaModel();
-                                    $scope.Pessoa = new PessoaModel();
-                                    $scope.Carro = new CarroModel();
-
+                                tryGetElement('#ocorrenciaModal', function($ocorrenciaModal) {
                                     // Fechar modal.
                                     $ocorrenciaModal.modal('hide');
-
-                                    // Remover painel de upload.
-                                    $("#pnlUploadsAtivos").hide("slow");
-
-                                    // Reativar painel de pesquisa de placa.
-                                    $("#pnlPesquisaPlacaOcorrencia").show("slow");
-                                }
+                                });
                             }
                         },
                         function error(response) {
@@ -170,14 +124,9 @@ function ocorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
                 }
             );
 
-            // Mostrar painel de upload de fotos.
-            if ($scope.FotosUploading.length != 0) {
-                // Mostar painel de upload.
-                $("#pnlUploadsAtivos").show("slow");
-            }
+            $scope.Ocorrencia = new OcorrenciaModel();
         });
     };
-
 }
 
 var referencedModules = [
@@ -186,8 +135,8 @@ var referencedModules = [
     'CarroModel',
     'OcorrenciaModel',
     'FotoModel',
-    ocorrenciaController
+    OcorrenciaController
 ];
 
 // Registrar Pessoa Controller
-vivendasControllers.controller('ocorrenciaController', referencedModules);
+vivendasControllers.controller('OcorrenciaController', referencedModules);

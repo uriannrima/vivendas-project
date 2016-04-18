@@ -7,7 +7,7 @@
  * @param {ngResource} $resource Gerador de Recursos do Angular.
  * @return {ngResource} Recurso gerado do Angular.
  */
-function ocorrenciaService($resource) {
+function OcorrenciaService($resource) {
 
     // URL do Serviço.
     var serviceURL = "/api/ocorrencias";
@@ -41,4 +41,4 @@ function ocorrenciaService($resource) {
 }
 
 // Registrar Ocorrencia Service.
-vivendasServices.factory('ocorrenciaService', ['$resource', ocorrenciaService]);
+vivendasServices.factory('OcorrenciaService', ['$resource', OcorrenciaService]);

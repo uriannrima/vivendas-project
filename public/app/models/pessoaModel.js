@@ -4,10 +4,10 @@
 /**
  * Método para encapsular definição da classe do modelo.
  * 
- * @param {ngService} pessoaService Serviço utilizado pelo modelo para recuperar seus dados.
+ * @param {ngService} PessoaService Serviço utilizado pelo modelo para recuperar seus dados.
  * @return {PessoaModel} Entidade de Pessoa.
  */
-function pessoaModelDefinition($q, pessoaService, AbstractModel) {
+function pessoaModelDefinition($q, PessoaService, AbstractModel) {
 
     /**
      * Construtor de Modelo.
@@ -19,7 +19,7 @@ function pessoaModelDefinition($q, pessoaService, AbstractModel) {
     /**
      * Extender classe abstrata de modelo.
      */
-    PessoaModel.prototype = new AbstractModel(pessoaService);
+    PessoaModel.prototype = new AbstractModel(PessoaService);
 
     /**
      * Sobrescrever método de instancia modelo. 
@@ -60,4 +60,4 @@ function pessoaModelDefinition($q, pessoaService, AbstractModel) {
 }
 
 // Registrar Visita Model.
-vivendasModels.factory('PessoaModel', ['$q', 'pessoaService', 'AbstractModel', pessoaModelDefinition]);
+vivendasModels.factory('PessoaModel', ['$q', 'PessoaService', 'AbstractModel', pessoaModelDefinition]);

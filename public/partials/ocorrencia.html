@@ -1,19 +1,19 @@
-<div id="divOcorrencia" ng-controller="ocorrenciaController">
+<div id="divOcorrencia" ng-controller="OcorrenciaController">
 
     <!-- Panel de Pesquisa -->
-    <div id="pnlPesquisaPlacaOcorrencia" class="panel panel-default">
+    <div id="pnlPesquisaPlacaOcorrencia" class="panel panel-default" ng-show="!FotosUploading.length">
         <div class="panel-heading">
             <h4>Registro de Ocorrência</h4></div>
         <div class="panel-body">
             <div class="input-group">
                 <span class="input-group-addon">Placa do Veiculo</span>
-                <input id="txtPlacaOcorrencia" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Ocorrencia.Placa" />
+                <input id="txtPlacaOcorrencia" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Ocorrencia.Placa" vsg-formatar-placa/>
             </div>
         </div>
     </div>
 
     <!-- Panel de Visualização de Dados -->
-    <div id="pnlOcorrenciaVisualizarPessoa" class="panel panel-default" style="display:none">
+    <div id="pnlOcorrenciaVisualizarPessoa" class="panel panel-default" ng-show="Pessoa.ID && Carro.ID && !FotosUploading.length">
         <div class="panel-heading">
             <h4>Dados do {{ Pessoa.Tipo }}</h4></div>
         <div class="panel-body">
@@ -34,7 +34,7 @@
                 </div>
 
                 <!-- Dados de Morador -->
-                <div id="divOcorrenciaMorador">
+                <div id="divOcorrenciaMorador" ng-if="Pessoa.Tipo == 'Morador'">
                     <div class="form-group">
                         <label class="col-md-2 control-label">Bloco</label>
                         <div class="col-md-10">
@@ -69,43 +69,62 @@
     </div>
 
     <!-- Panel de Dados da ocorrência -->
-    <div id="pnlCadastoOcorrencia" class="panel panel-default" style="display:none">
+    <div id="pnlCadastoOcorrencia" class="panel panel-default" ng-show="Pessoa.ID && Carro.ID && !FotosUploading.length">
         <div class="panel-heading">
             <h4>Dados da Ocorrência</h4>
         </div>
         <div class="panel-body">
-            <form ng-submit="registrarOcorrencia()" class="form-horizontal" enctype="multipart/form-data">
+            <form name="formOcorrencia" ng-submit="registrarOcorrencia()" class="form-horizontal" enctype="multipart/form-data">
                 <label for="comment">Descrição da Ocorrência:</label>
-                <textarea id="txtOcorrencia" type="text" class="form-control" rows="5" placeholder="Descreva o que ocorreu aqui." ng-model="Ocorrencia.Descricao"></textarea>
+                <textarea name="descricao" id="txtOcorrencia" type="text" class="form-control" rows="5" placeholder="Descreva o que ocorreu aqui." ng-model="Ocorrencia.Descricao" required></textarea>
                 <br>
                 <div class="input-group input-group">
                     <span class="input-group-addon">Bloco</span>
-                    <input type="number" class="form-control" placeholder="Bloco da Ocorrência" ng-model="Ocorrencia.Bloco" required min="1" max="4">
+                    <input name="bloco" type="number" class="form-control" placeholder="Bloco da Ocorrência" ng-model="Ocorrencia.Bloco" required min="1" max="4">
                 </div>
                 <br>
                 <div class="input-group input-group">
                     <span class="input-group-addon">Apartamento</span>
-                    <input id="txtOcorrenciaApartamento" type="number" class="form-control" placeholder="Apartamento da Ocorrência" ng-model="Ocorrencia.Apartamento" required min="101" max="1508">
+                    <input name="apartamento" id="txtOcorrenciaApartamento" type="number" class="form-control" placeholder="Apartamento da Ocorrência" ng-model="Ocorrencia.Apartamento" required min="101" max="1508">
                 </div>
                 <br>
                 <div class="input-group input-group">
                     <span class="input-group-addon">Data</span>
-                    <input id="txtDataOcorrencia" class="form-control" ng-model="Ocorrencia.Data">
+                    <input name="data" id="txtDataOcorrencia" class="form-control" ng-model="Ocorrencia.Data" required>
                 </div>
                 <br>
                 <div class="input-group input-group">
                     <span class="input-group-addon">Foto</span>
-                    <input id="arqFoto" type="file" class="form-control" ng-model="Ocorrencia.Arquivos" accept="image/*" max-size="3" bind-file multiple>
+                    <input id="arqFoto" type="file" class="form-control" ng-model="Ocorrencia.Arquivos" accept="image/*" max-size="3" vsg-bind-file multiple>
                 </div>
                 <br>
+                <div>
+                    <ul ng-if='formOcorrencia.descricao.$dirty' ng-messages="formOcorrencia.descricao.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher a descrição da ocorrência.</li>
+                    </ul>
+                    <ul ng-if='formOcorrencia.bloco.$dirty' ng-messages="formOcorrencia.bloco.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher o bloco.</li>
+                        <li ng-message="min">Bloco deve ser maior que 1.</li>
+                        <li ng-message="max">Bloco deve ser menor que 4.</li>
+                    </ul>
+                    <ul ng-if='formOcorrencia.apartamento.$dirty' ng-messages="formOcorrencia.apartamento.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher o apartamento.</li>
+                        <li ng-message="min">Apartamento deve ser maior que 101.</li>
+                        <li ng-message="max">Apartamento deve ser menor que 1508.</li>
+                    </ul>
+                    <ul ng-if='formOcorrencia.data.$dirty' ng-messages="formOcorrencia.data.$error" style="color:maroon" role="alert">
+                        <li ng-message="required">Favor, preencher a data da ocorrência.</li>
+                    </ul>
+                    <br>
+                </div>
                 <button type="reset" class="btn btn-danger">Limpar</button>
-                <button type="submit" class="btn btn-primary pull-right">Registrar Ocorrencia</button>
+                <button type="submit" class="btn btn-primary pull-right">Salvar</button>
             </form>
         </div>
     </div>
-    
+
     <!-- Panel de Uploads Ativos -->
-    <div id="pnlUploadsAtivos" class="panel panel-default" style="display: none">
+    <div id="pnlUploadsAtivos" class="panel panel-default" ng-show="FotosUploading.length">
         <div class="panel-heading">
             <h4>Envio de Foto</h4>
         </div>
@@ -135,13 +154,13 @@
 
 <script type="text/javascript">
     // Configurar Placa Input.
-    function configurePlacaOcorrencia() {
+    function configureInputFields() {
 
         // Recuperar textbox de placa.
         var $txtPlacaOcorrencia = $("#txtPlacaOcorrencia");
 
         // Mascara do textbox de placa.
-        $txtPlacaOcorrencia.mask("SSS-0000");
+        //$txtPlacaOcorrencia.mask("SSS-0000");
 
         // Typeahead configuration.
         var configuration = {};
@@ -152,7 +171,10 @@
             var placa = item.substring(0, 8);
 
             // Carregar placa dentro do Ocorrencia Controller.
-            $('#divOcorrencia').scope().loadPlaca(placa);
+            //$('#divOcorrencia').scope().loadPlaca(placa);
+            tryGetScope('#divOcorrencia', function($scope) {
+                $scope.loadPlaca(placa);
+            });
 
             return placa;
         };
@@ -176,41 +198,10 @@
         // Configurar o typeahead.
         $txtPlacaOcorrencia.typeahead(configuration);
 
-        var $txtApartamento = $("#txtOcorrenciaApartamento");
-
-        // Validação do apartamento (andar e número).
-        $txtApartamento.keyup(function(event) {
-            var value = $txtApartamento.val();
-
-            // Se menos caracteres do que o necessário pra validação
-            if (value.length < 3) {
-                // Deixar o HTML fazer validação default.
-                event.target.setCustomValidity("");
-                return;
-            }
-
-            // Padleft para 4 digitos.
-            var pad = "0000";
-            value = pad.substring(0, pad.length - value.length) + value;
-
-            // Validar andar (entre 1 e 15) e número do apartamento (entre 1 e 8).
-            var andar = value.substr(0, 2);
-            var numero = value.substr(2, 2);
-
-            if (andar < 1 || andar > 15) {
-                event.target.setCustomValidity("Apartamento invalido.");
-            }
-            else if (numero < 1 || numero > 8) {
-                event.target.setCustomValidity("Apartamento invalido.");
-            }
-            else {
-                event.target.setCustomValidity("");
-            }
-        });
-
+        // Configurar mascara do campo de data da ocorrência.
         var $txtDataOcorrencia = $("#txtDataOcorrencia");
         $txtDataOcorrencia.mask('00/00/0000 00:00:00');
     }
 
-    $().ready(configurePlacaOcorrencia);
+    $().ready(configureInputFields);
 </script>

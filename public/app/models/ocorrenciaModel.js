@@ -4,10 +4,10 @@
 /**
  * Método para encapsular definição da classe do modelo.
  * 
- * @param {ngService} pessoaService Serviço utilizado pelo modelo para recuperar seus dados.
+ * @param {ngService} PessoaService Serviço utilizado pelo modelo para recuperar seus dados.
  * @return {OcorrenciaModel} Entidade de Ocorrência.
  */
-function ocorrenciaModelDefinition($q, ocorrenciaService, AbstractModel) {
+function ocorrenciaModelDefinition($q, OcorrenciaService, AbstractModel) {
 
     /**
      * Construtor de Modelo.
@@ -19,7 +19,7 @@ function ocorrenciaModelDefinition($q, ocorrenciaService, AbstractModel) {
     /**
      * Extender classe abstrata de modelo.
      */
-    OcorrenciaModel.prototype = new AbstractModel(ocorrenciaService);
+    OcorrenciaModel.prototype = new AbstractModel(OcorrenciaService);
 
     /**
      * Sobrescrever método de instancia modelo. 
@@ -61,4 +61,4 @@ function ocorrenciaModelDefinition($q, ocorrenciaService, AbstractModel) {
 }
 
 // Registrar Ocorrencia Model.
-vivendasModels.factory('OcorrenciaModel', ['$q', 'ocorrenciaService', 'AbstractModel', ocorrenciaModelDefinition]);
+vivendasModels.factory('OcorrenciaModel', ['$q', 'OcorrenciaService', 'AbstractModel', ocorrenciaModelDefinition]);

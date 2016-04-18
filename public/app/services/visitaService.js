@@ -7,7 +7,7 @@
  * @param {ngResource} $resource Gerador de Recursos do Angular.
  * @return {ngResource} Recurso gerado do Angular.
  */
-function visitaService($resource) {
+function VisitaService($resource) {
 
     // URL do Serviço.
     var serviceURL = "/api/visitas";
@@ -36,4 +36,4 @@ function visitaService($resource) {
 }
 
 // Registrar VisitaService.
-vivendasServices.factory('visitaService', ['$resource', visitaService]);
+vivendasServices.factory('VisitaService', ['$resource', VisitaService]);

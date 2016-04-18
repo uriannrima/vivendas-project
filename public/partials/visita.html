@@ -7,31 +7,44 @@
         <div class="panel-body">
             <div class="input-group">
                 <span class="input-group-addon">Placa do Veiculo</span>
-                <input id="txtPlaca" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Placa" />
+                <input id="txtPlaca" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Placa" vsg-formatar-placa/>
             </div>
         </div>
     </div>
 
-    <!-- Panel de Dados da Visita -->
+    <!-- Panel de Cadastro de Visita -->
     <div id="pnlCadastoVisita" class="panel panel-default" ng-show="Pessoa.Tipo == 'Visitante'">
         <div class="panel-heading">
             <h4>Dados da Visita</h4>
         </div>
         <div ng-submit="entradaVisitante()" class="panel-body">
-            <form class="form-horizontal">
+            <form name="visitaForm" class="form-horizontal">
                 <div class="input-group input-group">
                     <span class="input-group-addon">Bloco</span>
-                    <input type="number" class="form-control" placeholder="Qual Bloco esta sendo visitado?" ng-model="Visita.Bloco" required min="1" max="4">
+                    <input name="bloco" type="number" class="form-control" placeholder="Qual Bloco esta sendo visitado?" ng-model="Visita.Bloco" required min="1" max="4">
                 </div>
                 <br>
                 <div class="input-group input-group">
                     <span class="input-group-addon">Apartamento</span>
-                    <input id="txtApartamento" type="number" class="form-control" placeholder="Qual Apartamento esta sendo visitado?" ng-model="Visita.Apartamento" required min="101" max="1508">
+                    <input name="apartamento" id="txtApartamento" type="number" class="form-control" placeholder="Qual Apartamento esta sendo visitado?" ng-model="Visita.Apartamento" required min="101" max="1508">
                 </div>
                 <br>
                 <button type="reset" class="btn btn-danger">Limpar</button>
                 <button type="submit" class="btn btn-primary pull-right">Registrar Visita</button>
             </form>
+        </div>
+        <div>
+            <ul ng-if='visitaForm.bloco.$dirty' ng-messages="visitaForm.bloco.$error" style="color:maroon" role="alert">
+                <li ng-message="required">Favor, preencher o bloco.</li>
+                <li ng-message="min">Bloco deve ser maior que 1.</li>
+                <li ng-message="max">Bloco deve ser menor que 4.</li>
+            </ul>
+            <ul ng-if='visitaForm.apartamento.$dirty' ng-messages="visitaForm.apartamento.$error" style="color:maroon" role="alert">
+                <li ng-message="required">Favor, preencher o apartamento.</li>
+                <li ng-message="min">Apartamento deve ser maior que 101.</li>
+                <li ng-message="max">Apartamento deve ser menor que 1508.</li>
+            </ul>
+            <br>
         </div>
     </div>
 
@@ -176,80 +189,47 @@
 
 <script type="text/javascript">
     // Configurar Placa Input.
-    function configurePlacaInput() {
+    function configureInputFields() {
 
         // Recuperar textbox de placa.
-        var $txtPlaca = $("#txtPlaca");
+        tryGetElement("#txtPlaca", function($txtPlaca) {
+            // Mascara do textbox de placa.
+            //$txtPlaca.mask("SSS-0000");
 
-        // Mascara do textbox de placa.
-        $txtPlaca.mask("SSS-0000");
+            // Typeahead configuration.
+            var configuration = {};
 
-        // Typeahead configuration.
-        var configuration = {};
+            // Metodo chamado quando algum item é selecionado.
+            // Retorno é colocado dentro do InputText.
+            configuration.updater = function(item) {
+                var placa = item.substring(0, 8);
 
-        // Metodo chamado quando algum item é selecionado.
-        // Retorno é colocado dentro do InputText.
-        configuration.updater = function(item) {
-            var placa = item.substring(0, 8);
+                // Used to call LoadPessoa from #Scope
+                $('#divVisita').scope().loadPlaca(placa);
 
-            // Used to call LoadPessoa from #Scope
-            $('#divVisita').scope().loadPlaca(placa);
+                return placa;
+            };
 
-            return placa;
-        };
+            // Configuração do AJAX do Typeahead
+            configuration.ajax = {
+                url: "/api/placas",
+                displayField: "displayField",
+                triggerLength: 3,
+                method: "get",
+                // Método chamado antes do dispatch do AJAX.
+                preDispatch: function(query) {
+                    return $('#divVisita').scope().typeahead.preDispatch(query);
+                },
+                // Método chamado no retorno de dados do serviço REST.
+                preProcess: function(data) {
+                    return $('#divVisita').scope().typeahead.preProcess(data);
+                }
+            };
 
-        // Configuração do AJAX do Typeahead
-        configuration.ajax = {
-            url: "/api/placas",
-            displayField: "displayField",
-            triggerLength: 3,
-            method: "get",
-            // Método chamado antes do dispatch do AJAX.
-            preDispatch: function(query) {
-                return $('#divVisita').scope().typeahead.preDispatch(query);
-            },
-            // Método chamado no retorno de dados do serviço REST.
-            preProcess: function(data) {
-                return $('#divVisita').scope().typeahead.preProcess(data);
-            }
-        };
-
-        // Configurar o typeahead.
-        $txtPlaca.typeahead(configuration);
-
-        var $txtApartamento = $("#txtApartamento");
-
-        // Validação do apartamento (andar e número).
-        $txtApartamento.keyup(function(event) {
-            var value = $txtApartamento.val();
-
-            // Se menos caracteres do que o necessário pra validação
-            if (value.length < 3) {
-                // Deixar o HTML fazer validação default.
-                event.target.setCustomValidity("");
-                return;
-            }
-
-            // Padleft para 4 digitos.
-            var pad = "0000";
-            value = pad.substring(0, pad.length - value.length) + value;
-
-            // Validar andar (entre 1 e 15) e número do apartamento (entre 1 e 8).
-            var andar = value.substr(0, 2);
-            var numero = value.substr(2, 2);
-
-            if (andar < 1 || andar > 15) {
-                event.target.setCustomValidity("Apartamento invalido.");
-            }
-            else if (numero < 1 || numero > 8) {
-                event.target.setCustomValidity("Apartamento invalido.");
-            }
-            else {
-                event.target.setCustomValidity("");
-            }
+            // Configurar o typeahead.
+            $txtPlaca.typeahead(configuration);
         });
-
     }
 
-    $().ready(configurePlacaInput);
+    $().ready(configureInputFields);
 </script>

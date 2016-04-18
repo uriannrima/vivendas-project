@@ -5,6 +5,25 @@
 var maxTime = 2;
 var maxUploadSize = 6 * 1024 * 1024;
 
+function tryGetElement(query, callback) {
+    var $element = $(query);
+    if ($element) {
+        return callback($element);
+    }
+    
+    return null;
+}
+
+function tryGetScope(query, callback) {
+    tryGetElement(query, function($element) {
+        if ($element.scope()) {
+            return callback($element.scope());
+        }
+    });
+    
+    return null;
+}
+
 // Criar aplicação.
 var vivendas = angular.module('vivendas', ['ngRoute', 'ngFileUpload', 'vivendasControllers', 'vivendasServices', 'vivendasModels']);
 
@@ -18,14 +37,18 @@ vivendas.config(['$routeProvider', '$locationProvider',
         $routeProvider
             .when('/', {
                 templateUrl: 'partials/visita.html',
-                controller: 'visitaController'
+                controller: 'VisitaController'
             })
             .when('/pessoa', {
                 templateUrl: 'partials/pessoa.html',
-                controller: 'pessoaController'
+                controller: 'PessoaController'
             })
             .when('/ocorrencia', {
-                templateUrl: 'partials/ocorrencia.html'
+                templateUrl: 'partials/ocorrencia.html',
+            })
+            .when('/pessoas', {
+                templateUrl: 'partials/pessoas.html',
+                controller: 'PessoasController'
             });
 
         // Configureção de Provider.
@@ -35,7 +58,7 @@ vivendas.config(['$routeProvider', '$locationProvider',
 ]);
 
 // Directive para fazer bind de arquivo no modelo.
-vivendas.directive('bindFile', [function() {
+vivendas.directive('vsgBindFile', [function() {
     return {
 
         // Requer Bind de algum modelo.
@@ -64,7 +87,7 @@ vivendas.directive('bindFile', [function() {
                     });
 
                     if (sizeSum < maxUploadSize) {
-                        
+
                         event.target.setCustomValidity("");
 
                         // Recuperar arquivo que foi preenchido no input file
@@ -73,7 +96,8 @@ vivendas.directive('bindFile', [function() {
 
                         // Aplicar alterações no $scope.
                         $scope.$apply();
-                    } else {
+                    }
+                    else {
                         event.target.setCustomValidity("Tamanho máximo das fotos somadas não pode passar de 6 MB.");
                     }
                 }
@@ -95,6 +119,23 @@ vivendas.directive('bindFile', [function() {
                     }
                 }
             );
+        }
+    };
+}]);
+
+// Directive para fazer bind de arquivo no modelo.
+vivendas.directive('vsgFormatarPlaca', [function() {
+    return {
+
+        // Requer Bind de algum modelo.
+        require: "ngModel",
+
+        // Aplicar somente a atributo (?).
+        restrict: 'A',
+
+        // Função executada durante o Bind da Directive no elemento HTML
+        link: function($scope, element, attributes, ngModel) {
+            element.mask("SSS-0000");
         }
     };
 }]);
