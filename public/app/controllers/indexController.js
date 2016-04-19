@@ -10,6 +10,9 @@
  */
 function IndexController($scope, $rootScope) {
     $rootScope.Mensagens = [];
+    
+    $rootScope.TempoMaximo = 20;
+    $rootScope.UploadMaximo = 6 * 1024 * 1024;
 
     $rootScope.adicionarMensagem = function(texto, tipo, strong) {
 

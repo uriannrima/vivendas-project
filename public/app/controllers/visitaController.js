@@ -31,13 +31,13 @@ function VisitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
             var minutes = visita.Permanencia.Duracao.asMinutes();
 
             // Se duração maior que tempo médio.
-            if (minutes >= (maxTime / 2)) {
+            if (minutes >= ($rootScope.TempoMaximo / 2)) {
 
                 // Recuperar TableRow
                 var $visitaTableRow = $("#visita_" + visita.ID);
 
                 // Se permanência menor que tempo máximo.
-                if (minutes < maxTime) {
+                if (minutes < $rootScope.TempoMaximo) {
                     // Alterar CSS Class para Warning.
                     $visitaTableRow.attr('class', 'warning');
                 }
@@ -47,7 +47,7 @@ function VisitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
                     $visitaTableRow.attr('class', 'danger');
                     if (!visita.PossuiOcorrencia) {
                         var ocorrencia = new OcorrenciaModel({
-                            Descricao: "Visitante ficou mais de " + maxTime + " minutos no condominio.",
+                            Descricao: "Visitante ficou mais de " + $rootScope.TempoMaximo + " minutos no condominio.",
                             CarroID: visita.CarroID,
                             Bloco: visita.Bloco,
                             Apartamento: visita.Apartamento,

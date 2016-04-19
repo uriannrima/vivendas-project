@@ -80,7 +80,7 @@ function visitaModelDefinition($q, VisitaService, AbstractModel) {
             var agora = moment();
             var entrada = moment(this.Entrada, "DD/MM/YYYY HH:mm:ss");
             
-            // Calcular permanência.
+            // Calcular duração.
             var duration = moment.duration(agora.diff(entrada));
             this.Permanencia.Duracao = duration;
             
