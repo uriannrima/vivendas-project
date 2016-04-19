@@ -25,7 +25,7 @@ function tryGetScope(query, callback) {
 }
 
 // Criar aplicação.
-var vivendas = angular.module('vivendas', ['ngRoute', 'ngFileUpload', 'vivendasControllers', 'vivendasServices', 'vivendasModels']);
+var vivendas = angular.module('vivendas', ['ngRoute', 'ngFileUpload', 'ngMessages', 'vivendasControllers', 'vivendasServices', 'vivendasModels']);
 
 // Configurações da aplicação.
 vivendas.config(['$routeProvider', '$locationProvider',
@@ -136,8 +136,6 @@ vivendas.directive('vsgFormatarPlaca', ['CarroModel', function(CarroModel) {
         // Função executada durante o Bind da Directive no elemento HTML
         link: function($scope, element, attributes, ngModel) {
             
-            ngModel.$setValidity("placataken", false);
-            
             element.mask("SSS-0000");
             
             element.bind('change', function(event) {
@@ -149,10 +147,10 @@ vivendas.directive('vsgFormatarPlaca', ['CarroModel', function(CarroModel) {
 
                     carro.find().then(function(carros) {
                         if (carros.length <= 0) {
-                            ngModel.$setValidity("placataken", false);
+                            ngModel.$setValidity("placataken", true);
                         }
                         else {
-                            ngModel.$setValidity("placataken", true);
+                            ngModel.$setValidity("placataken", false);
                         }
                     });
                 }
