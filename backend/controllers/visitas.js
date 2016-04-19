@@ -55,8 +55,13 @@ module.exports = function(app) {
         }
 
         // Feio demais, jesus cristo...
-        if (req.query.ativa && (req.query.ativa.toUpperCase() == "TRUE" || req.query.ativa.toUpperCase() == "S")) {
-            query += " and vis.dh_saida is null ";
+        if (req.query.ativa) {
+            if (req.query.ativa.toUpperCase() == "TRUE" || req.query.ativa.toUpperCase() == "S") {
+                query += " and vis.dh_saida is null ";
+            }
+            else if (req.query.ativa.toUpperCase() == "FALSE" || req.query.ativa.toUpperCase() == "N") {
+                query += " and vis.dh_saida is not null ";
+            }
         }
         else if (req.query.saida) {
             query += " and vis.dh_saida = str_to_date(?, '%d/%m/%Y %H:%i:%s') ";

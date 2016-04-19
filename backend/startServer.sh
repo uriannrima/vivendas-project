@@ -5,4 +5,4 @@ mysql-ctl restart
 echo "Projeto executando na URL: https://vivendas-project-uriannrima.c9users.io."
 
 # Iniciar servidor do NodeJS.
-node "server.js"
+nodemon "server.js"

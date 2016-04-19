@@ -40,8 +40,7 @@ vivendas.config(['$routeProvider', '$locationProvider',
                 controller: 'VisitaController'
             })
             .when('/pessoa', {
-                templateUrl: 'partials/pessoa.html',
-                controller: 'PessoaController'
+                templateUrl: 'partials/pessoa.html'
             })
             .when('/ocorrencia', {
                 templateUrl: 'partials/ocorrencia.html',
@@ -49,6 +48,10 @@ vivendas.config(['$routeProvider', '$locationProvider',
             .when('/pessoas', {
                 templateUrl: 'partials/pessoas.html',
                 controller: 'PessoasController'
+            })
+            .when('/visitas', {
+                templateUrl: 'partials/visitas.html',
+                controller: 'VisitasController'
             });
 
         // Configureção de Provider.

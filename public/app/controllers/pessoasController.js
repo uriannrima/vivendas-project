@@ -7,6 +7,7 @@
  * 
  * @param {ngScope} $scope ViewScope do Controller.
  * @param {PessoaModel} PessoaModel Referencia ao Modelo de Pessoa.
+ * @param {CarroModel} CarroModel Referencia ao Modelo de Carro.
  */
 function PessoasController($scope, PessoaModel, CarroModel) {
     // Filtro de Pessoa.

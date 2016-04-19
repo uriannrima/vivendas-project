@@ -20,7 +20,7 @@ function PessoaController($scope, $rootScope, $routeParams, $location, PessoaMod
 
     $scope.isModal = function() {
         var $pessoaModal = $('#pessoaModal');
-        if ($pessoaModal) return $pessoaModal.is(':visible');
+        if ($pessoaModal) return true;
         return false;
     };
 

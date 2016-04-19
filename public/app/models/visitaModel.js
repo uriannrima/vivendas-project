@@ -55,16 +55,9 @@ function visitaModelDefinition($q, VisitaService, AbstractModel) {
      * Aqui vão os métodos somente necessários neste modelo atual.
      */
     var extendPrototype = {
-        /**
-         * Método auxiliar para criar permanências.
-         * 
-         * @param {Moment} entrada Moment de Entrada do Visitante.
-         * @return {Object} Objeto contendo duração da permanência e duração formatada (DD:hh:mm:ss).
-         */
-        atualizarPermanencia: function() {
-            // Calcular permanência.
-            var duration = moment.duration(moment().diff(moment(this.Entrada, "DD/MM/YYYY HH:mm:ss")));
-            this.Permanencia.Duracao = duration;
+        formatarPermanencia: function() {
+            // Recuperar duração.
+            var duration = this.Permanencia.Duracao;
 
             // Formatar permanência.
             var days = duration.days() > 0 ? duration.days() + "d:" : "";
@@ -72,7 +65,40 @@ function visitaModelDefinition($q, VisitaService, AbstractModel) {
             var minutes = duration.minutes() > 0 || hours != "" ? duration.minutes() + "m:" : "";
             var seconds = duration.seconds() > 0 || minutes != "" ? duration.seconds() + "s" : "";
 
+            // Definir.
             this.Permanencia.Formatada = days + hours + minutes + seconds;
+        },
+
+        /**
+         * Método auxiliar para criar permanências.
+         * 
+         * @param {Moment} entrada Moment de Entrada do Visitante.
+         * @return {Object} Objeto contendo duração da permanência e duração formatada (DD:hh:mm:ss).
+         */
+        atualizarPermanencia: function() {
+            // Converter agora e entrada.
+            var agora = moment();
+            var entrada = moment(this.Entrada, "DD/MM/YYYY HH:mm:ss");
+            
+            // Calcular permanência.
+            var duration = moment.duration(agora.diff(entrada));
+            this.Permanencia.Duracao = duration;
+            
+            // Formatar a permanencia.
+            this.formatarPermanencia();
+        },
+
+        calcularPermanencia: function() {
+            // Converter saida e entrada.
+            var saida = moment(this.Saida, "DD/MM/YYYY HH:mm:ss");
+            var entrada = moment(this.Entrada, "DD/MM/YYYY HH:mm:ss");
+
+            // Calcular permanência.
+            var duration = moment.duration(saida.diff(entrada));
+            this.Permanencia.Duracao = duration;
+            
+            // Formatar a permanencia.
+            this.formatarPermanencia();
         }
     };
 

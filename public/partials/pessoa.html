@@ -80,16 +80,5 @@
             </form>
         </div>
     </div>
-    <a href="/#!/pessoas" ng-show="!isModal()">Voltar</a>
+    <a href="/#!/pessoas" ng-if="!isModal()">Voltar</a>
 </div>
-<script type="text/javascript">
-    function configureInputFields() {
-        // Recuperar textbox de placa.
-        tryGetElement("#txtPlaca", function($txtPlaca) {
-            // Mascara do textbox de placa.
-            //$txtPlaca.mask("SSS-0000");
-        });
-    }
-
-    $().ready(configureInputFields);
-</script>
