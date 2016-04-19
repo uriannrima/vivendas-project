@@ -7,7 +7,7 @@
         <div class="panel-body">
             <div class="input-group">
                 <span class="input-group-addon">Placa do Veiculo</span>
-                <input id="txtPlacaOcorrencia" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Ocorrencia.Placa" vsg-formatar-placa/>
+                <input id="txtPlacaOcorrencia" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Ocorrencia.Placa" vsg-formatar-placa vsg-typeahead-placa/>
             </div>
         </div>
     </div>
@@ -155,49 +155,6 @@
 <script type="text/javascript">
     // Configurar Placa Input.
     function configureInputFields() {
-
-        // Recuperar textbox de placa.
-        var $txtPlacaOcorrencia = $("#txtPlacaOcorrencia");
-
-        // Mascara do textbox de placa.
-        //$txtPlacaOcorrencia.mask("SSS-0000");
-
-        // Typeahead configuration.
-        var configuration = {};
-
-        // Metodo chamado quando algum item é selecionado.
-        // Retorno é colocado dentro do InputText.
-        configuration.updater = function(item) {
-            var placa = item.substring(0, 8);
-
-            // Carregar placa dentro do Ocorrencia Controller.
-            //$('#divOcorrencia').scope().loadPlaca(placa);
-            tryGetScope('#divOcorrencia', function($scope) {
-                $scope.loadPlaca(placa);
-            });
-
-            return placa;
-        };
-
-        // Configuração do AJAX do Typeahead
-        configuration.ajax = {
-            url: "/api/placas",
-            displayField: "displayField",
-            triggerLength: 3,
-            method: "get",
-            // Método chamado antes do dispatch do AJAX.
-            preDispatch: function(query) {
-                return $('#divOcorrencia').scope().typeahead.preDispatch(query);
-            },
-            // Método chamado no retorno de dados do serviço REST.
-            preProcess: function(data) {
-                return $('#divOcorrencia').scope().typeahead.preProcess(data);
-            }
-        };
-
-        // Configurar o typeahead.
-        $txtPlacaOcorrencia.typeahead(configuration);
-
         // Configurar mascara do campo de data da ocorrência.
         var $txtDataOcorrencia = $("#txtDataOcorrencia");
         $txtDataOcorrencia.mask('00/00/0000 00:00:00');

@@ -7,7 +7,7 @@
         <div class="panel-body">
             <div class="input-group">
                 <span class="input-group-addon">Placa do Veiculo</span>
-                <input id="txtPlaca" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Placa" vsg-formatar-placa/>
+                <input id="txtPlaca" type="text" class="form-control" placeholder="AAA-1111" style="text-transform: uppercase" ng-model="Placa" vsg-formatar-placa vsg-typeahead-placa/>
             </div>
         </div>
     </div>
@@ -188,48 +188,4 @@
 </div>
 
 <script type="text/javascript">
-    // Configurar Placa Input.
-    function configureInputFields() {
-
-        // Recuperar textbox de placa.
-        tryGetElement("#txtPlaca", function($txtPlaca) {
-            // Mascara do textbox de placa.
-            //$txtPlaca.mask("SSS-0000");
-
-            // Typeahead configuration.
-            var configuration = {};
-
-            // Metodo chamado quando algum item é selecionado.
-            // Retorno é colocado dentro do InputText.
-            configuration.updater = function(item) {
-                var placa = item.substring(0, 8);
-
-                // Used to call LoadPessoa from #Scope
-                $('#divVisita').scope().loadPlaca(placa);
-
-                return placa;
-            };
-
-            // Configuração do AJAX do Typeahead
-            configuration.ajax = {
-                url: "/api/placas",
-                displayField: "displayField",
-                triggerLength: 3,
-                method: "get",
-                // Método chamado antes do dispatch do AJAX.
-                preDispatch: function(query) {
-                    return $('#divVisita').scope().typeahead.preDispatch(query);
-                },
-                // Método chamado no retorno de dados do serviço REST.
-                preProcess: function(data) {
-                    return $('#divVisita').scope().typeahead.preProcess(data);
-                }
-            };
-
-            // Configurar o typeahead.
-            $txtPlaca.typeahead(configuration);
-        });
-    }
-
-    $().ready(configureInputFields);
 </script>

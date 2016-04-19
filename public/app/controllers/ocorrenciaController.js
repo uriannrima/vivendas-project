@@ -18,6 +18,15 @@ function OcorrenciaController($scope, PessoaModel, CarroModel, OcorrenciaModel, 
 
     // Métodos do Typeahead.
     $scope.typeahead = {
+        
+        // Metodo chamado quando algum item é selecionado.
+        // Retorno é colocado dentro do InputText.
+        updater: function(item) {
+            var placa = item.substring(0, 8);
+            $scope.loadPlaca(placa);
+            return placa;
+        },
+        
         // Método chamado antes do dispatch do AJAX.
         preDispatch: function(query) {
 
