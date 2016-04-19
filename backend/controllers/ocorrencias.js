@@ -11,7 +11,7 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Criar query.
-        var query = "select oco.id_oco as 'ID', oco.de_desc as 'Descrição', oco.id_car as 'CarroID', oco.cd_bloco as 'Bloco', " +
+        var query = "select oco.id_oco as 'ID', oco.de_desc as 'Descricao', oco.id_car as 'CarroID', oco.cd_bloco as 'Bloco', " +
             " oco.cd_apartamento as 'Apartamento', date_format(oco.dh_ocorrencia, '%d/%m/%Y %H:%i:%s') as 'Data' from tvsgoco0 oco where 1 = 1";
 
         // Parametros da Query.

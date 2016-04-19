@@ -47,7 +47,11 @@ vivendas.config(['$routeProvider', '$locationProvider',
                 controller: 'PessoasController'
             })
             .when('/ocorrencia/:ocorrenciaId', {
-                templateUrl: 'partials/ocorrencia/ocorrencia.html',
+                templateUrl: 'partials/ocorrencia/ocorrencia.html'
+            })
+            .when('/ocorrencias', {
+                templateUrl: 'partials/ocorrencia/ocorrencias.html',
+                controller: 'OcorrenciasController'
             })
             .when('/carro/:carroId', {
                 templateUrl: 'partials/carro/carros.html',
