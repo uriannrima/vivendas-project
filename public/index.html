@@ -68,6 +68,7 @@
     <script src="app/controllers/pessoaController.js"></script>
     <script src="app/controllers/pessoasController.js"></script>
     <script src="app/controllers/ocorrenciaController.js"></script>
+    <script src="app/controllers/carrosController.js"></script>
 
     <!-- Models. -->
     <script src="app/models.js"></script>
@@ -104,11 +105,12 @@
                     <li class="active"><a href="/#!/">Controle de Entrada</a></li>
                     <li><a href="/#!/pessoas">Pessoas</a></li>
                     <li><a href="/#!/visitas">Visitas</a></li>
+                    <li><a href="/#!/carros">Carros</a></li>
                 </ul>
 
                 <!-- Right options -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Tempo Máximo de Visita: <b>{{ TempoMaximo }} minutos</b></a></li>
+                    <li><a>Tempo Máximo de Visita: <b><text ng-bind="TempoMaximo">?</text> minutos</b></a></li>
                     <li><a href="#">Contato</a></li>
                     <li><a href="#">Sair</a></li>
                 </ul>

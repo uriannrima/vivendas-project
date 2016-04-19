@@ -1,0 +1,69 @@
+<style type="text/css">
+    /* webkit solution */
+    ::-webkit-input-placeholder {
+        text-align: center;
+    }
+    
+    /* mozilla solution */
+    input:-moz-placeholder {
+        text-align: center;
+    }
+</style>
+<div id="divVisitas">
+    <!-- Panel de Visitas do Condominio -->
+    <div id="pnlVisitas" class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Visitas Cadastradas</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped" ng-show="Visitas.length">
+                <thead>
+                    <tr>
+                        <th class="col-md-2 text-center">Placa</th>
+                        <th class="col-md-3 text-center">Visitante</th>
+                        <th class="col-md-1 text-center">Bloco</th>
+                        <th class="col-md-1 text-center">Apartamento</th>
+                        <th class="col-md-2 text-center">Entrada</th>
+                        <th class="col-md-2 text-center">Saida</th>
+                        <th class="col-md-1 text-center">Permanência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-md-2 text-center">
+                            <input type="text" class="form-control" placeholder="Placa" ng-model="VisitaFilter.Placa" vsg-formatar-placa />
+                        </td>
+                        <td class="col-md-3 text-center">
+                            <input type="text" class="form-control" placeholder="Visitante" ng-model="VisitaFilter.Visitante" />
+                        </td>
+                        <td class="col-md-1 text-center">
+                            <input type="text" class="form-control" placeholder="Bloco" ng-model="VisitaFilter.Bloco" />
+                        </td>
+                        <td class="col-md-1 text-center">
+                            <input type="text" class="form-control" placeholder="Apartamento" ng-model="VisitaFilter.Apartamento" />
+                        </td>
+                        <td class="col-md-2 text-center">
+                            <input type="text" class="form-control" placeholder="Entrada" ng-model="VisitaFilter.Entrada" />
+                        </td>
+                        <td class="col-md-2 text-center">
+                            <input type="text" class="form-control" placeholder="Saida" ng-model="VisitaFilter.Saida" />
+                        </td>
+                        <td class="col-md-1 text-center">
+                            <input type="text" class="form-control" placeholder="Permanência" ng-model="VisitaFilter.Permanencia.Formatada" />
+                        </td>
+                    </tr>
+                    <tr ng-repeat="visita in Visitas | filter : VisitaFilter" ng-class="{ danger: visita.Permanencia.Duracao.asMinutes() >= TempoMaximo, warning: visita.Permanencia.Duracao.asMinutes() >= (TempoMaximo/2) }">
+                        <td class="col-md-2 text-center">{{visita.Placa}}</td>
+                        <td class="col-md-3 text-center">{{visita.Visitante}}</td>
+                        <td class="col-md-1 text-center">{{visita.Bloco}}</td>
+                        <td class="col-md-1 text-center">{{visita.Apartamento}}</td>
+                        <td class="col-md-2 text-center">{{visita.Entrada}}</td>
+                        <td class="col-md-2 text-center">{{visita.Saida}}</td>
+                        <td class="col-md-1 text-center">{{visita.Permanencia.Formatada}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p ng-hide="Visitas.length"> Não há visitas cadastradas.</p>
+        </div>
+    </div>
+</div>

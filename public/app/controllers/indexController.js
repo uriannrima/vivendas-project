@@ -11,7 +11,10 @@
 function IndexController($scope, $rootScope) {
     $rootScope.Mensagens = [];
     
+    // Tempo máximo de visita no condominio.
     $rootScope.TempoMaximo = 20;
+    
+    // Tamanho máximo de upload.
     $rootScope.UploadMaximo = 6 * 1024 * 1024;
 
     $rootScope.adicionarMensagem = function(texto, tipo, strong) {

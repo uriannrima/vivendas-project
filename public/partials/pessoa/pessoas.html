@@ -1,3 +1,14 @@
+<style type="text/css">
+    /* webkit solution */
+    ::-webkit-input-placeholder {
+        text-align: center;
+    }
+    
+    /* mozilla solution */
+    input:-moz-placeholder {
+        text-align: center;
+    }
+</style>
 <div id="divPessoas">
     <!-- Panel de Pessoas do Condominio -->
     <div id="pnlPessoas" class="panel panel-default">
@@ -51,7 +62,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <!-- Include do conteudo da pagina Pessoa.-->
-                    <div id="pessoaModal" ng-include src="'partials/pessoa.html'"></div>
+                    <div id="pessoaModal" ng-include src="'partials/pessoa/pessoa.html'"></div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 </div>
             </div>

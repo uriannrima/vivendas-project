@@ -26,40 +26,6 @@ function VisitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
 
             // Atualizar permanência.
             visita.atualizarPermanencia();
-
-            // Recuperar minutos para mudança do "class".
-            var minutes = visita.Permanencia.Duracao.asMinutes();
-
-            // Se duração maior que tempo médio.
-            if (minutes >= ($rootScope.TempoMaximo / 2)) {
-
-                // Recuperar TableRow
-                var $visitaTableRow = $("#visita_" + visita.ID);
-
-                // Se permanência menor que tempo máximo.
-                if (minutes < $rootScope.TempoMaximo) {
-                    // Alterar CSS Class para Warning.
-                    $visitaTableRow.attr('class', 'warning');
-                }
-                // Se permanência maior que tempo máximo.
-                else {
-                    // Alterar CSS Class para Danger.
-                    $visitaTableRow.attr('class', 'danger');
-                    if (!visita.PossuiOcorrencia) {
-                        var ocorrencia = new OcorrenciaModel({
-                            Descricao: "Visitante ficou mais de " + $rootScope.TempoMaximo + " minutos no condominio.",
-                            CarroID: visita.CarroID,
-                            Bloco: visita.Bloco,
-                            Apartamento: visita.Apartamento,
-                            Data: moment().format("DD/MM/YYYY HH:mm:ss")
-                        });
-                        // ocorrencia.save().then(function() {
-                        //     visita.PossuiOcorrencia = true;
-                        // });
-                    }
-                }
-
-            }
         }
     }, 1000);
 

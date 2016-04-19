@@ -150,7 +150,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr id="visita_{{visita.ID}}" ng-repeat="visita in Visitas">
+                    <tr id="visita_{{visita.ID}}" ng-repeat="visita in Visitas" ng-class="{ danger: visita.Permanencia.Duracao.asMinutes() >= TempoMaximo, warning: visita.Permanencia.Duracao.asMinutes() >= (TempoMaximo/2) }">
                         <td class="col-md-2 text-center">{{ visita.Placa }}</td>
                         <td class="col-md-2 text-center">{{ visita.Visitante }}</td>
                         <td class="col-md-1 text-center">{{ visita.Bloco }}</td>
@@ -179,7 +179,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <!-- Include do conteudo da pagina Ocorrência.-->
-                <div id="ocorrenciaModal" ng-include src="'partials/ocorrencia.html'"></div>
+                <div id="ocorrenciaModal" ng-include src="'partials/ocorrencia/ocorrencia.html'"></div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
             </div>
         </div>

@@ -32,22 +32,30 @@ vivendas.config(['$routeProvider', '$locationProvider',
         // Ou ira ocorrer duas vezes inicialização do mesmo controller.
         $routeProvider
             .when('/', {
-                templateUrl: 'partials/visita.html',
+                templateUrl: 'partials/visita/visita.html',
                 controller: 'VisitaController'
             })
-            .when('/pessoa', {
-                templateUrl: 'partials/pessoa.html'
+            .when('/visitas', {
+                templateUrl: 'partials/visita/visitas.html',
+                controller: 'VisitasController'
             })
-            .when('/ocorrencia', {
-                templateUrl: 'partials/ocorrencia.html',
+            .when('/pessoa/:pessoaId', {
+                templateUrl: 'partials/pessoa/pessoa.html'
             })
             .when('/pessoas', {
-                templateUrl: 'partials/pessoas.html',
+                templateUrl: 'partials/pessoa/pessoas.html',
                 controller: 'PessoasController'
             })
-            .when('/visitas', {
-                templateUrl: 'partials/visitas.html',
-                controller: 'VisitasController'
+            .when('/ocorrencia/:ocorrenciaId', {
+                templateUrl: 'partials/ocorrencia/ocorrencia.html',
+            })
+            .when('/carro/:carroId', {
+                templateUrl: 'partials/carro/carros.html',
+                controller: 'CarrosController'
+            })
+            .when('/carros', {
+                templateUrl: 'partials/carro/carros.html',
+                controller: 'CarrosController'
             });
 
         // Configureção de Provider.
