@@ -15,25 +15,6 @@ function OcorrenciasController($scope, OcorrenciaModel, CarroModel, PessoaModel)
     // Lista de Ocorrencias.
     $scope.Ocorrencias = [];
 
-    function popularPessoa(ocorrenciasArray) {
-        angular.forEach(ocorrenciasArray, function(ocorrencia) {
-            // Carregar dados do Carro da Ocorrência.
-            var carro = new CarroModel();
-            carro.load(ocorrencia.CarroID).then(function() {
-                // Popular ocorrencia com o carro.
-                ocorrencia.Carro = carro;
-                
-                // Carregar dados da Pessoa da Ocorrência
-                var pessoa = new PessoaModel();
-                pessoa.load(carro.PessoaID).then(function() {
-                    // Popular ocorrência com a pessoa.
-                    ocorrencia.Pessoa = pessoa;
-                });
-            });
-        });
-        return ocorrenciasArray;
-    }
-
     // Popular lista de Ocorrencias.
     function popularLista(ocorrenciasArray) {
         $scope.Ocorrencias = ocorrenciasArray;
@@ -43,7 +24,6 @@ function OcorrenciasController($scope, OcorrenciaModel, CarroModel, PessoaModel)
     $scope.carregarOcorrencias = function() {
         var ocorrenciaModel = new OcorrenciaModel();
         ocorrenciaModel.find()
-            .then(popularPessoa)
             .then(popularLista);
     };
 

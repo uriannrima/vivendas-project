@@ -11,8 +11,10 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Criar query.
-        var query = "select oco.id_oco as 'ID', oco.de_desc as 'Descricao', oco.id_car as 'CarroID', oco.cd_bloco as 'Bloco', " +
-            " oco.cd_apartamento as 'Apartamento', date_format(oco.dh_ocorrencia, '%d/%m/%Y %H:%i:%s') as 'Data' from tvsgoco0 oco where 1 = 1";
+        var query = "select oco.id_oco as 'ID', car.de_placa as 'Placa', pes.de_nome as 'Nome', oco.de_desc as 'Descricao', oco.id_car as 'CarroID', oco.cd_bloco as 'Bloco', " +
+            " oco.cd_apartamento as 'Apartamento', date_format(oco.dh_ocorrencia, '%d/%m/%Y %H:%i:%s') as 'Data' from tvsgoco0 oco " +
+            " inner join tvsgcar0 car on oco.id_car = car.id_car inner join tvsgpes0 pes on car.id_pes = pes.id_pes" +
+            " where 1 = 1";
 
         // Parametros da Query.
         var params = [];
@@ -49,18 +51,20 @@ module.exports = function(app) {
         }
 
         // Executar query.
-        app.database.mysql.query(
+        app.database.mysql.connection.query(
             query, // Query
             params, // Parameters
-            function(errors, rows, columns) // Callback (Errors, Rows, Columns)
+            function(e, r, c) // Callback (Errors, Rows, Columns)
             {
                 // Check if errors happened.
-                if (errors) {
-                    console.log(errors);
+                if (e) {
+                    console.log(e);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // res the result as json.
-                res.json(rows);
+                res.json(r);
             }
         );
     };
@@ -78,11 +82,13 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (ocorrencia && ocorrencia.Descricao && ocorrencia.CarroID && ocorrencia.Bloco && ocorrencia.Apartamento && ocorrencia.Data) {
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, [ocorrencia.Descricao.toUpperCase(), ocorrencia.CarroID, ocorrencia.Bloco, ocorrencia.Apartamento, ocorrencia.Data],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
+                        app.database.mysql.reconectar();
+                        return;
                     }
 
                     var resultado = {};
@@ -96,6 +102,6 @@ module.exports = function(app) {
             res.status(500).send("Ocorrência não preenchida corretamente.");
         }
     };
-    
+
     return controller;
 };

@@ -1,5 +1,5 @@
 // Directive para fazer bind de arquivo no modelo.
-vivendasDirectives.directive('vsgBindFile', [function() {
+function vsgBindFileDefinition() {
     return {
 
         // Requer Bind de algum modelo.
@@ -62,4 +62,6 @@ vivendasDirectives.directive('vsgBindFile', [function() {
             );
         }
     };
-}]);
+}
+
+vivendasDirectives.directive('vsgBindFile', [vsgBindFileDefinition]);

@@ -68,10 +68,12 @@ module.exports = function(app) {
             params.push(req.query.saida);
         }
 
-        app.database.mysql.query(query, params,
+        app.database.mysql.connection.query(query, params,
             function(e, r, c) {
                 if (e) {
                     console.log(e);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // res the result as json.
@@ -97,11 +99,13 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (visita && visita.CarroID && visita.Entrada && visita.Bloco && visita.Apartamento) {
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, [visita.CarroID, visita.Entrada, visita.Bloco, visita.Apartamento],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
+                        app.database.mysql.reconectar();
+                        return;
                     }
 
                     var resultado = {};
@@ -136,18 +140,20 @@ module.exports = function(app) {
         // Se nome foi enviado.
         if (id) {
             // Executar query.
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, // Query
                 [visita.CarroID, visita.Bloco, visita.Apartamento, visita.Entrada, visita.Saida, id], // Parameters
-                function(errors, rows, columns) // Callback (Errors, Rows, Columns)
+                function(e, r, c) // Callback (Errors, Rows, Columns)
                 {
                     // Check if errors happened.
-                    if (errors) {
-                        console.log(errors);
+                    if (e) {
+                        console.log(e);
+                        app.database.mysql.reconectar();
+                        return;
                     }
 
                     // res the result as json.
-                    res.json(rows);
+                    res.json(r);
                 }
             );
         }

@@ -126,7 +126,9 @@ function VisitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
             $scope.Carro.Placa = $scope.Placa;
 
             // Alguém foi recuperado
-            if (data.length == 1) {
+            if (data.length >= 1) {
+                
+                $scope.Pessoa = data[0];
 
                 // Informar que visitante já existia.
                 $rootScope.adicionarMensagem("Visitante " + $scope.Pessoa.Nome + " já existia e veiculo será associado a ele.", "I");
@@ -147,7 +149,7 @@ function VisitaController($scope, $rootScope, $interval, PessoaModel, VisitaMode
                     $rootScope.adicionarMensagem("Visitante " + $scope.Pessoa.Nome + " não existia e foi registrado com sucesso.", "I");
 
                     // Recuperar ID da pessoa inserida e inserir na entidade do novo carro
-                    $scope.Carro.PessoaID = data[0].ID;
+                    $scope.Carro.PessoaID = $scope.Pessoa.ID;
 
                     // Invocar save da entidade carro.
                     $scope.Carro.save().then(function() {

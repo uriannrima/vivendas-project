@@ -1,73 +1,62 @@
 <style type="text/css">
     /* webkit solution */
+    
     ::-webkit-input-placeholder {
         text-align: center;
     }
-    
     /* mozilla solution */
+    
     input:-moz-placeholder {
         text-align: center;
     }
-    
-    td {
-        
-    }
 </style>
-<div id="divOcorrencias">
-    <!-- Panel de Ocorrencias do Condominio -->
-    <div id="pnlOcorrencias" class="panel panel-default">
-        <div class="panel-heading">
-            <h4>Ocorrências Cadastradas</h4>
-        </div>
-        <div class="panel-body">
-            <table class="table table-striped" ng-show="Ocorrencias.length">
-                <thead>
-                    <tr>
-                        <th class="col-md-2 text-center">Placa</th>
-                        <th class="col-md-3 text-center">Nome</th>
-                        <th class="col-md-1 text-center">Bloco</th>
-                        <th class="col-md-1 text-center">Apartamento</th>
-                        <th class="col-md-2 text-center">Data</th>
-                        <th class="col-md-2 text-center">Descrição?</th>
-                        <th class="col-md-1 text-center">Fotos?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="col-md-2 text-center">
-                            <input type="text" class="form-control" placeholder="Placa" ng-model="OcorrenciaFilter.Carro.Placa" vsg-formatar-placa />
-                        </td>
-                        <td class="col-md-3 text-center">
-                            <input type="text" class="form-control" placeholder="Nome" ng-model="OcorrenciaFilter.Pessoa.Nome" />
-                        </td>
-                        <td class="col-md-1 text-center">
-                            <input type="text" class="form-control" placeholder="Bloco" ng-model="OcorrenciaFilter.Bloco" />
-                        </td>
-                        <td class="col-md-1 text-center">
-                            <input type="text" class="form-control" placeholder="Apartamento" ng-model="OcorrenciaFilter.Apartamento" />
-                        </td>
-                        <td class="col-md-2 text-center">
-                            <input type="text" class="form-control" placeholder="Data" ng-model="OcorrenciaFilter.Data" />
-                        </td>
-                        <td class="col-md-2 text-center">
-                            <input type="text" class="form-control" placeholder="Descrição?" ng-model="OcorrenciaFilter.Descricao" />
-                        </td>
-                        <td class="col-md-1 text-center">
-                            <input type="text" class="form-control" placeholder="Fotos?" ng-model="OcorrenciaFilter.Fotos" />
-                        </td>
-                    </tr>
-                    <tr ng-repeat="ocorrencia in Ocorrencias | filter : OcorrenciaFilter">
-                        <td class="col-md-2 text-center">{{ocorrencia.Carro.Placa}}</td>
-                        <td class="col-md-3 text-center">{{ocorrencia.Pessoa.Nome}}</td>
-                        <td class="col-md-1 text-center">{{ocorrencia.Bloco}}</td>
-                        <td class="col-md-1 text-center">{{ocorrencia.Apartamento}}</td>
-                        <td class="col-md-2 text-center">{{ocorrencia.Data}}</td>
-                        <td class="col-md-2 text-center">{{ocorrencia.Descricao ? "Sim" : "Não"}}</td>
-                        <td class="col-md-1 text-center">{{ocorrencia.Fotos ? "Sim" : "Não"}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p ng-hide="Ocorrencias.length"> Não há ocorrências cadastradas.</p>
-        </div>
-    </div>
-</div>
+<vsg-panel titulo="Ocorrências Cadastradas">
+    <table class="table table-striped" ng-show="Ocorrencias.length">
+        <thead>
+            <tr>
+                <th class="col-md-2 text-center">Placa</th>
+                <th class="col-md-3 text-center">Nome</th>
+                <th class="col-md-1 text-center">Bloco</th>
+                <th class="col-md-1 text-center">Apartamento</th>
+                <th class="col-md-2 text-center">Data</th>
+                <th class="col-md-2 text-center">Descrição?</th>
+                <th class="col-md-1 text-center">Fotos?</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col-md-2 text-center">
+                    <input type="text" class="form-control" placeholder="Placa" ng-model="OcorrenciaFilter.Carro.Placa" vsg-formatar-placa />
+                </td>
+                <td class="col-md-3 text-center">
+                    <input type="text" class="form-control" placeholder="Nome" ng-model="OcorrenciaFilter.Pessoa.Nome" />
+                </td>
+                <td class="col-md-1 text-center">
+                    <input type="text" class="form-control" placeholder="Bloco" ng-model="OcorrenciaFilter.Bloco" />
+                </td>
+                <td class="col-md-1 text-center">
+                    <input type="text" class="form-control" placeholder="Apartamento" ng-model="OcorrenciaFilter.Apartamento" />
+                </td>
+                <td class="col-md-2 text-center">
+                    <input type="text" class="form-control" placeholder="Data" ng-model="OcorrenciaFilter.Data" />
+                </td>
+                <td class="col-md-2 text-center">
+                    <input type="text" class="form-control" placeholder="Descrição?" ng-model="OcorrenciaFilter.Descricao" />
+                </td>
+                <td class="col-md-1 text-center">
+                    <input type="text" class="form-control" placeholder="Fotos?" ng-model="OcorrenciaFilter.Fotos" />
+                </td>
+            </tr>
+            <tr ng-repeat="ocorrencia in Ocorrencias | filter : OcorrenciaFilter">
+                <td class="col-md-2 text-center">{{ocorrencia.Placa}}</td>
+                <td class="col-md-3 text-center">{{ocorrencia.Nome}}</td>
+                <td class="col-md-1 text-center">{{ocorrencia.Bloco}}</td>
+                <td class="col-md-1 text-center">{{ocorrencia.Apartamento}}</td>
+                <td class="col-md-2 text-center">{{ocorrencia.Data}}</td>
+                <td class="col-md-2 text-center">{{ocorrencia.Descricao ? "Sim" : "Não"}}</td>
+                <td class="col-md-1 text-center">{{ocorrencia.Fotos ? "Sim" : "Não"}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p ng-hide="Ocorrencias.length"> Não há ocorrências cadastradas.</p>
+</vsg-panel>

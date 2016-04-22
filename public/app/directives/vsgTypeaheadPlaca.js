@@ -1,7 +1,7 @@
-// Directive para fazer bind de arquivo no modelo.
-vivendasDirectives.directive('vsgTypeaheadPlaca', [function() {
+// Directive para fazer configuração do Typeahead de Placa no elemento referenciado pela Directive.
+function vsgTypeaheadPlacaDefinition(){
     return {
-        // Aplicar somente a atributo (?).
+        // Aplicar somente a atributo (?) <any vsg-typeahead-placa>.
         restrict: 'A',
 
         // Função executada durante o Bind da Directive no elemento HTML
@@ -45,4 +45,6 @@ vivendasDirectives.directive('vsgTypeaheadPlaca', [function() {
             element.typeahead(configuration);
         }
     };
-}]);
+}
+
+vivendasDirectives.directive('vsgTypeaheadPlaca', [vsgTypeaheadPlacaDefinition]);

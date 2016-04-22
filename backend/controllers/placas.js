@@ -28,18 +28,20 @@ module.exports = function(app) {
         }
 
         // Executar query no banco.
-        app.database.mysql.query(
+        app.database.mysql.connection.query(
             query, // Query
             [placa], // Parametros
-            function(errors, rows, columns) // Callback (Errors, Rows, Columns)
+            function(e, r, c) // Callback (Errors, Rows, Columns)
             {
                 // Validar erros.
-                if (errors) {
-                    console.log(errors);
+                if (e) {
+                    console.log(e);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // Retornar JSON.
-                res.json(rows);
+                res.json(r);
             }
         );
     };

@@ -1,27 +1,19 @@
-<div id="divCarros">
-    <!-- Panel de Carros do Condominio -->
-    <div id="pnlCarros" class="panel panel-default">
-        <div class="panel-heading">
-            <h4>Carros Cadastrados</h4>
-        </div>
-        <div class="panel-body">
-            <table class="table table-striped" ng-show="Carros.length">
-                <thead>
-                    <tr>
-                        <th class="col-md-4 text-center">Placa</th>
-                        <th class="col-md-4 text-center">Modelo</th>
-                        <th class="col-md-4 text-center">Cor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="carro in Carros | filter : CarroFilter">
-                        <td class="col-md-4 text-center">{{carro.Placa}}</td>
-                        <td class="col-md-4 text-center">{{carro.Modelo}}</td>
-                        <td class="col-md-4 text-center">{{carro.Cor}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p ng-hide="Carros.length"> Não há carros cadastrados.</p>
-        </div>
-    </div>
-</div>
+<vsg-panel titulo="Carros Cadastrados">
+    <table class="table table-striped" ng-show="Carros.length">
+        <thead>
+            <tr>
+                <th class="col-md-4 text-center">Placa</th>
+                <th class="col-md-4 text-center">Modelo</th>
+                <th class="col-md-4 text-center">Cor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="carro in Carros | filter : CarroFilter">
+                <td class="col-md-4 text-center">{{carro.Placa}}</td>
+                <td class="col-md-4 text-center">{{carro.Modelo}}</td>
+                <td class="col-md-4 text-center">{{carro.Cor}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p ng-hide="Carros.length"> Não há carros cadastrados.</p>
+</vsg-panel>
