@@ -20,8 +20,19 @@ function tryGetScope(query, callback) {
     return null;
 }
 
+// Dependencias da aplicação.
+var appDependencies = [
+    'ngRoute',
+    'ngFileUpload',
+    'ngMessages',
+    'vivendasDirectives',
+    'vivendasControllers',
+    'vivendasServices',
+    'vivendasModels'
+];
+
 // Criar aplicação.
-var vivendas = angular.module('vivendas', ['ngRoute', 'ngFileUpload', 'ngMessages', 'vivendasControllers', 'vivendasServices', 'vivendasModels']);
+var vivendas = angular.module('vivendas', appDependencies);
 
 // Configurações da aplicação.
 vivendas.config(['$routeProvider', '$locationProvider',
