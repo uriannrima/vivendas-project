@@ -14,13 +14,6 @@ var load = require('express-load');
 // Carregar database, então controllers e routers.
 load('database').then('controllers').then('routes').into(app);
 
-// Configuração de reset do servidor de banco de dados.
-require('./config/resetdb')(app);
-
-app.on('error', function(error) {
-    console.log(error);
-});
-
 // Iniciar servidor.
 app.listen(process.env.PORT,
     function() {

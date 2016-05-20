@@ -1,6 +1,7 @@
-// Directive para fazer formatação da placa para AAA-SSS e fazer validação do HTML5.
-function vsgFormatarPlacaDefinition(CarroModel) {
+// Directive para fazer bind de arquivo no modelo.
+vivendasDirectives.directive('vsgFormatarPlaca', ['CarroModel', function(CarroModel) {
     return {
+
         // Requer Bind de algum modelo.
         require: "ngModel",
 
@@ -9,9 +10,9 @@ function vsgFormatarPlacaDefinition(CarroModel) {
 
         // Função executada durante o Bind da Directive no elemento HTML
         link: function($scope, element, attributes, ngModel) {
-
+            
             element.mask("SSS-0000");
-
+            
             element.bind('change', function(event) {
                 if (event.target.value.length == 8) {
 
@@ -31,6 +32,4 @@ function vsgFormatarPlacaDefinition(CarroModel) {
             });
         }
     };
-}
-
-vivendasDirectives.directive('vsgFormatarPlaca', ['CarroModel', vsgFormatarPlacaDefinition]);
+}]);

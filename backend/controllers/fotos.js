@@ -31,20 +31,18 @@ module.exports = function(app) {
         }
 
         // Executar query.
-        app.database.mysql.connection.query(
+        app.database.mysql.query(
             query, // Query
             params, // Parameters
-            function(e, r, c) // Callback (Errors, Rows, Columns)
+            function(errors, rows, columns) // Callback (Errors, Rows, Columns)
             {
                 // Check if errors happened.
-                if (e) {
-                    console.log(e);
-                    app.database.mysql.reconectar();
-                    return;
+                if (errors) {
+                    console.log(errors);
                 }
 
                 // res the result as json.
-                res.json(r);
+                res.json(rows);
             }
         );
     };
@@ -65,13 +63,11 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (foto && foto.OcorrenciaID && foto.Arquivo.path) {
-            app.database.mysql.connection.query(
+            app.database.mysql.query(
                 query, [foto.OcorrenciaID, foto.Arquivo.path],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
-                        app.database.mysql.reconectar();
-                        return;
                     }
 
                     // Remover foto temporária do servidor.
@@ -91,6 +87,6 @@ module.exports = function(app) {
             res.status(500).send("Foto não preenchida corretamente.");
         }
     };
-
+    
     return controller;
 };

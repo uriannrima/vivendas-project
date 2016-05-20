@@ -3,7 +3,7 @@ module.exports = function(app) {
 
     // Objeto para manter os controllers.
     var controller = {};
-
+    
     /**
      * Método GET para recuperar pessoas.
      * 
@@ -17,54 +17,51 @@ module.exports = function(app) {
     controller.selecionar = function(req, res) {
 
         // Criar query.
-        var query = "select pes.id_pes as 'ID', pes.de_nome as 'Nome', " +
-            "case when (pes.cd_bloco is null and pes.cd_apartamento is null) then 'Visitante' else 'Morador' end as 'Tipo', " +
-            "pes.cd_bloco as 'Bloco', pes.cd_apartamento as 'Apartamento', car.de_placa as 'Placa' " +
-            "from tvsgpes0 pes inner join tvsgcar0 car on car.id_pes = pes.id_pes " +
-            "where 1 = 1 ";
+        var query = "select id_pes as 'ID', de_nome as 'Nome', " +
+            "case when (cd_bloco is null and cd_apartamento is null) then 'Visitante' else 'Morador' end as 'Tipo', " +
+            "cd_bloco as 'Bloco', cd_apartamento as 'Apartamento' " +
+            "from tvsgpes0 where 1 = 1 ";
 
         // Parametros da Query.
         var params = [];
 
         // Recuperar parametros.
         if (req.query.id) {
-            query += " and pes.id_pes = ? ";
+            query += " and id_pes = ? ";
             params.push(req.query.id);
         }
 
         if (req.query.nome) {
-            query += " and pes.de_nome = ? ";
+            query += " and de_nome = ? ";
             params.push(req.query.nome);
         }
 
         if (req.query.bloco) {
-            query += " and pes.cd_bloco = ? ";
+            query += " and cd_bloco = ? ";
             params.push(req.query.bloco);
         }
 
         if (req.query.apartamento) {
-            query += " and pes.cd_apartamento = ? ";
+            query += " and cd_apartamento = ? ";
             params.push(req.query.apartamento);
         }
-
-        query += " order by pes.de_nome";
-
+        
+        query += " order by de_nome";
+        
 
         // Executar query.
-        app.database.mysql.connection.query(
+        app.database.mysql.query(
             query, // Query
             params, // Parameters
-            function(e, r, c) // Callback (Errors, Rows, Columns)
+            function(errors, rows, columns) // Callback (Errors, Rows, Columns)
             {
                 // Check if errors happened.
-                if (e) {
-                    console.log(e);
-                    app.database.mysql.reconectar();
-                    return;
+                if (errors) {
+                    console.log(errors);
                 }
 
                 // res the result as json.
-                res.json(r);
+                res.json(rows);
             }
         );
     };
@@ -86,13 +83,11 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (pessoa && pessoa.Nome) {
-            app.database.mysql.connection.query(
+            app.database.mysql.query(
                 query, [pessoa.Nome.toUpperCase(), pessoa.Bloco, pessoa.Apartamento],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
-                        app.database.mysql.reconectar();
-                        return;
                     }
 
                     var resultado = {};
@@ -106,7 +101,7 @@ module.exports = function(app) {
             res.status(500).send("Parametro 'Nome' não foi passado.");
         }
     };
-
+    
     /**
      * Método PUT para atualizar pessoas.
      * 
@@ -124,20 +119,18 @@ module.exports = function(app) {
         // Se nome foi enviado.
         if (id) {
             // Executar query.
-            app.database.mysql.connection.query(
+            app.database.mysql.query(
                 query, // Query
                 [pessoa.Nome, pessoa.Bloco, pessoa.Apartamento, id], // Parameters
-                function(e, r, c) // Callback (Errors, Rows, Columns)
+                function(errors, rows, columns) // Callback (Errors, Rows, Columns)
                 {
                     // Check if errors happened.
-                    if (e) {
-                        console.log(e);
-                        app.database.mysql.reconectar();
-                        return;
+                    if (errors) {
+                        console.log(errors);
                     }
 
                     // res the result as json.
-                    res.json(r);
+                    res.json(rows);
                 }
             );
         }
@@ -158,20 +151,18 @@ module.exports = function(app) {
         // Se nome foi enviado.
         if (id) {
             // Executar query.
-            app.database.mysql.connection.query(
+            app.database.mysql.query(
                 query, // Query
                 [id], // Parameters
-                function(e, r, c) // Callback (Errors, Rows, Columns)
+                function(errors, rows, columns) // Callback (Errors, Rows, Columns)
                 {
                     // Check if errors happened.
-                    if (e) {
-                        console.log(e);
-                        app.database.mysql.reconectar();
-                        return;
+                    if (errors) {
+                        console.log(errors);
                     }
 
                     // res the result as json.
-                    res.json(r);
+                    res.json(rows);
                 }
             );
         }

@@ -44,12 +44,10 @@ module.exports = function(app) {
             params.push(req.query.cor);
         }
 
-        app.database.mysql.connection.query(query, params,
+        app.database.mysql.query(query, params,
             function(e, r, c) {
                 if (e) {
                     console.log(e);
-                    app.database.mysql.reconectar();
-                    return;
                 }
 
                 // res the result as json.
@@ -76,13 +74,11 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (carro && carro.Placa && carro.PessoaID) {
-            app.database.mysql.connection.query(
+            app.database.mysql.query(
                 query, [carro.Placa.toUpperCase(), carro.PessoaID, carro.Modelo.toUpperCase(), carro.Cor.toUpperCase()],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
-                        app.database.mysql.reconectar();
-                        return;
                     }
 
                     var resultado = {};
@@ -97,6 +93,6 @@ module.exports = function(app) {
             res.status(500).send("Placa ou ID da Pessoa não foi informado.");
         }
     };
-
+    
     return controller;
 };
