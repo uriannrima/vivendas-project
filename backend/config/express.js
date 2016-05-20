@@ -18,7 +18,12 @@ module.exports = function() {
     // Configurações do servidor:
 
     // Definir caminho "root":
-    app.use(express.static('/home/ubuntu/workspace/public'));
+    
+    // Angular 1
+    //app.use(express.static('/home/ubuntu/workspace/public'));
+    
+    // Angular 2
+    app.use(express.static('/home/ubuntu/workspace/frontend'));
 
     // log every req to the console
     app.use(morgan('dev'));
