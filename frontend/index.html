@@ -1,12 +1,37 @@
 <html>
 
 <head>
+    <base href="/">
+    
     <title>VSG - Vivendas São Gonçalo</title>
+    
+    <!-- Fake Favicon. -->
+    <link rel="icon" href="data:;base64,=">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- 1. Load libraries -->
+    <!-- Third Party Javascript Frameworks -->
+    
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <!-- Jquery UI JS and CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    
+    <!-- Bootstrap JS -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style src="node_modules/bootstrap/dist/css/bootstrap-theme.min.css"></style>
+    
+    <!-- Typeahead -->
+    <script src="js/typeahead-2.0.3.js"></script>
+    
     <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
     <script src="node_modules/zone.js/dist/zone.js"></script>
@@ -22,12 +47,18 @@
             console.error(err);
         });
     </script>
+    
+    <style>
+        .dropdown-menu {
+            z-index: 2050;
+        }
+    </style>
 
 </head>
 <!-- 3. Display the application -->
 
 <body>
-    <my-app>Loading...</my-app>
+    <vsg-app>Loading...</vsg-app>
 </body>
 
 </html>
