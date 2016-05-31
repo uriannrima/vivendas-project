@@ -1,14 +1,37 @@
 {
-  "name"         : "node-vivendas",
-  "version"      : "0.0.0",
-  "description"  : "Controle de Entrada/Saida.",
-  "main"         : "server.js",
-  "author"       : "Luciano Lima",
-  "dependencies" : {
-    "express"    : "~4.7.2", 
-    "mysql"   : "~2.10.2", 
-    "morgan"     : "~1.2.2",
+  "name": "node-vivendas",
+  "version": "1.0.0",
+  "description": "Controle de Entrada/Saida.",
+  "main": "server.js",
+  "author": "Luciano Lima",
+  "dependencies": {
     "body-parser": "~1.5.2",
-    "method-override": "~2.1.2"
-    }
+    "connect-multiparty": "~2.0.0",
+    "cors": "^2.7.1",
+    "express": "~4.7.2",
+    "express-load": "~1.1.15"
+    "file-system": "~2.2.1",
+    "method-override": "~2.1.2",
+    "moment": "~2.13.0",
+    "morgan": "~1.2.2",
+    "mysql": "~2.10.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uriannrima/vivendas-project.git"
+  },
+  "keywords": [
+    "API",
+    "Backend",
+    "Vivendas-Project"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uriannrima/vivendas-project/issues"
+  },
+  "homepage": "https://github.com/uriannrima/vivendas-project#readme"
 }
