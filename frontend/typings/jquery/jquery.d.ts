@@ -3222,7 +3222,7 @@ interface JQuery {
      * 
      * @param options Opções para a criação do Typeahead.
      */
-    typeahead(options?: any): JQuery;
+    typeahead(options: any): JQuery;
 
     /**
      * Utilizar método de mask do jquery.mask-1.13.8.js.
