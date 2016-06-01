@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { FormatarPlacaDirective } from '../directives/formatar-placa.directive';
-import { TypeaheadPlacaComponent } from './typeahead-placa.component';
+import { TypeaheadComponent } from './typeahead.component';
 
 @Component({
     selector: 'pesquisa-placa',
-    templateUrl: 'app/components/templates/pesquisa-placa.template.html',
+    templateUrl: 'app/templates/pesquisa-placa.template.html',
     directives: [
-        FormatarPlacaDirective,
-        TypeaheadPlacaComponent
+        TypeaheadComponent
     ]
 })
 export class PesquisaPlacaComponent {
-    public onChange($event) {
-        console.log($event.target.value);
+
+    @Output() onSelect = new EventEmitter<string>();
+
+    onPlacaSelecionada($event: any) {
+        if (this.onSelect) this.onSelect.emit($event);
     }
 }
