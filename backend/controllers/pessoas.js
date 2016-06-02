@@ -91,7 +91,7 @@ module.exports = function(app) {
                     }
 
                     var resultado = {};
-                    resultado.ID = r.insertId;
+                    resultado.id = r.insertId;
                     res.json(resultado);
                 }
             );

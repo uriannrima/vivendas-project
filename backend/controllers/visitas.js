@@ -90,7 +90,7 @@ module.exports = function(app) {
      * @return {int} ID da Visita incluida.
      */
     controller.inserir = function(req, res) {
-        var query = "insert into tvsgvis0 (id_car, dh_entrada, cd_bloco, cd_apartamento) values (?, str_to_date(?, '%d/%m/%Y %H:%i:%s'), ?, ?)";
+        var query = "insert into tvsgvis0 (id_car, dh_entrada, cd_bloco, cd_apartamento) values (?, DATE_FORMAT(?,'%Y-%m-%dT%TZ'), ?, ?)";
 
         // Recuperar modelo dos parametros.
         var visita = req.body;
@@ -105,7 +105,7 @@ module.exports = function(app) {
                     }
 
                     var resultado = {};
-                    resultado.ID = r.insertId;
+                    resultado.id = r.insertId;
                     res.json(resultado);
                 }
             );

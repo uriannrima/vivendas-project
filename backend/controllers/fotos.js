@@ -77,7 +77,7 @@ module.exports = function(app) {
 
                     // Retornar resultado.
                     var resultado = {};
-                    resultado.ID = r.insertId;
+                    resultado.id = r.insertId;
                     res.json(resultado);
                 }
             );
