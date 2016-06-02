@@ -19,8 +19,8 @@ module.exports = function(app) {
     controller.selecionar = function(req, res) {
         var query = "select vis.id_vis as 'id', car.de_placa as 'placa', car.id_car as 'carroID', " +
             "pes.de_nome as 'visitante', vis.cd_bloco as 'bloco', vis.cd_apartamento as 'apartamento', " +
-            "date_format(vis.dh_entrada, '%d/%m/%Y %H:%i:%s') as 'entrada', " +
-            "date_format(vis.dh_saida, '%d/%m/%Y %H:%i:%s') as 'saida', " +
+            "date_format(vis.dh_entrada,'%Y-%m-%dT%TZ') as 'entrada', " +
+            "date_format(vis.dh_saida,'%Y-%m-%dT%TZ') as 'saida', " +
             "case when (dh_saida is null) then 'S' else 'N' end as 'ativa' " +
             "from tvsgvis0 vis inner join tvsgcar0 car on vis.id_car = car.id_car " +
             "inner join tvsgpes0 pes on car.id_pes = pes.id_pes where 1 = 1 ";
@@ -50,7 +50,7 @@ module.exports = function(app) {
         }
 
         if (req.query.entrada) {
-            query += " and vis.dh_entrada = str_to_date(?, '%d/%m/%Y %H:%i:%s') ";
+            query += " and vis.dh_entrada = date_format(?,'%Y-%m-%dT%TZ') ";
             params.push(req.query.entrada);
         }
 
@@ -64,7 +64,7 @@ module.exports = function(app) {
             }
         }
         else if (req.query.saida) {
-            query += " and vis.dh_saida = str_to_date(?, '%d/%m/%Y %H:%i:%s') ";
+            query += " and vis.dh_saida = date_format(?,'%Y-%m-%dT%TZ') ";
             params.push(req.query.saida);
         }
 
@@ -90,7 +90,7 @@ module.exports = function(app) {
      * @return {int} ID da Visita incluida.
      */
     controller.inserir = function(req, res) {
-        var query = "insert into tvsgvis0 (id_car, dh_entrada, cd_bloco, cd_apartamento) values (?, DATE_FORMAT(?,'%Y-%m-%dT%TZ'), ?, ?)";
+        var query = "insert into tvsgvis0 (id_car, dh_entrada, cd_bloco, cd_apartamento) values (?, date_format(?,'%Y-%m-%dT%TZ'), ?, ?)";
 
         // Recuperar modelo dos parametros.
         var visita = req.body;
