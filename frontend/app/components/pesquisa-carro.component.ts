@@ -7,7 +7,7 @@ import { CarroModel } from '../models/carro.model';
 
 @Component({
     selector: 'pesquisa-carro',
-    templateUrl: 'app/templates/pesquisa-placa.template.html',
+    templateUrl: 'app/templates/pesquisa-carro.template.html',
     directives: [
         TypeaheadComponent
     ]
