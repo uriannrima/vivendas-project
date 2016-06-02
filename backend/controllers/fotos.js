@@ -57,14 +57,14 @@ module.exports = function(app) {
 
         // Recuperar modelo dos parametros.
         var foto = {
-            OcorrenciaID: req.body.model.ocorrenciaID,
-            Arquivo: req.files.file
+            ocorrenciaID: req.body.ocorrenciaID,
+            arquivo: req.files.file
         };
 
         // Validação de parametros.
-        if (foto && foto.OcorrenciaID && foto.Arquivo.path) {
+        if (foto && foto.ocorrenciaID && foto.arquivo.path) {
             app.database.mysql.query(
-                query, [foto.OcorrenciaID, foto.Arquivo.path],
+                query, [foto.ocorrenciaID, foto.arquivo.path],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);

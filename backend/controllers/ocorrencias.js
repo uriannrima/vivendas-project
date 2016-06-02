@@ -11,8 +11,8 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Criar query.
-        var query = "select oco.id_oco as 'ID', oco.de_desc as 'Descricao', oco.id_car as 'CarroID', oco.cd_bloco as 'Bloco', " +
-            " oco.cd_apartamento as 'Apartamento', date_format(oco.dh_ocorrencia, '%d/%m/%Y %H:%i:%s') as 'Data' from tvsgoco0 oco where 1 = 1";
+        var query = "select oco.id_oco as 'id', oco.de_desc as 'descricao', oco.id_car as 'carroID', oco.cd_bloco as 'bloco', " +
+            " oco.cd_apartamento as 'apartamento', date_format(oco.dh_ocorrencia, '%d/%m/%Y %H:%i:%s') as 'data' from tvsgoco0 oco where 1 = 1";
 
         // Parametros da Query.
         var params = [];
@@ -74,12 +74,12 @@ module.exports = function(app) {
         var query = "insert into tvsgoco0 (de_desc, id_car, cd_bloco, cd_apartamento, dh_ocorrencia, dh_criacao) values (?, ? , ?, ?, str_to_date(?, '%d/%m/%Y %H:%i:%s'), SYSDATE())";
 
         // Recuperar modelo dos parametros.
-        var ocorrencia = req.body.model;
+        var ocorrencia = req.body;
 
         // Validação de parametros.
-        if (ocorrencia && ocorrencia.Descricao && ocorrencia.CarroID && ocorrencia.Bloco && ocorrencia.Apartamento && ocorrencia.Data) {
+        if (ocorrencia && ocorrencia.descricao && ocorrencia.carroID && ocorrencia.bloco && ocorrencia.apartamento && ocorrencia.data) {
             app.database.mysql.query(
-                query, [ocorrencia.Descricao.toUpperCase(), ocorrencia.CarroID, ocorrencia.Bloco, ocorrencia.Apartamento, ocorrencia.Data],
+                query, [ocorrencia.descricao.toUpperCase(), ocorrencia.carroID, ocorrencia.bloco, ocorrencia.apartamento, ocorrencia.data],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);

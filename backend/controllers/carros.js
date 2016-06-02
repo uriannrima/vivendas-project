@@ -12,7 +12,7 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Create query.
-        var query = "select id_car as 'ID', de_placa as 'Placa', id_pes as 'PessoaID', de_modelo as 'Modelo', de_cor as 'Cor' " +
+        var query = "select id_car as 'ID', de_placa as 'placa', id_pes as 'pessoaID', de_modelo as 'modelo', de_cor as 'cor' " +
             " from tvsgcar0 where 1 = 1";
 
         // Parametros da Query.
@@ -70,12 +70,12 @@ module.exports = function(app) {
         var query = "insert into tvsgcar0 (de_placa, id_pes, de_modelo, de_cor) values ( ?, ?, ?, ?)";
 
         // Recuperar modelo dos parametros.
-        var carro = req.body.model;
+        var carro = req.body;
 
         // Validação de parametros.
-        if (carro && carro.Placa && carro.PessoaID) {
+        if (carro && carro.placa && carro.pessoaID) {
             app.database.mysql.query(
-                query, [carro.Placa.toUpperCase(), carro.PessoaID, carro.Modelo.toUpperCase(), carro.Cor.toUpperCase()],
+                query, [carro.placa.toUpperCase(), carro.pessoaID, carro.modelo.toUpperCase(), carro.cor.toUpperCase()],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
@@ -89,8 +89,8 @@ module.exports = function(app) {
         }
         else {
 
-            // Placa ou ID da Pessoa não foi informado.
-            res.status(500).send("Placa ou ID da Pessoa não foi informado.");
+            // placa ou ID da Pessoa não foi informado.
+            res.status(500).send("placa ou ID da Pessoa não foi informado.");
         }
     };
     

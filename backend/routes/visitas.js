@@ -22,8 +22,8 @@ module.exports = function(app) {
      * 
      * @param {int} idCar ID do Carro.
      * @param {string} entrada Data/Horario de Entrada.
-     * @param {int} bloco Bloco da Visita.
-     * @param {int} apartamento Apartamento da Visita.
+     * @param {int} bloco bloco da Visita.
+     * @param {int} apartamento apartamento da Visita.
      * 
      * @return {int} ID da Visita incluida.
      */

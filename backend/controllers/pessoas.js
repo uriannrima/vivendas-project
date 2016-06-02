@@ -17,9 +17,9 @@ module.exports = function(app) {
     controller.selecionar = function(req, res) {
 
         // Criar query.
-        var query = "select id_pes as 'ID', de_nome as 'Nome', " +
-            "case when (cd_bloco is null and cd_apartamento is null) then 'Visitante' else 'Morador' end as 'Tipo', " +
-            "cd_bloco as 'Bloco', cd_apartamento as 'Apartamento' " +
+        var query = "select id_pes as 'id', de_nome as 'nome', " +
+            "case when (cd_bloco is null and cd_apartamento is null) then 'Visitante' else 'Morador' end as 'tipo', " +
+            "cd_bloco as 'bloco', cd_apartamento as 'apartamento' " +
             "from tvsgpes0 where 1 = 1 ";
 
         // Parametros da Query.
@@ -79,12 +79,12 @@ module.exports = function(app) {
         var query = "insert into tvsgpes0 (de_nome, cd_bloco, cd_apartamento) values (?, ? , ?)";
 
         // Recuperar modelo dos parametros.
-        var pessoa = req.body.model;
+        var pessoa = req.body;
 
         // Validação de parametros.
-        if (pessoa && pessoa.Nome) {
+        if (pessoa && pessoa.nome) {
             app.database.mysql.query(
-                query, [pessoa.Nome.toUpperCase(), pessoa.Bloco, pessoa.Apartamento],
+                query, [pessoa.nome.toUpperCase(), pessoa.bloco, pessoa.apartamento],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
@@ -114,14 +114,14 @@ module.exports = function(app) {
 
         // Parametros vindos do cliente.
         var id = req.body.id;
-        var pessoa = req.body.model;
+        var pessoa = req.body;
 
         // Se nome foi enviado.
         if (id) {
             // Executar query.
             app.database.mysql.query(
                 query, // Query
-                [pessoa.Nome, pessoa.Bloco, pessoa.Apartamento, id], // Parameters
+                [pessoa.nome, pessoa.bloco, pessoa.apartamento, id], // Parameters
                 function(errors, rows, columns) // Callback (Errors, Rows, Columns)
                 {
                     // Check if errors happened.

@@ -17,11 +17,11 @@ module.exports = function(app) {
      * @return {Array} Lista de todas visitas com respeito aos parametros.
      */
     controller.selecionar = function(req, res) {
-        var query = "select vis.id_vis as 'ID', car.de_placa as 'Placa', car.id_car as 'CarroID', " +
-            "pes.de_nome as 'Visitante', vis.cd_bloco as 'Bloco', vis.cd_apartamento as 'Apartamento', " +
-            "date_format(vis.dh_entrada, '%d/%m/%Y %H:%i:%s') as 'Entrada', " +
-            "date_format(vis.dh_saida, '%d/%m/%Y %H:%i:%s') as 'Saida', " +
-            "case when (dh_saida is null) then 'S' else 'N' end as 'Ativa' " +
+        var query = "select vis.id_vis as 'id', car.de_placa as 'placa', car.id_car as 'carroID', " +
+            "pes.de_nome as 'visitante', vis.cd_bloco as 'bloco', vis.cd_apartamento as 'apartamento', " +
+            "date_format(vis.dh_entrada, '%d/%m/%Y %H:%i:%s') as 'entrada', " +
+            "date_format(vis.dh_saida, '%d/%m/%Y %H:%i:%s') as 'saida', " +
+            "case when (dh_saida is null) then 'S' else 'N' end as 'ativa' " +
             "from tvsgvis0 vis inner join tvsgcar0 car on vis.id_car = car.id_car " +
             "inner join tvsgpes0 pes on car.id_pes = pes.id_pes where 1 = 1 ";
 
@@ -93,12 +93,12 @@ module.exports = function(app) {
         var query = "insert into tvsgvis0 (id_car, dh_entrada, cd_bloco, cd_apartamento) values (?, str_to_date(?, '%d/%m/%Y %H:%i:%s'), ?, ?)";
 
         // Recuperar modelo dos parametros.
-        var visita = req.body.model;
+        var visita = req.body;
 
         // Validação de parametros.
-        if (visita && visita.CarroID && visita.Entrada && visita.Bloco && visita.Apartamento) {
+        if (visita && visita.carroID && visita.entrada && visita.bloco && visita.apartamento) {
             app.database.mysql.query(
-                query, [visita.CarroID, visita.Entrada, visita.Bloco, visita.Apartamento],
+                query, [visita.carroID, visita.entrada, visita.bloco, visita.apartamento],
                 function(e, r, c) {
                     if (e) {
                         console.log(e);
@@ -112,8 +112,8 @@ module.exports = function(app) {
         }
         else {
 
-            // ID do Carro, Entrada, Bloco ou Apartamento não informado.
-            res.status(500).send("ID do Carro, Entrada, Bloco ou Apartamento não informado.");
+            // ID do Carro, Entrada, bloco ou apartamento não informado.
+            res.status(500).send("ID do Carro, Entrada, bloco ou apartamento não informado.");
         }
     };
 
@@ -131,14 +131,14 @@ module.exports = function(app) {
 
         // Parametros vindos do cliente.
         var id = req.body.id;
-        var visita = req.body.model;
+        var visita = req.body;
 
         // Se nome foi enviado.
         if (id) {
             // Executar query.
             app.database.mysql.query(
                 query, // Query
-                [visita.CarroID, visita.Bloco, visita.Apartamento, visita.Entrada, visita.Saida, id], // Parameters
+                [visita.carroID, visita.bloco, visita.apartamento, visita.entrada, visita.saida, id], // Parameters
                 function(errors, rows, columns) // Callback (Errors, Rows, Columns)
                 {
                     // Check if errors happened.
