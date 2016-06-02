@@ -1,0 +1,13 @@
+<!-- Panel de Pesquisa e Registro de Entrada -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Registro de Entrada</h4></div>
+    <div class="panel-body">
+        <div class="input-group">
+            <span class="input-group-addon">Placa do Veiculo</span>
+            <typeahead placeholder="AAA-1111" [class]="'form-control'" [style]="{'text-transform' : 'uppercase'}" url="https://vivendas-project-uriannrima.c9users.io/api/placas"
+                displayField="displayField" method="get" [triggerLength]="3" mask="SSS-0000" regex="^[a-zA-Z]{3}-[0-9]{4}" (onSelect)="onPlacaSelecionada($event)">
+            </typeahead>
+        </div>
+    </div>
+</div>

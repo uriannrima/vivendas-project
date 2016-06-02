@@ -1,0 +1,31 @@
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+
+    <!-- Container -->
+    <div class="container-fluid">
+
+        <!-- Navbar Header -->
+        <div class="navbar-header">
+            <a class="navbar-brand">Vivendas de São Gonçalo</a>
+        </div>
+
+        <div id="navMenu">
+            <!-- Left options -->
+            <ul class="nav navbar-nav">
+                <li class="active"><a [routerLink]="['/']">Controle de Entrada</a></li>
+                <li><a href="/#!/pessoas">Pessoas</a></li>
+                <li><a href="/#!/visitas">Visitas</a></li>
+                <li><a href="/#!/carros">Carros</a></li>
+                <li><a href="/#!/ocorrencias">Ocorrências</a></li>
+            </ul>
+
+            <!-- Right options -->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a>Tempo Máximo de Visita: <b>{{ tempoMaximo }} minutos</b></a></li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">Sair</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<router-outlet></router-outlet>

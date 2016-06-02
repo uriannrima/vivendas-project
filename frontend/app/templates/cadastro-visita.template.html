@@ -1,0 +1,23 @@
+<!-- Panel de Cadastro de Visita -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Dados da Visita</h4>
+    </div>
+    <div class="panel-body">
+        <form name="visitaForm" class="form-horizontal">
+            <div class="input-group input-group">
+                <span class="input-group-addon">Bloco</span>
+                <input name="bloco" type="number" class="form-control" placeholder="Qual Bloco esta sendo visitado?" required min="1" max="4">
+            </div>
+            <br>
+            <div class="input-group input-group">
+                <span class="input-group-addon">Apartamento</span>
+                <input name="apartamento" id="txtApartamento" type="number" class="form-control" placeholder="Qual Apartamento esta sendo visitado?"
+                    required min="101" max="1508">
+            </div>
+            <br>
+            <button type="reset" class="btn btn-danger">Limpar</button>
+            <button type="submit" class="btn btn-primary pull-right">Registrar Visita</button>
+        </form>
+    </div>
+</div>
