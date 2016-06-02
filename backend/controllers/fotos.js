@@ -14,7 +14,7 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Criar query.
-        var query = "select id_fot as 'ID', id_oco as 'OcorrenciaID', bl_foto as 'Arquivo' from tvsgfot0 where 1 = 1";
+        var query = "select id_fot as 'id', id_oco as 'ocorrenciaID', bl_foto as 'arquivo' from tvsgfot0 where 1 = 1";
 
         // Parametros da Query.
         var params = [];

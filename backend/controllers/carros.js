@@ -12,7 +12,7 @@ module.exports = function(app) {
      */
     controller.selecionar = function(req, res) {
         // Create query.
-        var query = "select id_car as 'ID', de_placa as 'placa', id_pes as 'pessoaID', de_modelo as 'modelo', de_cor as 'cor' " +
+        var query = "select id_car as 'id', de_placa as 'placa', id_pes as 'pessoaID', de_modelo as 'modelo', de_cor as 'cor' " +
             " from tvsgcar0 where 1 = 1";
 
         // Parametros da Query.
