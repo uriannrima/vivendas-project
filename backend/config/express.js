@@ -1,6 +1,9 @@
 // Utilizar API Express.
 var express = require('express');
 
+// Permissão para Cross Origin Resource Sharing
+var cors = require('cors');
+
 // Usar API Morgan Logger.
 var morgan = require('morgan');
 
@@ -21,6 +24,10 @@ module.exports = function() {
     
     // Angular 1
     //app.use(express.static('/home/ubuntu/workspace/public'));
+    
+    // Permitir todo e qualquer tipo de request, vindo de qualquer origem
+    // Meio perigoso, mas vai servir por enquanto.
+    app.use(cors());
     
     // Angular 2
     app.use(express.static('/home/ubuntu/workspace/frontend'));
