@@ -12,6 +12,7 @@ import { PessoaService } from '../services/pessoa.service';
 
 import { VisitaModel } from '../models/visita.model';
 import { CarroModel } from '../models/carro.model';
+import { PessoaModel } from '../models/pessoa.model';
 
 @Component({
     selector: 'controle-entrada',
@@ -29,6 +30,7 @@ export class ControleEntradaComponent extends BaseComponent implements OnInit {
 
     public visita: VisitaModel = null;
     public carro: CarroModel = null;
+    public pessoa: PessoaModel = null
 
     constructor(private carroService: CarroService, private pessoaService: PessoaService) {
         super();
@@ -41,8 +43,12 @@ export class ControleEntradaComponent extends BaseComponent implements OnInit {
     carregarDados($event: any) {
         console.log($event);
         this.carroService.load(40)
-        .then((data) => {
-            this.carro = CarroModel.fromJSON(data);
-        });
+            .then((model) => {
+                this.carro = model;
+                this.pessoaService.load(this.carro.pessoaID)
+                    .then((model) => {
+                        this.pessoa = model;
+                    });
+            });
     }
 }

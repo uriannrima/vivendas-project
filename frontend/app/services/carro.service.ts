@@ -8,4 +8,8 @@ export class CarroService extends BaseService<CarroModel> {
     constructor(protected http: Http) {
         super('/carros', http);
     }
+
+    protected createModel(json: any): CarroModel {
+        return CarroModel.fromJSON(json);
+    }
 }

@@ -1,6 +1,7 @@
 <div>
     <div id="pnlPesquisaPlaca" style="display: none">
         <pesquisa-placa (onSelect)="carregarDados($event)"></pesquisa-placa>
+        {{ carro?.id }} - {{ pessoa?.id }}
     </div>
     <div id="pnlCadastroVisita" style="display: none">
         <cadastro-visita></cadastro-visita>
@@ -12,6 +13,6 @@
         <detalhar-pessoa></detalhar-pessoa>
     </div>
     <div id="pnlVisitasAtivas" style="display: none">
-        <visitas-ativas></visitas-ativas>   
-    </div>    
+        <visitas-ativas></visitas-ativas>
+    </div>
 </div>

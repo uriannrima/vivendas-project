@@ -6,13 +6,12 @@ export enum TipoPessoa {
 }
 
 export class PessoaModel extends BaseModel {
-    constructor(public nome: string, public tipo: TipoPessoa) {
+
+    constructor(public id?: number, public nome?: string, public tipo?: TipoPessoa) {
         super();
     }
 
-    public fromJSON(json: any) {
-        super.fromJSON(json);
-        
-        this.nome = json.Nome;
+    public static fromJSON(json: any): PessoaModel {
+        return new PessoaModel(json.ID, json.Nome, json.Tipo);
     }
-}
+} 

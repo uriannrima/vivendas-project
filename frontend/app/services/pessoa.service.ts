@@ -8,4 +8,8 @@ export class PessoaService extends BaseService<PessoaModel> {
     constructor(protected http: Http) {
         super('/pessoas', http);
     }
+
+    protected createModel(json: any): PessoaModel {
+        return PessoaModel.fromJSON(json);
+    }
 }
