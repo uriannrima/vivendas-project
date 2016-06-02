@@ -13,11 +13,11 @@ export class VisitaModel extends BaseModel {
         super(json);
 
         if (json != null) {
-            this.bloco = json.Bloco;
-            this.apartamento = json.Apartamento;
-            this.entrada = json.Entrada;
-            this.saida = json.Saida;
-            this.carroID = json.CarroID;
+            this.bloco = json.bloco;
+            this.apartamento = json.apartamento;
+            this.entrada = json.entrada;
+            this.saida = json.saida;
+            this.carroID = json.carroID;
         }
     }
 

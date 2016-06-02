@@ -15,10 +15,10 @@ export class PessoaModel extends BaseModel {
         super(json);
 
         if (json != null) {
-            this.nome = json.Nome;
-            this.tipo = json.Tipo;
-            this.bloco = json.Bloco;
-            this.apartamento = json.Apartamento;
+            this.nome = json.nome;
+            this.tipo = json.tipo;
+            this.bloco = json.bloco;
+            this.apartamento = json.apartamento;
         }
     }
 
