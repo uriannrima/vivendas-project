@@ -35,18 +35,30 @@ export abstract class BaseService<T extends BaseModel> {
     protected createQueryString(model: T): string {
         let parameters = "";
 
+        // Iterar pelas "keys" ou "propriedades" do json/modelo.
         Object.keys(model).forEach((propertyName) => {
+
+            // Recuperar valor da propriedade.
             let propertyValue = model[propertyName];
+
+            // Se propriedade possui valor.
             if (propertyValue != undefined) {
+
+                // Se é a primeira
                 if (parameters == "") {
+                    // Colocar "?"
                     parameters = "?";
                 } else {
+                    // Se não, colocar "&"
                     parameters += '&';
                 }
+
+                // Concatenar ao parametro anterior.
                 parameters += propertyName + "=" + propertyValue;
             }
         });
 
+        // Retornar parametros.
         return parameters;
     }
 
@@ -56,19 +68,23 @@ export abstract class BaseService<T extends BaseModel> {
      * @returns Uma Promise com Resolve de uma única entidade, ou null, ou Promise com Reason do erro. 
      */
     load(id: number): Promise<T> {
-        return this.http.get(this.getServiceUrl() + "?id=" + id).toPromise()
-            .then(response => {
-                let data: any[] = response.json();
+        // Retornar promise de get.
+        return this.http.get(this.getServiceUrl() + "?id=" + id).toPromise().then(response => {
+            // Recuperar JSON do Response.
+            let data: any[] = response.json();
 
-                if (data.length > 0) {
-                    return this.createModel(data[0]);
-                }
+            // Se retornou algo.
+            if (data.length > 0) {
+                // Criar entidade do model.
+                return this.createModel(data[0]);
+            }
 
-                return null;
-            })
-            .catch(reason => {
-                return reason;
-            });
+            // Se não, retornar vazio.
+            return null;
+        }).catch(reason => {
+            // Retornar razão do erro.
+            return reason;
+        });
     }
 
     /** 
@@ -76,40 +92,45 @@ export abstract class BaseService<T extends BaseModel> {
      * @param model Modelo contendo parametros para a pesquisa. Pode ser utilizado filtros de MySQL (ex: 'AAA%'). 
      * @returns Uma Promise com Resolve de um array entidade, ou null, ou Promise com Reason do erro. 
      */
-    find(model: T): Promise<T[]> {
-        return this.http.get(this.getServiceUrl() + this.createQueryString(model))
-            .toPromise()
-            .then(response => {
-                let data: any[] = response.json();
+    find(json: any): Promise<T[]> {
+        // Retornar promise de get.
+        return this.http.get(this.getServiceUrl() + this.createQueryString(json)).toPromise().then(response => {
 
-                if (data.length > 0) {
+            // Recuperar JSON do Response.
+            let data: any[] = response.json();
 
-                    let result: T[] = new Array<T>();
+            // Se retornou algo.
+            if (data.length > 0) {
+                // Invocar createModel para cada objeto dentro do data.
+                return data.map(this.createModel);
+            }
 
-                    data.forEach((jsonObject) => {
-                        result.push(this.createModel(jsonObject));
-                    });
-
-                    return result;
-                } else {
-                    return null;
-                }
-            })
-            .catch(reason => {
-                return reason;
-            });
+            // Se não, retornar vazio.
+            return null;
+        }).catch(reason => {
+            // Retornar razão do erro.
+            return reason;
+        });
     }
 
     save(model: T) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(this.getServiceUrl(), JSON.stringify(model), { headers: headers })
-            .toPromise()
-            .then(response => {
-                console.log(response);
-            })
-            .catch(reason => {
-                console.log(reason);
+        return this.http.post(this.getServiceUrl(), JSON.stringify(model), { headers: headers }).toPromise().then(response => {
+            // Recuperar JSON do Response.
+            let data: any = response.json();
+            
+            // Retornar uma promise para carregamento da entidade, usando ID retornado pelo save.
+            return this.load(data.id).then(model => {
+                // Retornar o modelo.
+                return model;
+            }).catch(reason => {
+            // Retornar razão do erro.
+                return reason;
             });
+        }).catch(reason => {
+            // Retornar razão do erro.
+            return reason;
+        });
     }
 
     delete(id: number) {

@@ -19,13 +19,10 @@ export class PesquisaCarroComponent {
     @Output() carroCarregado = new EventEmitter<CarroModel>();
 
     placaSelecionada(placa: string) {
-        let carro = new CarroModel();
-        carro.placa = placa;
-        this.carroService.find(carro)
-            .then((carrosArray) => {
-                if (this.carroCarregado && carrosArray && carrosArray.length > 0) {
-                    this.carroCarregado.emit(carrosArray[0]);
-                }
-            });
+        this.carroService.find({ "placa": placa }).then((carrosArray) => {
+            if (this.carroCarregado && carrosArray && carrosArray.length > 0) {
+                this.carroCarregado.emit(carrosArray[0]);
+            }
+        });
     }
 }
