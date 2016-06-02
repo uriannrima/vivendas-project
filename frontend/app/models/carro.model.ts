@@ -11,10 +11,10 @@ export class CarroModel extends BaseModel {
         super(json);
         
         if (json != null) {
-            this.placa = json.Placa;
-            this.pessoaID = json.PessoaID;
-            this.modelo = json.Modelo;
-            this.cor = json.Cor;
+            this.placa = json.placa;
+            this.pessoaID = json.pessoaID;
+            this.modelo = json.modelo;
+            this.cor = json.cor;
         }
     }
 
