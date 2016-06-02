@@ -1,9 +1,8 @@
 export class BaseModel {
-    constructor(public id?: number) {
-
+    public id: number;
+    constructor(json?: any) {
+        if (json != null) {
+            this.id = json.ID;
+        }
     }
-
-    public fromJSON(json: any) {
-        this.id = json.ID;
-    };
 }

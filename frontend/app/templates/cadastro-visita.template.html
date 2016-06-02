@@ -4,15 +4,15 @@
         <h4>Dados da Visita</h4>
     </div>
     <div class="panel-body">
-        <form name="visitaForm" class="form-horizontal">
+        <form name="visitaForm" class="form-horizontal" (ngSubmit)="registrarVisita()">
             <div class="input-group input-group">
                 <span class="input-group-addon">Bloco</span>
-                <input name="bloco" type="number" class="form-control" placeholder="Qual Bloco esta sendo visitado?" required min="1" max="4">
+                <input [(ngModel)]="visita.bloco" name="bloco" type="number" class="form-control" placeholder="Qual Bloco esta sendo visitado?" required min="1" max="4">
             </div>
             <br>
             <div class="input-group input-group">
                 <span class="input-group-addon">Apartamento</span>
-                <input name="apartamento" id="txtApartamento" type="number" class="form-control" placeholder="Qual Apartamento esta sendo visitado?"
+                <input [(ngModel)]="visita.apartamento" name="apartamento" id="txtApartamento" type="number" class="form-control" placeholder="Qual Apartamento esta sendo visitado?"
                     required min="101" max="1508">
             </div>
             <br>
@@ -21,3 +21,4 @@
         </form>
     </div>
 </div>
+<detalhar-pessoa [pessoa]="pessoa" [carro]="carro"></detalhar-pessoa>

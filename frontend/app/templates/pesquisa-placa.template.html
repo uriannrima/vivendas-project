@@ -6,7 +6,7 @@
         <div class="input-group">
             <span class="input-group-addon">Placa do Veiculo</span>
             <typeahead placeholder="AAA-1111" [class]="'form-control'" [style]="{'text-transform' : 'uppercase'}" url="https://vivendas-project-uriannrima.c9users.io/api/placas"
-                displayField="displayField" method="get" [triggerLength]="3" mask="SSS-0000" regex="^[a-zA-Z]{3}-[0-9]{4}" (onSelect)="onPlacaSelecionada($event)">
+                displayField="displayField" method="get" [triggerLength]="3" mask="SSS-0000" regex="^[a-zA-Z]{3}-[0-9]{4}" (select)="placaSelecionada($event)">
             </typeahead>
         </div>
     </div>

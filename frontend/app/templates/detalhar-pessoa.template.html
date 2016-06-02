@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h4>Dados do Pessoa.Tipo</h4></div>
+        <h4>Dados do {{ pessoa?.tipo }}</h4></div>
     <div class="panel-body">
         <form class="form-horizontal">
 
@@ -8,28 +8,28 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Nome</label>
                 <div class="col-md-10">
-                    <p class="form-control-static">Pessoa.Nome</p>
+                    <p class="form-control-static">{{ pessoa?.nome }}</p>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Placa</label>
                 <div class="col-md-10">
-                    <p class="form-control-static">Carro.Placa</p>
+                    <p class="form-control-static">{{ carro?.placa}}</p>
                 </div>
             </div>
 
             <!-- Dados de Morador -->
-            <div>
+            <div *ngIf="pessoa && pessoa.tipo =='Morador'">
                 <div class="form-group">
                     <label class="col-md-2 control-label">Bloco</label>
                     <div class="col-md-10">
-                        <p class="form-control-static">Pessoa.Bloco</p>
+                        <p class="form-control-static">{{ pessoa?.bloco }}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Apartamento</label>
                     <div class="col-md-10">
-                        <p class="form-control-static">Pessoa.Apartamento</p>
+                        <p class="form-control-static">{{ pessoa?.apartamento }}</p>
                     </div>
                 </div>
             </div>
@@ -39,13 +39,13 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Modelo</label>
                     <div class="col-md-10">
-                        <p class="form-control-static">Carro.Modelo ? Carro.Modelo : "Não preenchido."</p>
+                        <p class="form-control-static">{{ carro ? carro.modelo ? carro.modelo : "Não preenchido." : "Não preenchido." }}</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Cor</label>
                     <div class="col-md-10">
-                        <p class="form-control-static">Carro.Cor ? Carro.Cor : "Não preenchido."</p>
+                        <p class="form-control-static">{{ carro ? carro.cor ? carro.cor : "Não preenchido." : "Não preenchido." }}</p>
                     </div>
                 </div>
             </div>

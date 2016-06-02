@@ -8,9 +8,9 @@ import { NgStyle, NgClass } from '@angular/common';
 export class TypeaheadComponent implements OnInit {
 
     /** Eventos do AJAX do Typeahead. */
-    @Output() onSent = new EventEmitter<string>();
-    @Output() onReceive = new EventEmitter<any>();
-    @Output() onSelect = new EventEmitter<string>();
+    @Output() sent = new EventEmitter<string>();
+    @Output() receive = new EventEmitter<any>();
+    @Output() select = new EventEmitter<string>();
 
     /** Variaveis de configuração do Typeahead. */
     @Input() url: string;
@@ -75,17 +75,17 @@ export class TypeaheadComponent implements OnInit {
                 }
 
                 // Emitir seleção.
-                if (scope.onSelect) scope.onSelect.emit(item);
+                if (scope.select) scope.select.emit(item);
                 return item;
             },
             /** Evento invocado antes de invocar o serviço. */
             preDispatch: (query : string) => {
-                if (this.onSent) this.onSent.emit(query);
+                if (this.sent) this.sent.emit(query);
                 return query;
             },
             /** Evento invocado após retorno de dados do serviço. */
             preprocess: (data : any) => {
-                if (this.onReceive) this.onReceive.emit(data);
+                if (this.receive) this.receive.emit(data);
                 return data;
             },
             ajax: {

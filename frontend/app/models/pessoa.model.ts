@@ -1,17 +1,28 @@
 import { BaseModel } from './base.model';
 
 export enum TipoPessoa {
-    Morador,
-    Visitante
+    Morador, Visitante
 }
 
 export class PessoaModel extends BaseModel {
 
-    constructor(public id?: number, public nome?: string, public tipo?: TipoPessoa) {
-        super();
+    public nome: string;
+    public tipo: TipoPessoa;
+    public bloco : number;
+    public apartamento : number;    
+
+    constructor(json?: any) {
+        super(json);
+
+        if (json != null) {
+            this.nome = json.Nome;
+            this.tipo = json.Tipo;
+            this.bloco = json.Bloco;
+            this.apartamento = json.Apartamento;
+        }
     }
 
     public static fromJSON(json: any): PessoaModel {
-        return new PessoaModel(json.ID, json.Nome, json.Tipo);
+        return new PessoaModel(json);
     }
 } 
