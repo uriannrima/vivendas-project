@@ -98,11 +98,18 @@ export abstract class BaseService<T extends BaseModel> {
 
             // Recuperar JSON do Response.
             let data: any[] = response.json();
+            let models = new Array<T>();
 
             // Se retornou algo.
             if (data.length > 0) {
+                
                 // Invocar createModel para cada objeto dentro do data.
-                return data.map(this.createModel);
+                data.forEach((item) => {
+                    models.push(this.createModel(item));
+                });
+                
+                //return data.map(this.createModel);
+                return models;
             }
 
             // Se não, retornar vazio.
@@ -118,13 +125,13 @@ export abstract class BaseService<T extends BaseModel> {
         return this.http.post(this.getServiceUrl(), JSON.stringify(model), { headers: headers }).toPromise().then(response => {
             // Recuperar JSON do Response.
             let data: any = response.json();
-            
+
             // Retornar uma promise para carregamento da entidade, usando ID retornado pelo save.
             return this.load(data.id).then(model => {
                 // Retornar o modelo.
                 return model;
             }).catch(reason => {
-            // Retornar razão do erro.
+                // Retornar razão do erro.
                 return reason;
             });
         }).catch(reason => {

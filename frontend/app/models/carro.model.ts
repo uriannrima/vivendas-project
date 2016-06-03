@@ -1,4 +1,5 @@
 import { BaseModel } from './base.model';
+import { PessoaModel } from './pessoa.model';
 
 export class CarroModel extends BaseModel {
 
@@ -6,6 +7,7 @@ export class CarroModel extends BaseModel {
     public pessoaID: number;
     public modelo: string;
     public cor: string;
+    public pessoa : PessoaModel;
 
     constructor(json?: any) {
         super(json);

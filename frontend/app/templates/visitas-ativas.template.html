@@ -1,7 +1,7 @@
 <!-- Panel de Visitantes no Condominio -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h4>Visitas Ativas</h4>
+        <h4>Visitas Ativas: {{ visitas?.length }}</h4>
     </div>
     <div class="panel-body">
         <table class="table table-striped">
@@ -17,13 +17,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="visita_visita.ID">
-                    <td class="col-md-2 text-center"> visita.Placa </td>
-                    <td class="col-md-2 text-center"> visita.Visitante </td>
-                    <td class="col-md-1 text-center"> visita.Bloco </td>
-                    <td class="col-md-1 text-center"> visita.Apartamento </td>
-                    <td class="col-md-2 text-center"> visita.Entrada </td>
-                    <td class="col-md-2 text-center"> visita.Permanencia.Formatada </td>
+                <tr id="visita_{{ visita.id }}" *ngFor="let visita of visitas">
+                    <td class="col-md-2 text-center"> {{ visita.carro?.placa }} </td>
+                    <td class="col-md-2 text-center"> {{ visita.carro?.pessoa?.nome }} </td>
+                    <td class="col-md-1 text-center"> {{ visita.bloco }} </td>
+                    <td class="col-md-1 text-center"> {{ visita.apartamento }} </td>
+                    <td class="col-md-2 text-center"> {{ visita.entrada.toLocaleString() }} </td>
+                    <td class="col-md-2 text-center"> visita.Permanencia() </td>
                     <td class="col-md-2 text-center">
                         <button type="submit" class="btn btn-warning">Saida</button>
                     </td>

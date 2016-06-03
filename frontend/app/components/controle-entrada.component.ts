@@ -29,7 +29,6 @@ import { VisitaModel } from '../models/visita.model';
 export class ControleEntradaComponent extends BaseComponent implements OnInit {
 
     public carro: CarroModel = null;
-    public pessoa: PessoaModel = null
     public visitas: VisitaModel[] = new Array<VisitaModel>();
 
     constructor(
@@ -40,26 +39,35 @@ export class ControleEntradaComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.show("#pnlPesquisaPlaca");
+        this.show("#pnlPesquisaCarro");
 
         this.visitaService.find({ "ativa": true }).then(visitasArray => {
-            this.visitas = visitasArray;
-            if (this.visitas.length > 0) {
+            if (visitasArray && visitasArray.length > 0) {
+                this.visitas = visitasArray;
                 this.show("#pnlVisitasAtivas");
             }
         });
     }
 
+    fecharDetalhamento(query: string) {
+        this.fecharCadastro();
+    }
+
+    fecharCadastro() {
+        this.hide("#pnlCadastroVisita", () => {
+            this.carro = new CarroModel();
+        });
+    }
+
     carregarDados(carro: CarroModel) {
         this.carro = carro;
-        this.pessoaService.load(this.carro.pessoaID).then((pessoa) => {
-            this.pessoa = pessoa;
-            this.show("#pnlCadastroVisita");
-        });
+        this.show("#pnlCadastroVisita");
     }
 
     carregarVisita(visita: VisitaModel) {
         this.visitas.push(visita);
         console.log(this.visitas);
     }
+
+
 }

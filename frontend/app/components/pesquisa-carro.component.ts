@@ -16,7 +16,12 @@ export class PesquisaCarroComponent {
 
     constructor(private carroService: CarroService) { }
 
+    @Output() pesquisandoCarro = new EventEmitter<string>();
     @Output() carroCarregado = new EventEmitter<CarroModel>();
+
+    placaEnviada(query: string) {
+        if (this.pesquisandoCarro) this.pesquisandoCarro.emit(query);
+    }
 
     placaSelecionada(placa: string) {
         this.carroService.find({ "placa": placa }).then((carrosArray) => {

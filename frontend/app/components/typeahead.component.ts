@@ -78,21 +78,21 @@ export class TypeaheadComponent implements OnInit {
                 if (scope.select) scope.select.emit(item);
                 return item;
             },
-            /** Evento invocado antes de invocar o serviço. */
-            preDispatch: (query : string) => {
-                if (this.sent) this.sent.emit(query);
-                return query;
-            },
-            /** Evento invocado após retorno de dados do serviço. */
-            preprocess: (data : any) => {
-                if (this.receive) this.receive.emit(data);
-                return data;
-            },
             ajax: {
                 url: this.url,
                 displayField: this.displayField,
                 triggerLength: this.triggerLength,
-                method: this.method
+                method: this.method,
+                /** Evento invocado antes de invocar o serviço. */
+                preDispatch: (query: string) => {
+                    if (this.sent) this.sent.emit(query);
+                    return query;
+                },
+                /** Evento invocado após retorno de dados do serviço. */
+                preProcess: (data: any) => {
+                    if (this.receive) this.receive.emit(data);
+                    return data;
+                }
             }
         };
 

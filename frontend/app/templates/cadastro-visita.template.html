@@ -1,5 +1,5 @@
 <!-- Panel de Cadastro de Visita -->
-<div class="panel panel-default">
+<div class="panel panel-default" *ngIf="carro && carro.pessoa && carro.pessoa.tipo == 'Visitante'">
     <div class="panel-heading">
         <h4>Dados da Visita</h4>
     </div>
@@ -21,4 +21,4 @@
         </form>
     </div>
 </div>
-<detalhar-pessoa [pessoa]="pessoa" [carro]="carro"></detalhar-pessoa>
+<detalhar-pessoa [pessoa]="carro?.pessoa" [carro]="carro"></detalhar-pessoa>

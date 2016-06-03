@@ -10,6 +10,12 @@
     },
     "jqueryui/jqueryui.d.ts": {
       "commit": "edb64e4a35896510ce02b93c0bca5ec3878db738"
+    },
+    "moment/moment.d.ts": {
+      "commit": "473232e5dbd179e9ee682fab12f796720f37b118"
+    },
+    "moment/moment-node.d.ts": {
+      "commit": "473232e5dbd179e9ee682fab12f796720f37b118"
     }
   }
 }
