@@ -8,6 +8,7 @@ export class VisitaModel extends BaseModel {
     public entrada: Date;
     public saida: Date;
     public carroID: number;
+    public ativa: boolean;
 
     constructor(json?: any) {
         super(json);
@@ -15,8 +16,9 @@ export class VisitaModel extends BaseModel {
         if (json != null) {
             this.bloco = json.bloco;
             this.apartamento = json.apartamento;
-            this.entrada = json.entrada;
-            this.saida = json.saida;
+            if (json.entrada) this.entrada = new Date(json.entrada);
+            if (json.saida) this.saida = new Date(json.saida);
+            this.ativa = json.ativa;
             this.carroID = json.carroID;
         }
     }

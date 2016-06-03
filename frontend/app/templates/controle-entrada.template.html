@@ -3,7 +3,7 @@
         <pesquisa-carro (carroCarregado)="carregarDados($event)"></pesquisa-carro>
     </div>
     <div id="pnlCadastroVisita" style="display: none">
-        <cadastro-visita [pessoa]="pessoa" [carro]="carro"></cadastro-visita>
+        <cadastro-visita [pessoa]="pessoa" [carro]="carro" (visitaCadastrada)="carregarVisita($event)"></cadastro-visita>
     </div>
     <div id="pnlCadastroVisitante" style="display: none">
         <cadastro-visitante></cadastro-visitante>
