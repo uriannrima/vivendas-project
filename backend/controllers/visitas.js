@@ -68,14 +68,16 @@ module.exports = function(app) {
             params.push(req.query.saida);
         }
 
-        app.database.mysql.query(query, params,
-            function(e, r, c) {
-                if (e) {
-                    console.log(e);
+        app.database.mysql.connection.query(query, params,
+            function(errors, rows, columns) {
+                if (errors) {
+                    console.log(errors);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // res the result as json.
-                res.json(r);
+                res.json(rows);
             }
         );
     };
@@ -97,15 +99,17 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (visita && visita.carroID && visita.entrada && visita.bloco && visita.apartamento) {
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, [visita.carroID, visita.entrada, visita.bloco, visita.apartamento],
-                function(e, r, c) {
-                    if (e) {
-                        console.log(e);
+                function(errors, rows, columns) {
+                    if (errors) {
+                        console.log(errors);
+                        app.database.mysql.reconectar();
+                        return;
                     }
 
                     var resultado = {};
-                    resultado.id = r.insertId;
+                    resultado.id = rows.insertId;
                     res.json(resultado);
                 }
             );
@@ -136,7 +140,7 @@ module.exports = function(app) {
         // Se nome foi enviado.
         if (id) {
             // Executar query.
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, // Query
                 [visita.carroID, visita.bloco, visita.apartamento, visita.entrada, visita.saida, id], // Parameters
                 function(errors, rows, columns) // Callback (Errors, Rows, Columns)
@@ -144,6 +148,8 @@ module.exports = function(app) {
                     // Check if errors happened.
                     if (errors) {
                         console.log(errors);
+                        app.database.mysql.reconectar();
+                        return;
                     }
 
                     // res the result as json.

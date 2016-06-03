@@ -49,7 +49,7 @@ module.exports = function(app) {
         }
 
         // Executar query.
-        app.database.mysql.query(
+        app.database.mysql.connection.query(
             query, // Query
             params, // Parameters
             function(errors, rows, columns) // Callback (Errors, Rows, Columns)
@@ -57,6 +57,8 @@ module.exports = function(app) {
                 // Check if errors happened.
                 if (errors) {
                     console.log(errors);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // res the result as json.
@@ -78,15 +80,18 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (ocorrencia && ocorrencia.descricao && ocorrencia.carroID && ocorrencia.bloco && ocorrencia.apartamento && ocorrencia.data) {
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, [ocorrencia.descricao.toUpperCase(), ocorrencia.carroID, ocorrencia.bloco, ocorrencia.apartamento, ocorrencia.data],
-                function(e, r, c) {
-                    if (e) {
-                        console.log(e);
+                function(errors, rows, columns) {
+
+                    if (errors) {
+                        console.log(errors);
+                        app.database.mysql.reconectar();
+                        return;
                     }
 
                     var resultado = {};
-                    resultado.id = r.insertId;
+                    resultado.id = rows.insertId;
                     res.json(resultado);
                 }
             );
@@ -96,6 +101,6 @@ module.exports = function(app) {
             res.status(500).send("Ocorrência não preenchida corretamente.");
         }
     };
-    
+
     return controller;
 };

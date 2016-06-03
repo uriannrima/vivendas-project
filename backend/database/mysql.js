@@ -1,16 +1,38 @@
 // Utilizar API MySQL
-var mysql = require('mysql');
+var mysqlModule = require('mysql');
 
 module.exports = function() {
-    
-    // Definição da connectionString.
-    var connectionString = {
-        host: "0.0.0.0",
-        user: "uriannrima",
-        password: "",
-        database: "vivendas_db"
+
+    var mysql = {
+
+        connection: null,
+
+        connectionString: {
+            host: "0.0.0.0",
+            user: "uriannrima",
+            password: "",
+            database: "vivendas_db"
+        },
+
+        criarConexao: function() {
+            this.connection = mysqlModule.createConnection(this.connectionString);
+            this.gerenciarReconexao();
+        },
+
+        gerenciarReconexao: function() {
+            var scope = this;
+            this.connection.on('error', function(error) {
+                console.log(error);
+                scope.criarConexao();
+            });
+        },
+
+        reconectar: function() {
+            this.criarConexao();
+        }
     };
     
-    // Retornar conexão.
-    return mysql.createConnection(connectionString);
+    mysql.criarConexao();
+    
+    return mysql;
 };

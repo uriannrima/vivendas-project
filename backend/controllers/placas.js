@@ -28,7 +28,7 @@ module.exports = function(app) {
         }
 
         // Executar query no banco.
-        app.database.mysql.query(
+        app.database.mysql.connection.query(
             query, // Query
             [placa], // Parametros
             function(errors, rows, columns) // Callback (Errors, Rows, Columns)
@@ -36,6 +36,8 @@ module.exports = function(app) {
                 // Validar erros.
                 if (errors) {
                     console.log(errors);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // Retornar JSON.
@@ -43,6 +45,6 @@ module.exports = function(app) {
             }
         );
     };
-    
+
     return controller;
 }

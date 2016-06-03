@@ -44,14 +44,16 @@ module.exports = function(app) {
             params.push(req.query.cor);
         }
 
-        app.database.mysql.query(query, params,
-            function(e, r, c) {
-                if (e) {
-                    console.log(e);
+        app.database.mysql.connection.query(query, params,
+            function(errors, rows, columns) {
+                if (errors) {
+                    console.log(errors);
+                    app.database.mysql.reconectar();
+                    return;
                 }
 
                 // res the result as json.
-                res.json(r);
+                res.json(rows);
             }
         );
     };
@@ -74,15 +76,18 @@ module.exports = function(app) {
 
         // Validação de parametros.
         if (carro && carro.placa && carro.pessoaID) {
-            app.database.mysql.query(
+            app.database.mysql.connection.query(
                 query, [carro.placa.toUpperCase(), carro.pessoaID, carro.modelo.toUpperCase(), carro.cor.toUpperCase()],
-                function(e, r, c) {
-                    if (e) {
-                        console.log(e);
-                    }
+                function(errors, rows, columns) {
+                    
+                if (errors) {
+                    console.log(errors);
+                    app.database.mysql.reconectar();
+                    return;
+                }
 
                     var resultado = {};
-                    resultado.id = r.insertId;
+                    resultado.id = rows.insertId;
                     res.json(resultado);
                 }
             );
@@ -93,6 +98,6 @@ module.exports = function(app) {
             res.status(500).send("placa ou ID da Pessoa não foi informado.");
         }
     };
-    
+
     return controller;
 };
