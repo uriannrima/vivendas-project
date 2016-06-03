@@ -67,6 +67,8 @@ module.exports = function(app) {
             query += " and vis.dh_saida = date_format(?,'%Y-%m-%dT%TZ') ";
             params.push(req.query.saida);
         }
+        
+        query += " order by dh_entrada";
 
         app.database.mysql.connection.query(query, params,
             function(errors, rows, columns) {
