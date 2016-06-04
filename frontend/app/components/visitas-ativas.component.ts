@@ -12,7 +12,9 @@ export class VisitasAtivasComponent implements OnInit {
     ngOnInit() {
         let seconds = 0;
         setInterval(() => {
-            console.log(seconds++);
+            this.visitas.forEach((visita) => {
+                visita.atualizarPermanencia();
+            });
         }, 1000)
     }
 }
