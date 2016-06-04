@@ -33,7 +33,7 @@ export class CadastroVisitaComponent implements OnInit {
         if (this.carro != null) {
             this.visita.carroID = this.carro.id;
             this.visita.entrada = new Date();
-        }
+        }        
         
         if (this.cadastrandoVisita) this.cadastrandoVisita.emit(this.visita); 
 

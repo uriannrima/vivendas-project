@@ -102,12 +102,12 @@ export abstract class BaseService<T extends BaseModel> {
 
             // Se retornou algo.
             if (data.length > 0) {
-                
+
                 // Invocar createModel para cada objeto dentro do data.
                 data.forEach((item) => {
                     models.push(this.createModel(item));
                 });
-                
+
                 //return data.map(this.createModel);
                 return models;
             }
@@ -122,29 +122,36 @@ export abstract class BaseService<T extends BaseModel> {
 
     save(model: T) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
-        return this.http.post(this.getServiceUrl(), JSON.stringify(model), { headers: headers }).toPromise().then(response => {
-            // Recuperar JSON do Response.
-            let data: any = response.json();
-
-            // Retornar uma promise para carregamento da entidade, usando ID retornado pelo save.
-            return this.load(data.id).then(model => {
-                // Retornar o modelo.
+        if (model.id) {
+            return this.http.put(this.getServiceUrl(), JSON.stringify(model), { headers: headers }).toPromise().then(response => {
+                // Se foi atualizada com sucesso, retornar a entidade atualizada (que é a passada por parametro).
                 return model;
             }).catch(reason => {
                 // Retornar razão do erro.
                 return reason;
             });
-        }).catch(reason => {
-            // Retornar razão do erro.
-            return reason;
-        });
+        } else {
+            return this.http.post(this.getServiceUrl(), JSON.stringify(model), { headers: headers }).toPromise().then(response => {
+                // Recuperar JSON do Response.
+                let data: any = response.json();
+
+                // Retornar uma promise para carregamento da entidade, usando ID retornado pelo save.
+                // Executamos o Load afim de carregar informações extras da entidade (visita -> carro -> pessoa)
+                return this.load(data.id).then(model => {
+                    // Retornar o modelo.
+                    return model;
+                }).catch(reason => {
+                    // Retornar razão do erro.
+                    return reason;
+                });
+            }).catch(reason => {
+                // Retornar razão do erro.
+                return reason;
+            });
+        }
     }
 
     delete(id: number) {
-
-    }
-
-    update(id: number, model: T) {
 
     }
 }

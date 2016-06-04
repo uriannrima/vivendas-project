@@ -9,6 +9,6 @@
         <cadastro-visitante></cadastro-visitante>
     </div>
     <div id="pnlVisitasAtivas" style="display: none">
-        <visitas-ativas [visitas]="visitas"></visitas-ativas>
+        <visitas-ativas (listaVazia)="fecharPainelVisitas()" [visitas]="visitas"></visitas-ativas>
     </div>
 </div>

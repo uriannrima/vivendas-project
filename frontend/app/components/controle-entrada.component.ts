@@ -66,8 +66,11 @@ export class ControleEntradaComponent extends BaseComponent implements OnInit {
 
     carregarVisita(visita: VisitaModel) {
         this.visitas.push(visita);
-        console.log(this.visitas);
+        this.show("#pnlVisitasAtivas");
     }
 
+    fecharPainelVisitas() {
+        this.hide("#pnlVisitasAtivas");
+    }
 
 }

@@ -5,16 +5,17 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 export class VisitaModel extends BaseModel {
 
-    public bloco: string;
-    public apartamento: string;
+    public bloco: string = '';
+    public apartamento: string = '';
     public entrada: Date;
     public saida: Date;
     public carroID: number;
     public ativa: boolean;
     public carro: CarroModel;
     public permanencia: any = {
-        duracao: 0,
-        formatada: ''
+        duracao: moment(),
+        formatada: '',
+        emMinutos: 0
     };
 
     constructor(json?: any) {
@@ -40,6 +41,7 @@ export class VisitaModel extends BaseModel {
         let entrada = moment(this.entrada);
 
         this.permanencia.duracao = moment.duration(saida.diff(entrada));
+        this.permanencia.emMinutos = this.permanencia.duracao.asMinutes();
         
         this.formatarPermanencia();
     }

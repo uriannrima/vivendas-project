@@ -34,7 +34,7 @@ export class TypeaheadComponent implements OnInit {
 
     /** Referências para o elemento que contem o typeahead e inputText. */
     private element: HTMLElement;
-    private inputText: HTMLElement;
+    private inputText: HTMLInputElement;
 
     constructor(el: ElementRef) {
         this.element = el.nativeElement as HTMLElement;
@@ -49,7 +49,7 @@ export class TypeaheadComponent implements OnInit {
 
     /** Método para recuperar o inputText que irá ter a máscara e typeahead. */
     getInputText() {
-        this.inputText = this.element.children[0] as HTMLElement;
+        this.inputText = this.element.children[0] as HTMLInputElement;
     }
 
     /** Método para configurar máscara no inputText. */

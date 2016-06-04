@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="visita_{{ visita.id }}" *ngFor="let visita of visitas">
+                <tr #tableRow id="visita_{{ visita.id }}" *ngFor="let visita of visitas; let i = index" [ngClass]="{ danger: visita.permanencia.emMinutos >= 2, warning: visita.permanencia.emMinutos >= 1 }">
                     <td class="col-md-2 text-center"> {{ visita.carro?.placa }} </td>
                     <td class="col-md-2 text-center"> {{ visita.carro?.pessoa?.nome }} </td>
                     <td class="col-md-1 text-center"> {{ visita.bloco }} </td>
@@ -25,7 +25,7 @@
                     <td class="col-md-2 text-center"> {{ visita.entrada.toLocaleString() }} </td>
                     <td class="col-md-2 text-center"> {{ visita.permanencia.formatada }} </td>
                     <td class="col-md-2 text-center">
-                        <button type="submit" class="btn btn-warning">Saida</button>
+                        <button type="submit" class="btn btn-warning" (click)="registrarSaida(visita, tableRow, i)">Saida</button>
                     </td>
                 </tr>
             </tbody>

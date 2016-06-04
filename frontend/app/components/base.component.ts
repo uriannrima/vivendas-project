@@ -5,6 +5,7 @@ export enum Effects {
     Clip,
     Drop,
     Explode,
+    Fade,
     Fold,
     Highlight,
     Puff,
@@ -34,7 +35,7 @@ export abstract class BaseComponent {
      * @param jquerySelector  Seletor do JQuery.
      * @param complete Função opcional de callback.
     */
-    protected show(jquerySelector: string, complete?: () => void): void {
+    protected show(jquerySelector: any, complete?: () => void): void {
         // SetTimeOut serve para esperar o Angular lidar com o ngIf, já que ainda não temos ngAnimate.
         setTimeout(() => {
             $(jquerySelector).show(Effects.toString( this.effectConfig.Effect), this.effectConfig.Option, this.effectConfig.Duration, complete);
@@ -46,7 +47,7 @@ export abstract class BaseComponent {
      * @param jquerySelector  Seletor do JQuery.
      * @param complete Função opcional de callback.
     */
-    protected hide(jquerySelector: string, complete?: () => void): void {
+    protected hide(jquerySelector: any, complete?: () => void): void {
         // SetTimeOut serve para esperar o Angular lidar com o ngIf, já que ainda não temos ngAnimate.
         setTimeout(() => {
             $(jquerySelector).hide(Effects.toString( this.effectConfig.Effect), this.effectConfig.Option, this.effectConfig.Duration, complete);
@@ -61,7 +62,7 @@ export abstract class BaseComponent {
      * @param duration Duração do efeito.
      * @param complete Callback do efeito.
      */
-    protected effect(jquerySelector: string, effect: Effects, option?: any, duration?: number, complete?: () => void): void {
+    protected effect(jquerySelector: any, effect: Effects, option?: any, duration?: number, complete?: () => void): void {
         setTimeout(() => {
             $(jquerySelector).effect(Effects.toString(effect), option, duration, complete);
         }, 1);
