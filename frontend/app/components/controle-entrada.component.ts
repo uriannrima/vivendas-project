@@ -6,6 +6,7 @@ import { CadastroVisitaComponent } from './cadastro-visita.component';
 import { CadastroVisitanteComponent } from './cadastro-visitante.component';
 import { VisitasAtivasComponent } from './visitas-ativas.component';
 import { DetalharPessoaComponent } from './detalhar-pessoa.component';
+import { CadastroOcorrenciaComponent } from './cadastro-ocorrencia.component';
 
 import { CarroService } from '../services/carro.service';
 import { PessoaService } from '../services/pessoa.service';
@@ -23,7 +24,8 @@ import { VisitaModel } from '../models/visita.model';
         CadastroVisitaComponent,
         CadastroVisitanteComponent,
         VisitasAtivasComponent,
-        DetalharPessoaComponent
+        DetalharPessoaComponent,
+        CadastroOcorrenciaComponent
     ]
 })
 export class ControleEntradaComponent extends BaseComponent implements OnInit {

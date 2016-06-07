@@ -14,10 +14,9 @@ import { PessoaModel } from '../models/pessoa.model';
     directives: [DetalharPessoaComponent]
 })
 export class CadastroVisitaComponent implements OnInit {
-    
+
     public visita: VisitaModel = null;
     @Input() carro: CarroModel;
-    @Input() pessoa: PessoaModel;
     @Output() cadastrandoVisita = new EventEmitter<VisitaModel>();
     @Output() visitaCadastrada = new EventEmitter<VisitaModel>();
 
@@ -33,9 +32,9 @@ export class CadastroVisitaComponent implements OnInit {
         if (this.carro != null) {
             this.visita.carroID = this.carro.id;
             this.visita.entrada = new Date();
-        }        
-        
-        if (this.cadastrandoVisita) this.cadastrandoVisita.emit(this.visita); 
+        }
+
+        if (this.cadastrandoVisita) this.cadastrandoVisita.emit(this.visita);
 
         this.visitaService.save(this.visita).then((visita) => {
             if (this.visitaCadastrada) this.visitaCadastrada.emit(visita);

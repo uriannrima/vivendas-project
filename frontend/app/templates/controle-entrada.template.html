@@ -12,3 +12,20 @@
         <visitas-ativas (listaVazia)="fecharPainelVisitas()" [visitas]="visitas"></visitas-ativas>
     </div>
 </div>
+<div class="col-md-12 text-center">
+    <!-- Botão para chamada do modal. -->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ocorrenciaModal">Registrar Ocorrência</button>
+</div>
+
+<!-- Modal -->
+<div id="ocorrenciaModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <cadastro-ocorrencia></cadastro-ocorrencia>
+                <button type="button" class="btn btn-danger" data-toggle="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,9 +6,9 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class CarroService extends BaseService<CarroModel> {
-     
-     private scope: any;
-     
+
+    private scope: any;
+
     constructor(protected http: Http, protected pessoaService: PessoaService) {
         super('/carros', http);
         this.scope = this;

@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { BaseComponent, Effects } from './base.component';
 
 import { VisitaService } from '../services/visita.service';
+import { ConfiguracaoService } from '../services/configuracao.service';
 
 import { VisitaModel } from '../models/visita.model';
 
@@ -14,13 +15,15 @@ export class VisitasAtivasComponent extends BaseComponent implements OnInit {
     @Input() visitas: VisitaModel[];
     @Output() visitaRemovida = new EventEmitter<VisitaModel>();
     @Output() listaVazia = new EventEmitter<string>();
+    public tempoMaximo: number = 2;
 
-    constructor(private visitaService: VisitaService) {
+    constructor(private visitaService: VisitaService, private configuracaoService: ConfiguracaoService) {
         super();
         this.effectConfig.Effect = Effects.Fade;
     }
 
     ngOnInit() {
+        this.tempoMaximo = this.configuracaoService.tempoMaximo;
         this.inicializarContador();
     }
 

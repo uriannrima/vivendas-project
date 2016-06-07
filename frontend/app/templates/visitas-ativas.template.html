@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr #tableRow id="visita_{{ visita.id }}" *ngFor="let visita of visitas; let i = index" [ngClass]="{ danger: visita.permanencia.emMinutos >= 2, warning: visita.permanencia.emMinutos >= 1 }">
+                <tr #tableRow id="visita_{{ visita.id }}" *ngFor="let visita of visitas; let i = index" [ngClass]="{ danger: visita.permanencia.emMinutos >= tempoMaximo, warning: visita.permanencia.emMinutos >= (tempoMaximo / 2) }">
                     <td class="col-md-2 text-center"> {{ visita.carro?.placa }} </td>
                     <td class="col-md-2 text-center"> {{ visita.carro?.pessoa?.nome }} </td>
                     <td class="col-md-1 text-center"> {{ visita.bloco }} </td>

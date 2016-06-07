@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { CarroService } from './carro.service';
-import { VisitaModel } from '../models/visita.model';
+import { OcorrenciaModel } from '../models/ocorrencia.model';
 import { Http } from '@angular/http';
 
 @Injectable()
-export class VisitaService extends BaseService<VisitaModel> {
+export class OcorrenciaService extends BaseService<OcorrenciaModel> {
+
     constructor(protected http: Http, protected carroService: CarroService) {
-        super('/visitas', http);
+        super('/ocorrencias', http);
     }
 
-    protected createModel(json: any): VisitaModel {
-        let visita = VisitaModel.fromJSON(json);
+    protected createModel(json: any): OcorrenciaModel {
+        let ocorrencia = OcorrenciaModel.fromJSON(json);
 
         if (json.carroID) {
             this.carroService.load(json.carroID).then(carroModel => {
-                visita.carro = carroModel;
+                ocorrencia.carro = carroModel;
             });
         }
 
-        return visita;
+        return ocorrencia;
     }
 }

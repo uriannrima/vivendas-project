@@ -5,8 +5,8 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 export class VisitaModel extends BaseModel {
 
-    public bloco: string = '';
-    public apartamento: string = '';
+    public bloco: number;
+    public apartamento: number;
     public entrada: Date;
     public saida: Date;
     public carroID: number;

@@ -1,0 +1,73 @@
+<div>
+    <!-- Panel de Pesquisa -->
+    <pesquisa-carro></pesquisa-carro>
+
+    <!-- Panel de Visualização de Dados -->
+    <detalhar-pessoa></detalhar-pessoa>
+
+    <!-- Panel de Dados da ocorrência -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Dados da Ocorrência</h4>
+        </div>
+        <div class="panel-body">
+            <form name="formOcorrencia" class="form-horizontal" enctype="multipart/form-data">
+                <label for="comment">Descrição da Ocorrência:</label>
+                <textarea [(ngModel)]="ocorrencia.descricao" name="descricao" id="txtOcorrencia" type="text" class="form-control" rows="5"
+                    placeholder="Descreva o que ocorreu aqui." required></textarea>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Bloco</span>
+                    <input [(ngModel)]="ocorrencia.bloco" name="bloco" type="number" class="form-control" placeholder="Bloco da Ocorrência" required
+                        min="1" max="4">
+                </div>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Apartamento</span>
+                    <input [(ngModel)]="ocorrencia.apartamento" name="apartamento" id="txtOcorrenciaApartamento" type="number" class="form-control"
+                        placeholder="Apartamento da Ocorrência" required min="101" max="1508">
+                </div>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Data</span>
+                    <input [(ngModel)]="ocorrencia.data" name="data" id="txtDataOcorrencia" placeholder="00/00/0000 00:00:00" class="form-control" formatar-data required>
+                </div>
+                <br>
+                <div class="input-group input-group">
+                    <span class="input-group-addon">Foto</span>
+                    <input id="arqFoto" type="file" class="form-control" accept="image/*" max-size="3">
+                </div>
+                <br>
+                <button type="reset" class="btn btn-danger">Limpar</button>
+                <button type="submit" class="btn btn-primary pull-right">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel de Uploads Ativos -->
+    <div id="pnlUploadsAtivos" class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Envio de Foto</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-2 text-center">Nome</th>
+                        <th class="col-md-2 text-center">Tipo</th>
+                        <th class="col-md-1 text-center">Tamanho</th>
+                        <th class="col-md-1 text-center">Progresso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="foto in FotosUploading">
+                        <td class="col-md-2 text-center">foto.Arquivo.name.toUpperCase()</td>
+                        <td class="col-md-2 text-center">foto.Arquivo.type.toUpperCase()</td>
+                        <td class="col-md-1 text-center">(foto.Arquivo.size / 1048576).toFixed(2) MB</td>
+                        <td class="col-md-1 text-center">foto.Progresso%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
