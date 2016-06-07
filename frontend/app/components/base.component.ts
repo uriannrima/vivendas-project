@@ -1,3 +1,5 @@
+import { ElementRef } from '@angular/core'
+
 /** Enum de Efeitos do Show/Hide do JQuery UI. */
 export enum Effects {
     Blind,
@@ -32,37 +34,43 @@ export abstract class BaseComponent {
 
     /**
      * Método para mostrar de forma animada um elemento.
-     * @param jquerySelector  Seletor do JQuery.
+     * @param jquerySelector  Seletor do JQuery (Em caso de ElementRef, é recuperado o NativeElement).
      * @param complete Função opcional de callback.
     */
     protected show(jquerySelector: any, complete?: () => void): void {
+        if (jquerySelector instanceof ElementRef) jquerySelector = jquerySelector.nativeElement;
+
         // SetTimeOut serve para esperar o Angular lidar com o ngIf, já que ainda não temos ngAnimate.
         setTimeout(() => {
-            $(jquerySelector).show(Effects.toString( this.effectConfig.Effect), this.effectConfig.Option, this.effectConfig.Duration, complete);
+            $(jquerySelector).show(Effects.toString(this.effectConfig.Effect), this.effectConfig.Option, this.effectConfig.Duration, complete);
         }, 1);
     }
 
     /**
      * Método para esconderde forma animada um elemento.
-     * @param jquerySelector  Seletor do JQuery.
+     * @param jquerySelector  Seletor do JQuery (Em caso de ElementRef, é recuperado o NativeElement).
      * @param complete Função opcional de callback.
     */
     protected hide(jquerySelector: any, complete?: () => void): void {
+        if (jquerySelector instanceof ElementRef) jquerySelector = jquerySelector.nativeElement;
+
         // SetTimeOut serve para esperar o Angular lidar com o ngIf, já que ainda não temos ngAnimate.
         setTimeout(() => {
-            $(jquerySelector).hide(Effects.toString( this.effectConfig.Effect), this.effectConfig.Option, this.effectConfig.Duration, complete);
+            $(jquerySelector).hide(Effects.toString(this.effectConfig.Effect), this.effectConfig.Option, this.effectConfig.Duration, complete);
         }, 1);
     }
 
     /** 
      * Método para realizar efeito em um elemento.
-     * @param jquerySelector Seletor do JQuery.
+     * @param jquerySelector Seletor do JQuery (Em caso de ElementRef, é recuperado o NativeElement).
      * @param effect Efeito selecionado.
      * @param option Opções extras para o efeito.
      * @param duration Duração do efeito.
      * @param complete Callback do efeito.
      */
     protected effect(jquerySelector: any, effect: Effects, option?: any, duration?: number, complete?: () => void): void {
+        if (jquerySelector instanceof ElementRef) jquerySelector = jquerySelector.nativeElement;
+
         setTimeout(() => {
             $(jquerySelector).effect(Effects.toString(effect), option, duration, complete);
         }, 1);
@@ -78,6 +86,6 @@ export class EffectConfig {
     /** Opções do Efeito. */
     public Option: any;
 
-    /** Duração do Efeito. Padrão 500ms. */
-    public Duration: number = 500;
+    /** Duração do Efeito. Padrão 1000ms. */
+    public Duration: number = 1000;
 }  

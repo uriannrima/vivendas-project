@@ -1,14 +1,12 @@
-<div>
-    <div id="pnlPesquisaCarro" style="display: none">
-        <pesquisa-carro (pesquisandoCarro)="fecharDetalhamento($event)" (carroCarregado)="carregarDados($event)"></pesquisa-carro>
-    </div>
-    <div id="pnlCadastroVisita" style="display: none">
+<div #pnlControleEntrada style="display: none">
+    <pesquisa-carro (pesquisandoCarro)="fecharDetalhamento($event)" (carroCarregado)="carregarDados($event)"></pesquisa-carro>
+    <div #pnlCadastroVisita style="display: none">
         <cadastro-visita [carro]="carro" (cadastrandoVisita)="fecharCadastro($event)" (visitaCadastrada)="carregarVisita($event)"></cadastro-visita>
     </div>
-    <div id="pnlCadastroVisitante" style="display: none">
+    <div #pnlCadastroVisitante style="display: none">
         <cadastro-visitante></cadastro-visitante>
     </div>
-    <div id="pnlVisitasAtivas" style="display: none">
+    <div #pnlVisitasAtivas style="display: none">
         <visitas-ativas (listaVazia)="fecharPainelVisitas()" [visitas]="visitas"></visitas-ativas>
     </div>
 </div>

@@ -20,8 +20,7 @@ export class CadastroVisitaComponent implements OnInit {
     @Output() cadastrandoVisita = new EventEmitter<VisitaModel>();
     @Output() visitaCadastrada = new EventEmitter<VisitaModel>();
 
-    constructor(private visitaService: VisitaService) {
-    }
+    constructor(private visitaService: VisitaService) { }
 
     ngOnInit() {
         this.visita = new VisitaModel();
@@ -32,14 +31,14 @@ export class CadastroVisitaComponent implements OnInit {
         if (this.carro != null) {
             this.visita.carroID = this.carro.id;
             this.visita.entrada = new Date();
+
+            if (this.cadastrandoVisita) this.cadastrandoVisita.emit(this.visita);
+
+            this.visitaService.save(this.visita).then((visita) => {
+                if (this.visitaCadastrada) this.visitaCadastrada.emit(visita);
+            });
+
+            this.visita = new VisitaModel();
         }
-
-        if (this.cadastrandoVisita) this.cadastrandoVisita.emit(this.visita);
-
-        this.visitaService.save(this.visita).then((visita) => {
-            if (this.visitaCadastrada) this.visitaCadastrada.emit(visita);
-        });
-
-        this.visita = new VisitaModel();
     }
 }

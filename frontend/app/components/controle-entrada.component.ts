@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 
 import { BaseComponent } from './base.component';
 import { PesquisaCarroComponent } from './pesquisa-carro.component';
@@ -28,10 +28,15 @@ import { VisitaModel } from '../models/visita.model';
         CadastroOcorrenciaComponent
     ]
 })
-export class ControleEntradaComponent extends BaseComponent implements OnInit {
+export class ControleEntradaComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     public carro: CarroModel = null;
     public visitas: VisitaModel[] = new Array<VisitaModel>();
+
+    @ViewChild('pnlControleEntrada') private pnlControleEntrada: ElementRef;
+    @ViewChild('pnlCadastroVisita') private pnlCadastroVisita: ElementRef;
+    @ViewChild('pnlCadastroVisitante') private pnlCadastroVisitante: ElementRef;
+    @ViewChild('pnlVisitasAtivas') private pnlVisitasAtivas: ElementRef;
 
     constructor(
         private carroService: CarroService,
@@ -40,13 +45,20 @@ export class ControleEntradaComponent extends BaseComponent implements OnInit {
         super();
     }
 
+    /** Evento invocado durante inicialização do componente. Obs: Componentes não prontos. */
     ngOnInit() {
-        this.show("#pnlPesquisaCarro");
-
         this.visitaService.find({ "ativa": true }).then(visitasArray => {
             if (visitasArray && visitasArray.length > 0) {
                 this.visitas = visitasArray;
-                this.show("#pnlVisitasAtivas");
+            }
+        });
+    }
+
+    /** Evento invocado quando o conteudo da View do componente já esta pronto. */
+    ngAfterViewInit() {
+        this.show(this.pnlControleEntrada, () => {
+            if (this.visitas.length > 0) {
+                this.show(this.pnlVisitasAtivas);
             }
         });
     }
@@ -56,23 +68,23 @@ export class ControleEntradaComponent extends BaseComponent implements OnInit {
     }
 
     fecharCadastro() {
-        this.hide("#pnlCadastroVisita", () => {
+        this.hide(this.pnlCadastroVisita, () => {
             this.carro = new CarroModel();
         });
     }
 
     carregarDados(carro: CarroModel) {
         this.carro = carro;
-        this.show("#pnlCadastroVisita");
+        this.show(this.pnlCadastroVisita);
     }
 
     carregarVisita(visita: VisitaModel) {
         this.visitas.push(visita);
-        this.show("#pnlVisitasAtivas");
+        this.show(this.pnlVisitasAtivas);
     }
 
     fecharPainelVisitas() {
-        this.hide("#pnlVisitasAtivas");
+        this.hide(this.pnlVisitasAtivas);
     }
 
 }
