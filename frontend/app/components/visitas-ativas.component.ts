@@ -1,10 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-
 import { BaseComponent, Effects } from './base.component';
-
 import { VisitaService } from '../services/visita.service';
 import { ConfiguracaoService } from '../services/configuracao.service';
-
 import { VisitaModel } from '../models/visita.model';
 
 @Component({
@@ -12,9 +9,11 @@ import { VisitaModel } from '../models/visita.model';
     templateUrl: 'app/templates/visitas-ativas.template.html',
 })
 export class VisitasAtivasComponent extends BaseComponent implements OnInit {
-    @Input() visitas: VisitaModel[];
+
     @Output() visitaRemovida = new EventEmitter<VisitaModel>();
     @Output() listaVazia = new EventEmitter<string>();
+    @Input() visitas: VisitaModel[];
+
     public tempoMaximo: number = 2;
 
     constructor(private visitaService: VisitaService, private configuracaoService: ConfiguracaoService) {

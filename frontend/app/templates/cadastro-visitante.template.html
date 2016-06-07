@@ -3,20 +3,20 @@
     <div class="panel-heading">
         <h4>Cadastro de Visitante</h4></div>
     <div class="panel-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" (ngSubmit)="registrarVisitante()">
             <div class="input-group input-group">
                 <span class="input-group-addon">Nome</span>
-                <input type="text" class="form-control" placeholder="Nome do Visitante" required>
+                <input [(ngModel)]="pessoa.nome" type="text" class="form-control" placeholder="Nome do Visitante" required>
             </div>
             <br>
             <div class="input-group input-group">
                 <span class="input-group-addon">Modelo</span>
-                <input type="text" class="form-control" placeholder="Modelo do Veiculo">
+                <input [(ngModel)]="carro.modelo" type="text" class="form-control" placeholder="Modelo do Veiculo">
             </div>
             <br>
             <div class="input-group input-group">
                 <span class="input-group-addon">Cor</span>
-                <input type="text" class="form-control" placeholder="Cor do Veiculo">
+                <input [(ngModel)]="carro.cor" type="text" class="form-control" placeholder="Cor do Veiculo">
             </div>
             <br>
             <button type="reset" class="btn btn-danger">Limpar</button>

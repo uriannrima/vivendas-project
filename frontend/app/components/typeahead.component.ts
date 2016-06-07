@@ -14,6 +14,7 @@ export class TypeaheadComponent implements OnInit {
 
     /** Variaveis de configuração do Typeahead. */
     @Input() url: string;
+    @Input() property: string;
     @Input() displayField: string;
     @Input() triggerLength: number;
     @Input() method: string;
@@ -86,7 +87,7 @@ export class TypeaheadComponent implements OnInit {
                 /** Evento invocado antes de invocar o serviço. */
                 preDispatch: (query: string) => {
                     if (this.sent) this.sent.emit(query);
-                    return query;
+                    return this.property + "=" + query;
                 },
                 /** Evento invocado após retorno de dados do serviço. */
                 preProcess: (data: any) => {

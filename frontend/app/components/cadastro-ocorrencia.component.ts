@@ -1,16 +1,11 @@
 import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
-
 import { BaseComponent } from './base.component';
 import { PesquisaCarroComponent } from './pesquisa-carro.component';
 import { DetalharPessoaComponent } from './detalhar-pessoa.component';
-
+import { FormatarDataDirective } from '../directives/formatar-data.directive';
 import { OcorrenciaService } from '../services/ocorrencia.service';
-
-
 import { OcorrenciaModel } from '../models/ocorrencia.model';
 import { CarroModel } from '../models/carro.model';
-
-import { FormatarDataDirective } from '../directives/formatar-data.directive';
 
 @Component({
     selector: 'cadastro-ocorrencia',
@@ -18,22 +13,21 @@ import { FormatarDataDirective } from '../directives/formatar-data.directive';
     directives: [PesquisaCarroComponent, DetalharPessoaComponent, FormatarDataDirective]
 })
 export class CadastroOcorrenciaComponent extends BaseComponent implements OnInit, AfterViewInit {
-
-
+    
     @ViewChild('pnlCadastroOcorrencia') private pnlCadastroOcorrencia: ElementRef;
     @ViewChild('pnlDetalheDados') private pnlDetalheDados: ElementRef;
     @ViewChild('pnlUpload') private pnlUpload: ElementRef;
-
-    public ocorrencia: OcorrenciaModel = null;
-    public txtData: string = '';
-    @Input() carro: CarroModel = null;
     @Output() cadastrandoOcorrencia = new EventEmitter<OcorrenciaModel>();
     @Output() ocorrenciaCadastrada = new EventEmitter<OcorrenciaModel>();
-
+    @Input() carro: CarroModel = null;
+    
+    public ocorrencia: OcorrenciaModel = null;
+    public txtData: string = '';
+    
     constructor(private ocorrenciaService: OcorrenciaService) {
         super();
     }
-
+    
     ngOnInit() {
         this.criarNovaOcorrencia();
     }
@@ -41,7 +35,7 @@ export class CadastroOcorrenciaComponent extends BaseComponent implements OnInit
     ngAfterViewInit() {
         this.show(this.pnlCadastroOcorrencia);
     }
-
+    
     fecharPaineis() {
         this.hide(this.pnlDetalheDados);
     }

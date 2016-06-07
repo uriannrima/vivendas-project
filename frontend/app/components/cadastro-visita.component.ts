@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef} from '@angular/core';
-
 import { DetalharPessoaComponent } from './detalhar-pessoa.component';
-
 import { VisitaService } from '../services/visita.service';
-
 import { VisitaModel } from '../models/visita.model';
 import { CarroModel } from '../models/carro.model';
 import { PessoaModel } from '../models/pessoa.model';
@@ -14,18 +11,19 @@ import { PessoaModel } from '../models/pessoa.model';
     directives: [DetalharPessoaComponent]
 })
 export class CadastroVisitaComponent implements OnInit {
-
-    public visita: VisitaModel = null;
-    @Input() carro: CarroModel;
+    
     @Output() cadastrandoVisita = new EventEmitter<VisitaModel>();
     @Output() visitaCadastrada = new EventEmitter<VisitaModel>();
-
+    @Input() carro: CarroModel;
+    
+    public visita: VisitaModel = null;
+    
     constructor(private visitaService: VisitaService) { }
-
+    
     ngOnInit() {
         this.visita = new VisitaModel();
     }
-
+    
     registrarVisita() {
 
         if (this.carro != null) {

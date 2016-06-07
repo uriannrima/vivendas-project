@@ -1,7 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-
 import { TypeaheadComponent } from './typeahead.component';
-
 import { CarroService } from '../services/carro.service';
 import { CarroModel } from '../models/carro.model';
 
@@ -14,13 +12,18 @@ import { CarroModel } from '../models/carro.model';
 })
 export class PesquisaCarroComponent {
 
-    constructor(private carroService: CarroService) { }
-
     @Output() pesquisandoCarro = new EventEmitter<string>();
+    @Output() carrosRecebidos = new EventEmitter<any>();
     @Output() carroCarregado = new EventEmitter<CarroModel>();
+
+    constructor(private carroService: CarroService) { }
 
     placaEnviada(query: string) {
         if (this.pesquisandoCarro) this.pesquisandoCarro.emit(query);
+    }
+
+    placasRecebidas(data: any) {
+        if (this.carrosRecebidos) this.carrosRecebidos.emit(data);
     }
 
     placaSelecionada(placa: string) {

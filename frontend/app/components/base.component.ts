@@ -1,3 +1,4 @@
+// Core
 import { ElementRef } from '@angular/core'
 
 /** Enum de Efeitos do Show/Hide do JQuery UI. */
