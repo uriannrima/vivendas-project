@@ -133,7 +133,7 @@ module.exports = function(app) {
 
         // Because of C9 Time Zone
         // var query = "insert into tvsgvis0 (id_visit, dh_entrada, cd_bloco, cd_apartamento) values (?, NOW(), ?, ?)";
-        var query = "update tvsgvis0 set id_car =  ?, cd_bloco = ?, cd_apartamento = ?, dh_entrada = str_to_date(?, '%d/%m/%Y %H:%i:%s'), dh_saida = str_to_date(?, '%d/%m/%Y %H:%i:%s') where id_vis = ?";
+        var query = "update tvsgvis0 set id_car =  ?, cd_bloco = ?, cd_apartamento = ?, dh_entrada = date_format(?,'%Y-%m-%dT%TZ'), dh_saida = date_format(?,'%Y-%m-%dT%TZ') where id_vis = ?";
 
         // Parametros vindos do cliente.
         var id = req.body.id;

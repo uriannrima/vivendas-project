@@ -26,6 +26,8 @@ module.exports = function(app) {
             placa += "%";
             query += " where de_placa like ?";
         }
+        
+        query += " order by de_placa";
 
         // Executar query no banco.
         app.database.mysql.connection.query(

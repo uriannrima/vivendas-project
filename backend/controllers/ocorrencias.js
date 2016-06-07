@@ -12,7 +12,7 @@ module.exports = function(app) {
     controller.selecionar = function(req, res) {
         // Criar query.
         var query = "select oco.id_oco as 'id', oco.de_desc as 'descricao', oco.id_car as 'carroID', oco.cd_bloco as 'bloco', " +
-            " oco.cd_apartamento as 'apartamento', date_format(oco.dh_ocorrencia, '%d/%m/%Y %H:%i:%s') as 'data' from tvsgoco0 oco where 1 = 1";
+            " oco.cd_apartamento as 'apartamento', date_format(oco.dh_ocorrencia, '%Y-%m-%dT%TZ') as 'data' from tvsgoco0 oco where 1 = 1";
 
         // Parametros da Query.
         var params = [];
@@ -44,7 +44,7 @@ module.exports = function(app) {
         }
 
         if (req.query.data) {
-            query += " and oco.dh_ocorrencia = str_to_date(?, '%d/%m/%Y %H:%i:%s') ";
+            query += " and oco.dh_ocorrencia = date_format(?,'%Y-%m-%dT%TZ') ";
             params.push(req.query.data);
         }
 
@@ -73,7 +73,7 @@ module.exports = function(app) {
      * @return {int} ID da Ocorrência incluida.
      */
     controller.inserir = function(req, res) {
-        var query = "insert into tvsgoco0 (de_desc, id_car, cd_bloco, cd_apartamento, dh_ocorrencia, dh_criacao) values (?, ? , ?, ?, str_to_date(?, '%d/%m/%Y %H:%i:%s'), SYSDATE())";
+        var query = "insert into tvsgoco0 (de_desc, id_car, cd_bloco, cd_apartamento, dh_ocorrencia, dh_criacao) values (?, ? , ?, ?, date_format(?,'%Y-%m-%dT%TZ'), SYSDATE())";
 
         // Recuperar modelo dos parametros.
         var ocorrencia = req.body;
